@@ -49,7 +49,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                    DefaultTemplateId = report.DefaultTemplateId,
                                    DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                    DefaultExcelNoStimId = report.DefaultExcelNoStimId,
                                    FeatureUniqeCode = report.FeatureUniqeCode,
                                    AvailableForScheduling = report.AvailableForScheduling,
                                    DisablePreview = report.DisablePreview,
@@ -94,7 +93,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                                                DefaultTemplateId =a.DefaultTemplateId,
                                                DefaultMessageTemplateId = a.DefaultMessageTemplateId,
-                                               DefaultExcelNoStimId = a.DefaultExcelNoStimId,
                                                FeatureUniqeCode = a.FeatureUniqeCode,
                                                AvailableForScheduling = a.AvailableForScheduling,
                                                DisablePreview = a.DisablePreview,
@@ -128,7 +126,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                              DefaultTemplateId = a.DefaultTemplateId,
                              DefaultMessageTemplateId = a.DefaultMessageTemplateId,
-                             DefaultExcelNoStimId = a.DefaultExcelNoStimId,
                              FeatureUniqeCode = a.FeatureUniqeCode,
                              AvailableForScheduling = a.AvailableForScheduling,
                              DisablePreview = a.DisablePreview,
@@ -159,7 +156,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                                 DefaultTemplateId = report.DefaultTemplateId,
                                                 DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                                DefaultExcelNoStimId = report.DefaultExcelNoStimId,
                                                 FeatureUniqeCode = report.FeatureUniqeCode,
                                                 AvailableForScheduling = report.AvailableForScheduling,
                                                 DisablePreview = report.DisablePreview,
@@ -194,7 +190,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                           DefaultExcelNoStimId = report.DefaultExcelNoStimId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
                                            DisablePreview = report.DisablePreview,
@@ -247,7 +242,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                           DefaultExcelNoStimId = report.DefaultExcelNoStimId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
                                            DisablePreview = report.DisablePreview,
@@ -292,7 +286,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                           DefaultExcelNoStimId = report.DefaultExcelNoStimId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
                                            DisablePreview = report.DisablePreview,
@@ -306,13 +299,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 result.ReportDocumentId = modification.ReportDocumentId;
             }
             return result;
-        }
-
-        public Report GetReportOnlyByCode(string code, int tenant)
-        {
-            return (from a in repository.context.Reports
-                    where a.Tenant == tenant && a.Code == code && !a.InActive
-                    select a).FirstOrDefault();
         }
 
         public List<ReportList> GetReportListsByGroupIdAndTenant(string groupId, int tenant)
@@ -341,7 +327,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                           DefaultExcelNoStimId = report.DefaultExcelNoStimId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
                                            DisablePreview = report.DisablePreview,

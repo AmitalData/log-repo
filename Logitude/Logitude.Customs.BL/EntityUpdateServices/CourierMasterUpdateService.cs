@@ -1,37 +1,40 @@
-﻿using Devart.Data.Oracle;
-using Logitude.AmitalMessaging.Infrastructure.FuStatus;
-using Logitude.AmitalMessaging.Utils;
-using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.Messaging.Maman;
-using Logitude.Customs.BL.TraceEvents;
-using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
-using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Transactions;
-using Unifreight.BL.EntityPMs;
-using Unifreight.BL.EntityUpdateServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
 using Unifreight.Data.AmitalModel;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.BL.EntityUpdateServices;
+using Unifreight.BL.EntityPMs.UGenerated;
+using Unifreight.BL.EntityPMs;
+using Logitude.Customs.BL.BL;
+using Devart.Data.Oracle;
+using Logitude.Customs.BL.Validators;
+using System.Data.SqlClient;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using System.Data.Common;
+using Simplog.Data.InfrastructureModel;
+using Logitude.Customs.BL.EntityDataMappings;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -289,25 +292,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            FeatureQuery featureQuery = new FeatureQuery(entityPM.Tenant);
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
-            var feature = features.Features.FirstOrDefault(x => x.Code == "RaiseStatusOnLandingDate");
-            if (entityPOCO != null && feature != null)
-            {
-                var oldLanding = entityPOCO.LandingDate;
-                var newLanding = entityPM.LandingDate;
-
-                bool landingChanged =
-                    (oldLanding.HasValue != newLanding.HasValue) ||
-                    (oldLanding.HasValue && newLanding.HasValue && oldLanding.Value != newLanding.Value);
-
-                if (landingChanged && !string.IsNullOrWhiteSpace(entityPM.UnifreightLeadingFile))
-                {
-                    OpenUnifreighTask(entityPM, "L2U", "RTA", true, "",true);
-                }
-            }
             base.OnUpdating(entityPM, entityPOCO);
         }
+
 
         private static void Send2MasofDueMasterChanged(CourierDeclarationPM courierDeclaration, CourierMasterPM courierMasterPM)
         {
@@ -728,35 +715,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-        private string GetMyFUStatusXML
-           (string status_id, string comments, string xmlStatus, CourierMasterPM dirtyCourierMasterPM)
-        {
-            var user = GetLoggedContact(dirtyCourierMasterPM.Tenant);
-            var myFUStatus = new AmitalEventTracerModel.FUStatus()
-            {
-                entname = "CFIFILEM",
-                primary_number = dirtyCourierMasterPM.UnifreightLeadingFile,
-                status = "new",
-                xml_status = xmlStatus,
-                status_id = status_id,
-                status_DateTime = dirtyCourierMasterPM.LandingDate.HasValue ? Convert.ToDateTime(dirtyCourierMasterPM.LandingDate) : DateTime.Now,
-                comments = comments,
-                OwnerUnifreightUserCode = user?.EnglishName,
-            };
-
-            var myAmitalEventTracerModel = new AmitalEventTracerModel();
-            myAmitalEventTracerModel.MyFUStatus = myFUStatus;
-            GFUSTS myGFUSTS = AmitalEventTracer.GetFUStatus(myAmitalEventTracerModel);
-            var xml = XmlGenericUtil<GFUSTS>.SerializeObject(myGFUSTS, true);
-            return xml;
-        }
-        public void OpenUnifreighTask(CourierMasterPM dirtyCourierMasterPM, string taskType, string status, bool raiseStatus, string xmlStatus,bool isUnifreightLeadingFile = false)
+ 
+        public void OpenUnifreighTask(CourierMasterPM dirtyCourierMasterPM, string taskType, string status, bool raiseStatus, string xmlStatus)
         {
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
-
-            string entNameTarget = isUnifreightLeadingFile ? "CFIFILEM" : "MASTER";
-            string primaryNumTarget = isUnifreightLeadingFile ? dirtyCourierMasterPM.UnifreightLeadingFile : dirtyCourierMasterPM.Id;
+            var statusDateTime = DateTime.Now;
+            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyCourierMasterPM.Tenant).IsConnectedToUniFreight;
 
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
@@ -766,10 +731,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 AmitalContext _AmitalContext = null;
                 var requestData = "";
-                if (isUnifreightLeadingFile)
-                {
-                    requestData = GetMyFUStatusXML(status, "", "new",dirtyCourierMasterPM);
-                }
+
                 string unifreightUser = null;
 
                 if (String.IsNullOrWhiteSpace(unifreightUser))
@@ -782,17 +744,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                     STATUS = "W",
                     REQUESTDATA = requestData,
-                    ENTNAME = entNameTarget,
-                    PRIMARYNUM = primaryNumTarget,
+                    ENTNAME = "MASTER",
+                    PRIMARYNUM = dirtyCourierMasterPM.Id,
                     PRIORITY = YCULTASKPM.calcPriority(taskType),
                     //PRIORITY = priority,
                     TYPE = taskType,
                     USRCODE = unifreightUser,
                     ARCHIVE = "F",
                 };
-                
-                myYCULTASKPM.Tenant = dirtyCourierMasterPM.Tenant;
-                
+                if (!isConnectedToUniFreight)
+                {
+                    myYCULTASKPM.Tenant = dirtyCourierMasterPM.Tenant;
+                }
                 
                 _AmitalContext = AmitalContext.GetContext(dirtyCourierMasterPM.Tenant);
                 var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
@@ -811,15 +774,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     EXECDATE = DateTime.Now,
                     TRY = 9,
                     PRIORITY = 8,
-                    ENTNAME = entNameTarget,
-                    PRIMARYNUM = primaryNumTarget,
+                    ENTNAME = "MASTER",
+                    PRIMARYNUM = dirtyCourierMasterPM.Id,
                     FORMID = "LGT_UPDATE_FCI",
                     DEBUG = "F",
                     DONEOPERATION = "D",
+                    //GSTRING1 = myYCULTASKPM.TASKID,
                 };
-                
-                myGGGQPM.Tenant = dirtyCourierMasterPM.Tenant;
-                
+                if (!isConnectedToUniFreight)
+                {
+                    myGGGQPM.Tenant = dirtyCourierMasterPM.Tenant;
+                }
                 myGGGQUpdateService.Update(myGGGQPM, true);
                 
                 if (scope != null)
