@@ -26,10 +26,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestReportRepository.GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(tenant, glaccountId);
         }
 
-        public decimal? GetInterestReportOpenBalance(DateTime inputDate, int tenant, string glAccountId,bool isForeignCurrency)
+        public decimal? GetInterestReportOpenBalance(DateTime inputDate, int tenant, string glAccountId)
         {
             var interestReportRepository = new InterestReportRepository(tenant);
-            return interestReportRepository.GetInterestReportOpenBalance(inputDate, glAccountId, tenant, isForeignCurrency);
+            return interestReportRepository.GetInterestReportOpenBalance(inputDate, glAccountId, tenant);
         }
 
 
@@ -192,11 +192,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         InterestReportStatusLocalName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.LocalName,
                         GLAccountDisplayNumber = a.GLAccount == null ? null : a.GLAccount.DisplayNumber,
                         ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
-                        GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName,
-                        ReportCurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                        IsForeignCurrency = a.IsForeignCurrency,
-                        ReportCurrencyId = a.ReportCurrencyId
-
+                        GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName
 
                     });
 
@@ -316,11 +312,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName,
 
                        GLAccountMinimumInterest = a.GLAccount.MinimumInterestInvoiceBilling,
-
-                        ReportCurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                        IsForeignCurrency = a.IsForeignCurrency,
-                        ReportCurrencyId = a.ReportCurrencyId
-
 
                     }).ToList();
         }
