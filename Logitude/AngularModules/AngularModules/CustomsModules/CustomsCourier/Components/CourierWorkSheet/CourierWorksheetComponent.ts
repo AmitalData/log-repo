@@ -79,9 +79,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     public set SelectedRow(value: any) {
         this._SelectedRow = value;
     }
-
-     minValPay: number = 75;
-     MinValPayDisplay: string = '75';
     _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _DeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
@@ -152,7 +149,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         }
         this.EntityResourceService.getEntityResourceByTableName("Customs.CourierPendingReason").subscribe(response => {
         });
-        this.GetMinValInvoiceDefault();
+
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
         this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
@@ -1786,12 +1783,12 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         }
 
         switch (this._SelectedTotalInvoiceValue) {
-            case "minValPay": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", this.minValPay, null, null, "LessThanOrEqual", false, false, false, "number");
+            case "75": {
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
                 break;
             }
             case "500": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", this.minValPay + 0.01, 500, null, "Between", false, false, false, "number", false);
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75.01, 500, null, "Between", false, false, false, "number", false);
                 break;
             }
             case "1000": {
@@ -2945,29 +2942,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     }
 
-    private GetMinValInvoiceDefault() {
-        let svc = new CustomsSettingExtendedListService();
 
-        svc.GetDefault(
-            "ISRAEL",
-            "CGO_MINVAL_PAY",
-            "NON",
-            "NON",
-            SessionLocator.Tenant
-        ).subscribe((response: any) => {
-
-            const obj = response.Result;
-            if (obj) {
-                const val = obj['DefaultValue'];
-                const parsed = Number(val);
-
-                if (!AppTool.IsNullOrEmpty(val) && !isNaN(parsed) && parsed > 0) {
-                    this.minValPay = parsed;
-                    this.MinValPayDisplay = '' + parsed;
-                }
-            }
-        });
-    }
     openBulkFeedPending() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 1600;

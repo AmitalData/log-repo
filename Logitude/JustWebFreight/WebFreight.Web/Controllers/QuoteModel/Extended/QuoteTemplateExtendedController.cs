@@ -54,7 +54,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 
     public partial class QuoteTemplateExtendedController : ApiController
     {
-		public HttpResponseMessage Post(QuoteTemplatePM entityPM)
+        public HttpResponseMessage Post(QuoteTemplatePM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -338,8 +338,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
             }
 
         }
-
-		[HttpPut]
+		
+        [HttpPost]
 		[Route("api/QuoteTemplateExtended/BuildQuoteTemplatePdfReportForAppService")]
 		public HttpResponseMessage BuildQuoteTemplatePdfReportForAppService(BuildQuoteRequest buildQuoteRequest)
 		{
