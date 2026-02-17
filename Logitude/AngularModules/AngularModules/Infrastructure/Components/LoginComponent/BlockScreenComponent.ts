@@ -53,8 +53,7 @@ export class BlockScreenComponent {
         d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
         let expires: string = `expires=${d.toUTCString()}`;
         let cpath: string = path ? `; path=${path}` : '';
-        const isSecure = (window.location.protocol === "https:");
-        document.cookie = `${name}=${value}; ${expires}${cpath}${isSecure ? "; Secure" : ""}; SameSite=Lax`;
+        document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
 
 

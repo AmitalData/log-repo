@@ -723,18 +723,6 @@ ID List :
                                                         newExt.MyCertificateOfOriginTypeCodeEnum.IsCriterionMandatory = Convert.ToBoolean(dr["IsCriterionMandatory"]);
                                                     }
 
-                                                    if (dr["IsCustomsItemMandatory"] != DBNull.Value && dr["IsCustomsItemMandatory"] != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCustomsItemMandatory = Convert.ToBoolean(dr["IsCustomsItemMandatory"]);
-                                                    }
-
-                                                    if (dr["IsZipcodeMandatory"] != DBNull.Value && dr["IsZipcodeMandatory"] != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsZipcodeMandatory = Convert.ToBoolean(dr["IsZipcodeMandatory"]);
-                                                    }
-
                                                     extList.Add(newExt);
                                                 });
                         return extList;
