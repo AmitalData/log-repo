@@ -12,6 +12,7 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Def.EntityPMs;
+using CWXSD;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
@@ -304,7 +305,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsExpense = entityPM.IsExpense;
             entity.PrepaidCollectId = entityPM.PrepaidCollectId;
             entity.IsRegionalTax = entityPM.IsRegionalTax;
-            entity.ReceivableCreditGLAccountId = entityPM.ReceivableCreditGLAccountId;
 
             Tenant myTenant = TenantRepository.GetSingleTenant(entityPM.Tenant, true);
 

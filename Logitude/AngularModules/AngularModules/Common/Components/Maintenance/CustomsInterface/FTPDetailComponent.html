@@ -68,35 +68,21 @@
                                     <div></div>
                                 </td>
                             </tr>
-                            <tr class="FormFieldRow">
+
+                            <!--<tr class="FormFieldRow" *ngIf="ShowInactive">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'Port'" [Text]="'Port'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'Port'" [Text]="Port" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                             <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'PrivateKey'" [Text]="'PrivateKey'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true" [Text]="PrivateKey"
-                                            [ObjectFieldName]="'PrivateKey'" [HideColumns]="true" [ObjectTableName]="ObjectTableName"  [InputType]="'nText'" [DataContext]="DataContext" [Direction]="'LTR'">
-                                    </LogTextBox>
+                                    <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
 
                                 <td>
                                     <div></div>
                                 </td>
-                            </tr>
-                           <tr class="FormFieldRow" > </tr>
+                            </tr>-->
+
                            <tr class="FormFieldRow" >
                                 <td>
                                     <LogLabel [ObjectFieldName]="'UseSFTP'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
