@@ -15,23 +15,15 @@ export function NavigatesExportWizerd() {
 export function FillSearchField(creatNewExportInvoiceDetails: CreateNewExportInvoiceDetails) {
     cy.FillLogTextBox(CreateNewExportInvoiceSelectors.SearchField, creatNewExportInvoiceDetails.File, true);
     cy.get(CreateNewExportInvoiceSelectors.SearchField).focus();
-    cy.wait(2000);
-    
-    // Wait for grid to load and find first declaration row
-    cy.get(CreateNewExportInvoiceSelectors.FirstDeclaration, { timeout: 30000 })
-        .should('be.visible')
-        .click();
-    
+    cy.wait(5000);
+    cy.get(CreateNewExportInvoiceSelectors.FirstDeclaration).click();
     cy.get(BaseExportSelectors.ExporterInvoices).click();
     
 }
 
 export function CreateaAndFillNewExporterInvoice(createNewExportInvoiceDetails: CreateNewExportInvoiceDetails) {
     
-   // Wait for Add button to be visible and clickable
-   cy.get(CreateNewExportInvoiceSelectors.AddButtonInvoice, { timeout: 30000 })
-       .should('be.visible')
-       .click();
+   cy.get(CreateNewExportInvoiceSelectors.AddButtonInvoice).click();
    cy.FillLogLov(CreateNewExportInvoiceSelectors.AccountTypeCode,createNewExportInvoiceDetails.AccountTypeCode, true);
    cy.FillLogLov(CreateNewExportInvoiceSelectors.InvoiceCurrencyTypeCode,createNewExportInvoiceDetails.InvoiceCurrencyTypeCode, true);
    cy.FillLogLov(CreateNewExportInvoiceSelectors.IncotermCode,createNewExportInvoiceDetails.IncotermCode, true);
@@ -93,24 +85,13 @@ export function AssertSaveSupplierInvoice() {
 
 
 export function DeleteRow(){
-    // Wait for delete button to exist and force click (handles overflow issues)
-    cy.get(CreateNewExportInvoiceSelectors.ButtonDeleteSupplierInvoice, { timeout: 30000 })
-        .should('exist')
-        .click({ force: true });
-    
-    // Wait for confirmation dialog and click Yes with shorter timeout
-    cy.get(CreateNewExportInvoiceSelectors.Yes, { timeout: 5000 })
-        .should('be.visible')
-        .click();
+    cy.Click(CreateNewExportInvoiceSelectors.ButtonDeleteSupplierInvoice,null);
+    cy.Click(CreateNewExportInvoiceSelectors.Yes,null);
+
     
    }
 
    export function AssertDeleteRow() {
-       // Wait a bit for the delete operation to complete with shorter wait
-       cy.wait(1000);
-       
-       // Check if the specific supplier invoice grid is empty with shorter timeout
-       cy.get('declarationsupplierinvoicetabcomponent [id*="LogGrid"] [id*="row"]', { timeout: 5000 })
-           .should('not.exist');
+       BaseAssertion.AssertElementNotExist(CreateNewExportInvoiceSelectors.SupplierInvoiceFirstRow);
        
    }

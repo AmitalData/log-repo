@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
- 
+        public TruckerSettingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public TruckerSettingRepository(ICommonDataContext context)
         {
