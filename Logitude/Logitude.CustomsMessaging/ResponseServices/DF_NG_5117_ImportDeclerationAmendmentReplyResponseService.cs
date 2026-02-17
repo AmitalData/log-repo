@@ -1,36 +1,35 @@
 ﻿using Logitude.AmitalMessaging.Utils;
-using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.Messaging.Customs;
-using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
-using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
-using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Models;
-using Logitude.Customs.BL.NotificationBL;
-using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
-using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
-using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using UnifreightIIG.Common.MessageLib.Collateral;
 using UnifreightIIG.Common.MessageLib.Fault;
 using UnifreightIIG.Common.MessageLib.ID;
+using UnifreightIIG.Common.MessageLib.Collateral;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
+using System.Xml.Serialization;
+using Logitude.Customs.BL.TraceEvents;
+using Simplog.Data.CommonDataModel.Repositories;
+using System.Diagnostics;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
 using UnifreightIIG.Common.MessageLib.Ransom;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -58,7 +57,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
 
 
-            LogMessagingUtil.Instance.AppendLine($"5117.Update – start to update");
+
             FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
 
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
@@ -119,7 +118,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-                    LogMessagingUtil.Instance.AppendLine($"5117.Update – GetDeclaration is null");
+
                     if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
                     {
                         _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
@@ -156,11 +155,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (this._MyDeclarationPM == null)
                 {
-                    Handle5117MissingFileOrDeclaration(
-        customResponse,
-        requestParams,
-        context,
-        "לא נמצא תיק במערכת - נוצרה התראה לפי מספר הצהרה");
                     LogMessagingUtil.Instance.AppendLine("Can not find declaration" + requestParams.AppicationId);
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = false;
@@ -742,7 +736,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
 
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                        var swUpdateDec2 = Stopwatch.StartNew();
+                        var swUpdateDec2 = Stopwatch.StartNew(); 
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
                         LogMessagingUtil.Instance.AppendLine($"5117.Update – myDeclarationUpdateService.Update (else branch) took {swUpdateDec2.ElapsedMilliseconds} ms");
 
@@ -847,7 +841,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
                 this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
-                LogMessagingUtil.Instance.AppendLine($"5117.Update1 – answer for declaration " + this._MyDeclarationPM.DeclarationNumber);
 
                 requestParams.AppicationId = _MyDeclarationPM.Id;// myDeclarationQueryService.GetIdByDeclarationNumber(_MyDeclarationPM.Id, requestParams.Tenant);
                 //if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -899,11 +892,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (this._MyDeclarationPM == null)
                     {
-                        Handle5117MissingFileOrDeclaration(
-        customResponse,
-        requestParams,
-        context,
-        "לא נמצא תיק במערכת - נוצרה התראה לפי מספר הצהרה");
                         LogMessagingUtil.Instance.AppendLine("Can not find declaration" + requestParams.AppicationId);
                         this.MyResponseData.ApplicationID = requestParams.AppicationId;
                         this.MyResponseData.Succeeded = false;
@@ -979,7 +967,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
                     this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
-                    LogMessagingUtil.Instance.AppendLine($"5117.Update2 – answer for declaration " + this._MyDeclarationPM.DeclarationNumber);
 
                     bool sendDeclarationPrintSync = false;// ConfigurationManager.AppSettings["20180307.5117SendDeclarationPrintSync"] =="1";
                     if (sendDeclarationPrintSync)
@@ -1216,115 +1203,5 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogMessagingUtil.Instance.AppendLine("Declaration Print Request Succeeded " + resData.CustomsRequestsSheetId);
             return true;
         }
-
-        private void Handle5117MissingFileOrDeclaration(
-    DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse,
-    GenericRequestParams requestParams,
-    ICustomContext dbContext,
-    string reason)
-        {
-            try
-            {
-                string declarationNumber =
-                    customResponse?.Response?.Declaration?.ID?.Value
-                    ?? customResponse?.Response?.Declaration?.DMExtensions?.ExternalDeclarationID?.Value
-                    ?? requestParams?.AppicationId
-                    ?? "";
-
-                if (string.IsNullOrWhiteSpace(declarationNumber))
-                {
-                    LogMessagingUtil.Instance.AppendLine("5117 MissingFile: cannot determine declaration number");
-                    return;
-                }
-
-                string status32 = "";
-                var additional = customResponse?.Response?.AdditionalInformation;
-                if (additional != null)
-                {
-                    status32 = additional
-                        .FirstOrDefault(x => x.Content != null && x.StatementTypeCode?.Value == "32")
-                        ?.Content?.Value;
-                }
-
-                string eventCode;
-                switch (status32)
-                {
-                    case "1": eventCode = "DMA"; break; 
-                    case "4": eventCode = "DMD"; break; 
-                    case "2": eventCode = "DMP"; break; 
-                    case "6": eventCode = "DWR"; break; 
-                    default: eventCode = "DCH"; break; 
-                }
-
-                string notificationDefinitionCode = null;
-                string desc = null;
-                string type = "A"; 
-
-                switch (eventCode)
-                {
-                    case "DCH":
-                        notificationDefinitionCode = "5117N";
-                        desc = "בוצע תיקון הצהרה " + declarationNumber;
-                        break;
-
-                    case "DMA":
-                        notificationDefinitionCode = "5117A";
-                        desc = "תיקון הצהרה אושר " + declarationNumber;
-                        break;
-
-                    case "DMP":
-                        notificationDefinitionCode = "5117P";
-                        desc = "תיקון הצהרה אושר חלקית " + declarationNumber;
-                        break;
-
-                    case "DMD":
-                        notificationDefinitionCode = "5117D";
-                        desc = "תיקון הצהרה נדחה " + declarationNumber;
-                        break;
-
-                    case "DWR":
-                        notificationDefinitionCode = "5117W";
-                        desc = "תיקון הצהרה ממתין להחלטת המכס " + declarationNumber;
-                        break;
-                }
-
-                if (string.IsNullOrWhiteSpace(notificationDefinitionCode))
-                {
-                    LogMessagingUtil.Instance.AppendLine($"5117 MissingFile: no mapping for eventCode={eventCode}");
-                    return;
-                }
-
-                if (!string.IsNullOrWhiteSpace(reason))
-                {
-                    desc += "\n" + reason;
-                }
-
-                var functionalRef = customResponse?.Response?.FunctionalReferenceID?.Value;
-                if (!string.IsNullOrWhiteSpace(functionalRef))
-                {
-                    desc += "\nמספר בקשה - " + functionalRef;
-                }
-
-                NotificationBase.CreateNotification(
-                    dbContext: dbContext,
-                    tenant: requestParams.Tenant,
-                    objectTableName: "Customs.Declaration",
-                    notificationDefinitionCode: notificationDefinitionCode,
-                    description: desc,
-                    assigneToNotificationTypeCode: type,
-                    reference1Number: declarationNumber,
-                    entityId: null, 
-                    createdByRequestId: requestParams.CustomsRequestsSheetId
-                );
-
-                LogMessagingUtil.Instance.AppendLine(
-                    $"5117 MissingFile: notification created. Code={notificationDefinitionCode}, Ref={declarationNumber}, Event={eventCode}");
-            }
-            catch (System.Exception ex)
-            {
-                LogMessagingUtil.Instance.AppendLine("5117 MissingFile: failed " + ex);
-            }
-        }
-
     }
 }
