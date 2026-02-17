@@ -91,7 +91,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
             var onlyCustomer2Vendor3DTOAging = qGLAccountTotalByMonthsDTOAging.ToList();
 
             var myPeriodList = new List<PeriodM>();
-            foreach (string curAccId in accountCustomer2Vendor3Ids.Distinct())
+            foreach (string curAccId in accountCustomer2Vendor3Ids)
             {
                 var currAccountAgingDtoS = onlyCustomer2Vendor3DTOAging.Where(r => r.AccountId == curAccId).ToList();
 

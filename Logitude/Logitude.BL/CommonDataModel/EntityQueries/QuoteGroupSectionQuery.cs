@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         QuoteGroupSectionRepository repository;
 
-
+        public QuoteGroupSectionQuery()
+        {
+            repository = new QuoteGroupSectionRepository(); 
+        }
 
 
 

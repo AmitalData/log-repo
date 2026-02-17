@@ -21,7 +21,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public AddressRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<Address> GetAddresses(int tenant)
         {

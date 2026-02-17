@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class IndustryQuery
     {
         IndustryRepository repository;
-
+        public IndustryQuery()
+        {
+               repository = new IndustryRepository(); 
+        }
 
         public IndustryQuery(int tenant)
         {

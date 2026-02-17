@@ -410,14 +410,7 @@
     <Constraints
       Nullable="false" />
   </Column>
-	<Column
-	  Name="FileDataMD5Hash"
 
-	  Type="varchar"
-    Size="36">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="ChildObjectTableId"
     ReferencedTable="ObjectTables"
