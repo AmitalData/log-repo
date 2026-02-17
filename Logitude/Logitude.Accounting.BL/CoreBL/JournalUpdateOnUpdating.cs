@@ -344,13 +344,16 @@ namespace Logitude.Accounting.BL
             {
                 return;
             }
+
             // 5. Update items for deletion.
             foreach (var item in itemsToDelete)
             {
                 item.ChangeSetOp = ChangeSetOperation.Delete;
             }
 
+
         }
+
 
         private bool IsStornoJournalOK(JournalPM theOriginal, JournalPM theStorno)
         {
