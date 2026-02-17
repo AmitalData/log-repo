@@ -42,11 +42,11 @@ export function AssertApproveAPPayment() {
 export function VoidAPPayment() {
 
     cy.DefineRequestWait(RestAPI.PUT, URLs.APPayments, RequestAliases.APPayments)
-    cy.Click(BaseSelectors.MenuButtons, null, true)
-    cy.Click(APPaymentSelectors.VoidButton, null, true)
+    cy.Click(BaseSelectors.MenuButtons, null)
+    cy.Click(APPaymentSelectors.VoidButton, null)
     cy.FillLogTextBox(APPaymentSelectors.CancelationNotes, BaseSelectors.ContainsCancel)
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null, true)
-    cy.Click(APPaymentSelectors.ConfirmWindow, null, true)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+    cy.Click(APPaymentSelectors.ConfirmWindow,null)
     
     
 }

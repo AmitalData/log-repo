@@ -70,8 +70,8 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
         this.IsCurrentUserFreelancer = SessionLocator.LoggedUserPM.IsFreelancer;
 
-        //if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
-        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
+        //if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
             if (this.IsCurrentUserFreelancer) {
                 //this.NewUserPM.IsFreelancer = true;
                 //this.IsFreelancerVisible = false;
@@ -185,13 +185,6 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                 this.NewUserPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.NewUserPM.Technology = "AG";
                 this.NewUserPM.LayoutDirection = "rtl";
-
-                if (SessionLocator.TenantPM.HebrewTenant) {
-                    this.NewUserPM.ShowLocalNameInLOV = true;
-                    this.NewUserPM.DontShowLocalLabels = false;
-                    this.NewUserPM.LayoutDirection = "rtl";
-                }
-
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
                 this.userPMService.insert(this.NewUserPM).subscribe((myResult: any) => {

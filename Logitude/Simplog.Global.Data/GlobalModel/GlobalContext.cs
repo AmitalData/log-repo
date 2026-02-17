@@ -232,8 +232,8 @@ namespace Simplog.Global.Data.GlobalModel
         public IDbSet<CaptchaKey> CaptchaKeys { get; set; }
         public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; set; }
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys { get; set; }
         public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
+
+
     }
 }
