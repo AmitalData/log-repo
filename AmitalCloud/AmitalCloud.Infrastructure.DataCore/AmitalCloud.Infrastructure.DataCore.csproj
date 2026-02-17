@@ -1,0 +1,723 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Configurations>All Projects;Debug;None;Release</Configurations>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\Library\Bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>AmitalCloud.Infrastructure.Data</AssemblyTitle>
+    <Product>AmitalCloud.Infrastructure.Data</Product>
+    <Copyright>Copyright ©  2024</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Context\SystemLogContext.Views.cs" />
+    <Compile Update="Service References\BlobServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <None Include="Context\GlobalContext.Views.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Service References\BlobServiceReference\BlobService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Service References\BlobServiceReference\BlobService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Service References\BlobServiceReference\BlobService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Service References\BlobServiceReference\AmitalCloud.Infrastructure.Data.BlobServiceReference.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntityDataMappings\Manual\" />
+    <Folder Include="Mapping\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\BlobServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Service References\BlobServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Domain\AmitalCloud.Infrastructure.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Amital" Version="1.0.0" />
+    <PackageReference Include="BCrypt-Official" Version="0.1.109" />
+    <PackageReference Include="Devart.Data" Version="6.0.21" />
+    <PackageReference Include="Devart.Data.Oracle" Version="10.3.21" />
+    <PackageReference Include="EntityFramework" Version="6.5.1" />
+    <PackageReference Include="Microsoft" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Azure.KeyVault.Core" Version="3.0.5" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.2" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.24" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.19" />
+    <PackageReference Include="Microsoft.WindowsAzure.SDK" Version="2.9.0" />
+    <PackageReference Include="NetCommonHelper" Version="1.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NLog" Version="5.3.2" />
+    <PackageReference Include="NLog.Targets.Loki" Version="2.2.0" />
+    <PackageReference Include="RIAServices.Server" Version="4.2.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="9.0.2" />
+    <PackageReference Include="System.Net.Http.Json" Version="9.0.2" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+    <PackageReference Include="System.Security.AccessControl" Version="6.0.1" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.2" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="9.0.2" />
+    <PackageReference Include="System.Text.Json" Version="9.0.2" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.2" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.1.1" />
+    <PackageReference Include="System.ServiceModel.Http" Version="8.1.1" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="8.1.1" />
+    <PackageReference Include="System.ServiceModel.Security" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="8.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Context\GlobalContext.Views.cs" />
+    <Compile Remove="Context\SystemLogContext.Views.cs" />
+    <Compile Remove="CustomChildObjectPM.cs" />
+    <Compile Remove="CustomFieldsMainObjectPM.cs" />
+    <Compile Remove="CustomPickListPM.cs" />
+    <Compile Remove="CustomTablePM.cs" />
+    <Compile Remove="DataMapping\MenuButtonMapping.cs" />
+    <Compile Remove="DBHelpers\LogitudeExceptionExtU.cs" />
+    <Compile Remove="EntityDataMappings\Manual\AdvancedQueryFilterDataMapping.cs" />
+    <Compile Remove="EntityDataMappings\Manual\GlobalContactDataMapping.cs" />
+    <Compile Remove="EntityDataMappings\Manual\ScreenDataMapping.cs" />
+    <Compile Remove="EntityDataMappings\Manual\ScreenFieldDataMapping.cs" />
+    <Compile Remove="EntityDataMappings\Manual\TenantSettingDataMapping.cs" />
+    <Compile Remove="Repositories - Copy\AccountingPartnerRepository.cs" />
+    <Compile Remove="Repositories - Copy\AccountingSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\AccountingSystemRepository.cs" />
+    <Compile Remove="Repositories - Copy\AccountRepository.cs" />
+    <Compile Remove="Repositories - Copy\AccountTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\AdditionalServiceRepository.cs" />
+    <Compile Remove="Repositories - Copy\AddressRepository.cs" />
+    <Compile Remove="Repositories - Copy\AddressTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\AgentRepository.cs" />
+    <Compile Remove="Repositories - Copy\AirlineMessagingRuleRepository.cs" />
+    <Compile Remove="Repositories - Copy\AirlineRepository.cs" />
+    <Compile Remove="Repositories - Copy\AnalyzeQueueRepository.cs" />
+    <Compile Remove="Repositories - Copy\ApiCredintialsRepository.cs" />
+    <Compile Remove="Repositories - Copy\APILogsDataRepository.cs" />
+    <Compile Remove="Repositories - Copy\APILogsRepository.cs" />
+    <Compile Remove="Repositories - Copy\AuditLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\AutomationRepository.cs" />
+    <Compile Remove="Repositories - Copy\AutomationResultEmailRecipientRepository.cs" />
+    <Compile Remove="Repositories - Copy\AWBDescriptionOfGoodsRepository.cs" />
+    <Compile Remove="Repositories - Copy\AWBMessagesCCSTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\BatchServicesDefinitionRepository.cs" />
+    <Compile Remove="Repositories - Copy\BatchServicesLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\BatchTaskExecutionRepository.cs" />
+    <Compile Remove="Repositories - Copy\BatchTaskExecutionStatusRepository.cs" />
+    <Compile Remove="Repositories - Copy\BIFoldersPermissionRepository.cs" />
+    <Compile Remove="Repositories - Copy\BIReportFolderRepository.cs" />
+    <Compile Remove="Repositories - Copy\BIReportRepository.cs" />
+    <Compile Remove="Repositories - Copy\BIReportsExecutionLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\BIReportsTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\BluesnapContractRepository.cs" />
+    <Compile Remove="Repositories - Copy\BluesnapContractTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\BluesnapTransactionRepository.cs" />
+    <Compile Remove="Repositories - Copy\BorderTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\BranchRepository.cs" />
+    <Compile Remove="Repositories - Copy\BusinessHourRepository.cs" />
+    <Compile Remove="Repositories - Copy\BusinessHoursHolidayRepository.cs" />
+    <Compile Remove="Repositories - Copy\BusinessProcessQueueRepository.cs" />
+    <Compile Remove="Repositories - Copy\BusinessRoleRepository.cs" />
+    <Compile Remove="Repositories - Copy\BusinessUnitRepository.cs" />
+    <Compile Remove="Repositories - Copy\CardContactAdditionalServiceRepository.cs" />
+    <Compile Remove="Repositories - Copy\CardContactProductRepository.cs" />
+    <Compile Remove="Repositories - Copy\CardExternalAccountsByProductRepository.cs" />
+    <Compile Remove="Repositories - Copy\CardExternalCodeByCurrencyRepository.cs" />
+    <Compile Remove="Repositories - Copy\CardRepository.cs" />
+    <Compile Remove="Repositories - Copy\CardSearchRepository.cs" />
+    <Compile Remove="Repositories - Copy\CargoTenantMilestoneDefinitionRepository.cs" />
+    <Compile Remove="Repositories - Copy\CarrierAreaRepository.cs" />
+    <Compile Remove="Repositories - Copy\CarrierAreasPortRepository.cs" />
+    <Compile Remove="Repositories - Copy\CarrierServiceLineRepository.cs" />
+    <Compile Remove="Repositories - Copy\ChargesExternalAccountsByProductRepository.cs" />
+    <Compile Remove="Repositories - Copy\ChargesGroupRepository.cs" />
+    <Compile Remove="Repositories - Copy\ChargesTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\ChargeTypeAccountingRepository.cs" />
+    <Compile Remove="Repositories - Copy\CheckDigitControlAlgorithmRepository.cs" />
+    <Compile Remove="Repositories - Copy\ChildEntitiesCustomFieldRepository.cs" />
+    <Compile Remove="Repositories - Copy\CommodityRepository.cs" />
+    <Compile Remove="Repositories - Copy\CommunicationLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\CommunicationLogTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\CommunicationStatusTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\CompetitorRepository.cs" />
+    <Compile Remove="Repositories - Copy\ComputingPartnerCodeRepository.cs" />
+    <Compile Remove="Repositories - Copy\ComputingPartnerRepository.cs" />
+    <Compile Remove="Repositories - Copy\ComputingPartnerTableRepository.cs" />
+    <Compile Remove="Repositories - Copy\ComputingPartnerTranslationRepository.cs" />
+    <Compile Remove="Repositories - Copy\ContactDoneMethodRepository.cs" />
+    <Compile Remove="Repositories - Copy\ContactRepository.cs" />
+    <Compile Remove="Repositories - Copy\ContainerSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\CounterDefinitionRepository.cs" />
+    <Compile Remove="Repositories - Copy\CountryCityRepository.cs" />
+    <Compile Remove="Repositories - Copy\CountryRepository.cs" />
+    <Compile Remove="Repositories - Copy\CreditLimitSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\CurrencyRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomAgentRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomChildObjectRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerAccountManagerByProductRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerAdditionalServiceRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerDepositionRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerFieldsUpdateSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerGroupRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerOpenFilesAmountRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerProductActualDataRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerProductLocationRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerProductRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerSalesNoteRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerSizeRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerStatusRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerTeamRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerTenantAccessCardRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerTenantAccessCardsBatchRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerTenantAccessRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerTenantAccessRequestRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomerTenantAccessStatusTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomFieldsMainObjectsRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomsInterfaceRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomsInterfaceSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\CustomsShipperRepository.cs" />
+    <Compile Remove="Repositories - Copy\DataCustomObjectRepository.cs" />
+    <Compile Remove="Repositories - Copy\DefaultAndConfigurationKeyRepository.cs" />
+    <Compile Remove="Repositories - Copy\DefaultAndConfigurationRepository.cs" />
+    <Compile Remove="Repositories - Copy\DepartmentRepository.cs" />
+    <Compile Remove="Repositories - Copy\DeploymentPackageExecutionLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\DeploymentPackageRepository.cs" />
+    <Compile Remove="Repositories - Copy\DeploymentPackagesVersionRepository.cs" />
+    <Compile Remove="Repositories - Copy\DescriptionOfGoodsRepository.cs" />
+    <Compile Remove="Repositories - Copy\DigitalFieldSecurityRepository.cs" />
+    <Compile Remove="Repositories - Copy\DigitalPortalLanguageRepository.cs" />
+    <Compile Remove="Repositories - Copy\DigitalPortalScreenRepository.cs" />
+    <Compile Remove="Repositories - Copy\DigitalPreDefinedComponentRepository.cs" />
+    <Compile Remove="Repositories - Copy\DigitalProfileRepository.cs" />
+    <Compile Remove="Repositories - Copy\DigitalTextCodeRepository.cs" />
+    <Compile Remove="Repositories - Copy\DimensionsUnitRepository.cs" />
+    <Compile Remove="Repositories - Copy\DirectionRepository.cs" />
+    <Compile Remove="Repositories - Copy\DistributorRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentFilingBackupBatchRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentFilingBackupSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentFolderRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentsExecutionLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentsFilingRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentTypeCategoryRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentTypeCopyRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentTypeCustomFieldRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\DocumentTypeTemplateRepository.cs" />
+    <Compile Remove="Repositories - Copy\DueTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\DWCategoriesRepository.cs" />
+    <Compile Remove="Repositories - Copy\DWHSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\DWObjectFieldRepository.cs" />
+    <Compile Remove="Repositories - Copy\DWObjectTableRepository.cs" />
+    <Compile Remove="Repositories - Copy\EmailAlertSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\EntityStatusRepository.cs" />
+    <Compile Remove="Repositories - Copy\EntityStatusTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\ErrorLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\EventTypeCategoryRepository.cs" />
+    <Compile Remove="Repositories - Copy\EventTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\FeatureAccessLevelRepository.cs" />
+    <Compile Remove="Repositories - Copy\FeaturePackageTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\FeatureToggleRepository.cs" />
+    <Compile Remove="Repositories - Copy\FilingInboxAttachmentLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\FilingInboxAttachmentRepository.cs" />
+    <Compile Remove="Repositories - Copy\FilingInboxRepository.cs" />
+    <Compile Remove="Repositories - Copy\FTPDetailRepository.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AccountingPartnerRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AccountingSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AccountingSystemRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AccountRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AccountTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AdditionalServiceRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AddressRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AddressTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AgentRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AirlineMessagingRuleRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AirlineRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AnalyzeQueueRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ApiCredintialsRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\APILogsDataRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\APILogsRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AuditLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AutomationRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AutomationResultEmailRecipientRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AWBDescriptionOfGoodsRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\AWBMessagesCCSTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BatchServicesDefinitionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BatchServicesLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BatchTaskExecutionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BatchTaskExecutionStatusRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BIFoldersPermissionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BIReportFolderRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BIReportRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BIReportsExecutionLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BIReportsTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BluesnapContractRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BluesnapContractTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BluesnapTransactionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BorderTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BranchRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BusinessHourRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BusinessHoursHolidayRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BusinessProcessQueueRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BusinessRoleRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\BusinessUnitRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CardContactAdditionalServiceRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CardContactProductRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CardExternalAccountsByProductRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CardExternalCodeByCurrencyRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CardRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CardSearchRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CargoTenantMilestoneDefinitionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CarrierAreaRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CarrierAreasPortRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CarrierServiceLineRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ChargesExternalAccountsByProductRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ChargesGroupRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ChargesTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ChargeTypeAccountingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CheckDigitControlAlgorithmRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ChildEntitiesCustomFieldRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CommodityRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CommunicationLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CommunicationLogTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CommunicationStatusTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CompetitorRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ComputingPartnerCodeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ComputingPartnerRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ComputingPartnerTableRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ComputingPartnerTranslationRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ContactDoneMethodRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ContactRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ContainerSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CounterDefinitionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CountryCityRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CountryRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CreditLimitSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CurrencyRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomAgentRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomChildObjectRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerAccountManagerByProductRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerAdditionalServiceRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerDepositionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerFieldsUpdateSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerGroupRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerOpenFilesAmountRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerProductActualDataRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerProductLocationRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerProductRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerSalesNoteRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerSizeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerStatusRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerTeamRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerTenantAccessCardRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerTenantAccessCardsBatchRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerTenantAccessRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerTenantAccessRequestRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomerTenantAccessStatusTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomFieldsMainObjectsRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomsInterfaceRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomsInterfaceSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\CustomsShipperRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DataCustomObjectRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DefaultAndConfigurationKeyRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DefaultAndConfigurationRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DepartmentRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DeploymentPackageExecutionLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DeploymentPackageRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DeploymentPackagesVersionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DescriptionOfGoodsRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DigitalFieldSecurityRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DigitalPortalLanguageRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DigitalPortalScreenRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DigitalPreDefinedComponentRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DigitalProfileRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DigitalTextCodeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DimensionsUnitRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DirectionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DistributorRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentFilingBackupBatchRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentFilingBackupSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentFolderRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentsExecutionLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentsFilingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentTypeCategoryRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentTypeCopyRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentTypeCustomFieldRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DocumentTypeTemplateRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DueTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DWCategoriesRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DWHSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DWObjectFieldRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\DWObjectTableRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\EmailAlertSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\EntityStatusRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\EntityStatusTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ErrorLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\EventTypeCategoryRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\EventTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\FeatureAccessLevelRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\FeaturePackageTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\FeatureToggleRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\FilingInboxAttachmentLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\FilingInboxAttachmentRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\FilingInboxRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\FTPDetailRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\GlobalZoneRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\HelpResourceRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\HorseGenderRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\HorseRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\HTSCodeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\HybridPartnerRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\HybridTenantStateRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\HybridTenantThresholdRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\IATACodeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ImageLibraryRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\InboundEmailLineRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\InboundEmailRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\IncotermRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\IndustryRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\INTTRABranchRegisteredCarrierRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\INTTRASettingModeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\INTTRASettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\LastRunDetailRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\LBPTeamMemberRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\LeadSourceRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\LoginPolicyRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\LogitudeLeadRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\LogitudeMessagesTransmissionLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\MAWBStackRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\MeasurementRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\MentionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\MetodoPagoRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\MoveTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\MultiEntityUpdateLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\NumberFormatRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ObjectFieldRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ObjectTableRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PackageConnectedPackageRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PackageRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PackageTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ParticipantRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PartnerTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PasswordPolicyRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PaymentChannelRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PaymentCurrencyRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PaymentGatewayPartnerRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PaymentMethodRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PaymentTermDateTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PaymentTermRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PortGroupRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PortRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PortTimeZoneRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PostalCodeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\PrepaidCollectRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ProductItemRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ProductPeriodRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ProductTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QueryExportExecutionLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QueueMessageMoreDetailsRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QuoteChargesGroupRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QuoteGroupSectionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QuoteTemplateRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QuoteTemplateSectionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QuoteTemplateSectionTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QuoteTemplateSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QuoteTemplateTableDesignRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QuoteTemplateTextDesignRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\QuoteTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RankRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RateClassRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RatesTableRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RecurringPeriodRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ReferenceCustomObjectRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RegimenFiscalRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RegionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RegistryDateTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ReportExecutionLogRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ReportRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ReportsTemplateRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ReportsTemplatesVersionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RestrictionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RoleRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\RuleUpdateHistoryRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\SatisfactionSurveyRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\SchedulerProcedureRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ScreenSectionRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\SharedLogisticsInvitationStatusRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\SharedLogisticsSettingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ShippingAgentRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ShippingLineRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\StateRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\SystemDataRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TabModificationRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TariffCarrierTranslationRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TarrifChargeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TarrifFromToRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TarrifFromToTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TarrifHeaderRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TarrifStepRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TarrifTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TaskSchedulerHistoryRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TasksSchedulerRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TeamMemberBusinessRoleRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TeamRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TemperatureUnitRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TemplateFormatRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TenantAdditionalDataRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TenantAddOnRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TenantLoginPolicyRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TenantManagementLicenseRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TenantManagementRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TenantManagmentPrivateLabelsRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TenantRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TenantTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TermsofUseSignatureRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TextCodeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\ToggleRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TraceEventRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TransportModeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TruckerRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\TwoFactorAuthenticationDeviceRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\UnassignedEntityRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\UserLastSettingsRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\UserLicenseRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\UserRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\UsoCFDIRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VatFormatTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VatMandatoryTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VatTypePercentageRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VatTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VATTypesGroupRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VatUniquePartnerTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VatUniqueTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VendorRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VesselRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\VolumeUnitRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\WarehouseRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\WarehouseStoragePricingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\WarehouseTypeRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\WarehouseWeightMeasurementRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\WarehouseWeightRoundingRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\WebhookKeysRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\WeightUnitRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\Generated\WorkerRoleNameRepository.Generated.cs" />
+    <Compile Remove="Repositories - Copy\GlobalZoneRepository.cs" />
+    <Compile Remove="Repositories - Copy\HelpResourceRepository.cs" />
+    <Compile Remove="Repositories - Copy\HorseGenderRepository.cs" />
+    <Compile Remove="Repositories - Copy\HorseRepository.cs" />
+    <Compile Remove="Repositories - Copy\HTSCodeRepository.cs" />
+    <Compile Remove="Repositories - Copy\HybridPartnerRepository.cs" />
+    <Compile Remove="Repositories - Copy\HybridTenantStateRepository.cs" />
+    <Compile Remove="Repositories - Copy\HybridTenantThresholdRepository.cs" />
+    <Compile Remove="Repositories - Copy\IATACodeRepository.cs" />
+    <Compile Remove="Repositories - Copy\ImageLibraryRepository.cs" />
+    <Compile Remove="Repositories - Copy\InboundEmailLineRepository.cs" />
+    <Compile Remove="Repositories - Copy\InboundEmailRepository.cs" />
+    <Compile Remove="Repositories - Copy\IncotermRepository.cs" />
+    <Compile Remove="Repositories - Copy\IndustryRepository.cs" />
+    <Compile Remove="Repositories - Copy\INTTRABranchRegisteredCarrierRepository.cs" />
+    <Compile Remove="Repositories - Copy\INTTRASettingModeRepository.cs" />
+    <Compile Remove="Repositories - Copy\INTTRASettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\LastRunDetailRepository.cs" />
+    <Compile Remove="Repositories - Copy\LBPTeamMemberRepository.cs" />
+    <Compile Remove="Repositories - Copy\LeadSourceRepository.cs" />
+    <Compile Remove="Repositories - Copy\LoginPolicyRepository.cs" />
+    <Compile Remove="Repositories - Copy\LogitudeLeadRepository.cs" />
+    <Compile Remove="Repositories - Copy\LogitudeMessagesTransmissionLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\AdvancedQueryFilterRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\AuthenticationTokenRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\BlobFileRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\CardContactRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ContactTenantRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ContactTenantRoleRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\CounterLastNumberRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\CounterRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\CustomPickListRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\DocumentRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\FeatureRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\GlobalDBRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ObjectFieldValidationRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ObjectTabelRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ObjectTableHelperControlRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ObjectTableLastUpdateRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ObjectTableRuleFieldRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ObjectTableRuleRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ObjectTableTabRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ObjectTableTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\PackageFeatureRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\QueryColumnRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\QueryGroupRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\QueryRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\QueueDefinitionRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\QueueMessageRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\RoleFeatureRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\RuleConditionFieldRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\RuleNotificationTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\RuleTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ScreenFieldsRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\ScreensRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\SharedUserQueryRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\SystemMetadataLastUpdateRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\TranslationRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\UserLastLoginRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\UserLoginLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\UserPermittedBranchRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\UserPermittedProductRepository.cs" />
+    <Compile Remove="Repositories - Copy\Manual\UsersReleaseNotesDisplayRepository.cs" />
+    <Compile Remove="Repositories - Copy\MAWBStackRepository.cs" />
+    <Compile Remove="Repositories - Copy\MeasurementRepository.cs" />
+    <Compile Remove="Repositories - Copy\MentionRepository.cs" />
+    <Compile Remove="Repositories - Copy\MetodoPagoRepository.cs" />
+    <Compile Remove="Repositories - Copy\MoveTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\MultiEntityUpdateLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\NumberFormatRepository.cs" />
+    <Compile Remove="Repositories - Copy\ObjectFieldRepository.cs" />
+    <Compile Remove="Repositories - Copy\ObjectTableRepository.cs" />
+    <Compile Remove="Repositories - Copy\PackageConnectedPackageRepository.cs" />
+    <Compile Remove="Repositories - Copy\PackageRepository.cs" />
+    <Compile Remove="Repositories - Copy\PackageTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\ParticipantRepository.cs" />
+    <Compile Remove="Repositories - Copy\PartnerTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\PasswordPolicyRepository.cs" />
+    <Compile Remove="Repositories - Copy\PaymentChannelRepository.cs" />
+    <Compile Remove="Repositories - Copy\PaymentCurrencyRepository.cs" />
+    <Compile Remove="Repositories - Copy\PaymentGatewayPartnerRepository.cs" />
+    <Compile Remove="Repositories - Copy\PaymentMethodRepository.cs" />
+    <Compile Remove="Repositories - Copy\PaymentTermDateTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\PaymentTermRepository.cs" />
+    <Compile Remove="Repositories - Copy\PortGroupRepository.cs" />
+    <Compile Remove="Repositories - Copy\PortRepository.cs" />
+    <Compile Remove="Repositories - Copy\PortTimeZoneRepository.cs" />
+    <Compile Remove="Repositories - Copy\PostalCodeRepository.cs" />
+    <Compile Remove="Repositories - Copy\PrepaidCollectRepository.cs" />
+    <Compile Remove="Repositories - Copy\ProductItemRepository.cs" />
+    <Compile Remove="Repositories - Copy\ProductPeriodRepository.cs" />
+    <Compile Remove="Repositories - Copy\ProductTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\QueryExportExecutionLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\QueueMessageMoreDetailsRepository.cs" />
+    <Compile Remove="Repositories - Copy\QuoteChargesGroupRepository.cs" />
+    <Compile Remove="Repositories - Copy\QuoteGroupSectionRepository.cs" />
+    <Compile Remove="Repositories - Copy\QuoteTemplateRepository.cs" />
+    <Compile Remove="Repositories - Copy\QuoteTemplateSectionRepository.cs" />
+    <Compile Remove="Repositories - Copy\QuoteTemplateSectionTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\QuoteTemplateSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\QuoteTemplateTableDesignRepository.cs" />
+    <Compile Remove="Repositories - Copy\QuoteTemplateTextDesignRepository.cs" />
+    <Compile Remove="Repositories - Copy\QuoteTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\RankRepository.cs" />
+    <Compile Remove="Repositories - Copy\RateClassRepository.cs" />
+    <Compile Remove="Repositories - Copy\RatesTableRepository.cs" />
+    <Compile Remove="Repositories - Copy\RecurringPeriodRepository.cs" />
+    <Compile Remove="Repositories - Copy\ReferenceCustomObjectRepository.cs" />
+    <Compile Remove="Repositories - Copy\RegimenFiscalRepository.cs" />
+    <Compile Remove="Repositories - Copy\RegionRepository.cs" />
+    <Compile Remove="Repositories - Copy\RegistryDateTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\ReportExecutionLogRepository.cs" />
+    <Compile Remove="Repositories - Copy\ReportRepository.cs" />
+    <Compile Remove="Repositories - Copy\ReportsTemplateRepository.cs" />
+    <Compile Remove="Repositories - Copy\ReportsTemplatesVersionRepository.cs" />
+    <Compile Remove="Repositories - Copy\RestrictionRepository.cs" />
+    <Compile Remove="Repositories - Copy\RoleRepository.cs" />
+    <Compile Remove="Repositories - Copy\RuleUpdateHistoryRepository.cs" />
+    <Compile Remove="Repositories - Copy\SatisfactionSurveyRepository.cs" />
+    <Compile Remove="Repositories - Copy\SchedulerProcedureRepository.cs" />
+    <Compile Remove="Repositories - Copy\ScreenSectionRepository.cs" />
+    <Compile Remove="Repositories - Copy\SharedLogisticsInvitationStatusRepository.cs" />
+    <Compile Remove="Repositories - Copy\SharedLogisticsSettingRepository.cs" />
+    <Compile Remove="Repositories - Copy\ShippingAgentRepository.cs" />
+    <Compile Remove="Repositories - Copy\ShippingLineRepository.cs" />
+    <Compile Remove="Repositories - Copy\StateRepository.cs" />
+    <Compile Remove="Repositories - Copy\SystemDataRepository.cs" />
+    <Compile Remove="Repositories - Copy\TabModificationRepository.cs" />
+    <Compile Remove="Repositories - Copy\TariffCarrierTranslationRepository.cs" />
+    <Compile Remove="Repositories - Copy\TarrifChargeRepository.cs" />
+    <Compile Remove="Repositories - Copy\TarrifFromToRepository.cs" />
+    <Compile Remove="Repositories - Copy\TarrifFromToTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\TarrifHeaderRepository.cs" />
+    <Compile Remove="Repositories - Copy\TarrifStepRepository.cs" />
+    <Compile Remove="Repositories - Copy\TarrifTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\TaskSchedulerHistoryRepository.cs" />
+    <Compile Remove="Repositories - Copy\TasksSchedulerRepository.cs" />
+    <Compile Remove="Repositories - Copy\TeamMemberBusinessRoleRepository.cs" />
+    <Compile Remove="Repositories - Copy\TeamRepository.cs" />
+    <Compile Remove="Repositories - Copy\TemperatureUnitRepository.cs" />
+    <Compile Remove="Repositories - Copy\TemplateFormatRepository.cs" />
+    <Compile Remove="Repositories - Copy\TenantAdditionalDataRepository.cs" />
+    <Compile Remove="Repositories - Copy\TenantAddOnRepository.cs" />
+    <Compile Remove="Repositories - Copy\TenantLoginPolicyRepository.cs" />
+    <Compile Remove="Repositories - Copy\TenantManagementLicenseRepository.cs" />
+    <Compile Remove="Repositories - Copy\TenantManagementRepository.cs" />
+    <Compile Remove="Repositories - Copy\TenantManagmentPrivateLabelsRepository.cs" />
+    <Compile Remove="Repositories - Copy\TenantRepository.cs" />
+    <Compile Remove="Repositories - Copy\TenantTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\TermsofUseSignatureRepository.cs" />
+    <Compile Remove="Repositories - Copy\TextCodeRepository.cs" />
+    <Compile Remove="Repositories - Copy\ToggleRepository.cs" />
+    <Compile Remove="Repositories - Copy\TraceEventRepository.cs" />
+    <Compile Remove="Repositories - Copy\TransportModeRepository.cs" />
+    <Compile Remove="Repositories - Copy\TruckerRepository.cs" />
+    <Compile Remove="Repositories - Copy\TwoFactorAuthenticationDeviceRepository.cs" />
+    <Compile Remove="Repositories - Copy\UnassignedEntityRepository.cs" />
+    <Compile Remove="Repositories - Copy\UserLastSettingsRepository.cs" />
+    <Compile Remove="Repositories - Copy\UserLicenseRepository.cs" />
+    <Compile Remove="Repositories - Copy\UserRepository.cs" />
+    <Compile Remove="Repositories - Copy\UsoCFDIRepository.cs" />
+    <Compile Remove="Repositories - Copy\VatFormatTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\VatMandatoryTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\VatTypePercentageRepository.cs" />
+    <Compile Remove="Repositories - Copy\VatTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\VATTypesGroupRepository.cs" />
+    <Compile Remove="Repositories - Copy\VatUniquePartnerTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\VatUniqueTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\VendorRepository.cs" />
+    <Compile Remove="Repositories - Copy\VesselRepository.cs" />
+    <Compile Remove="Repositories - Copy\VolumeUnitRepository.cs" />
+    <Compile Remove="Repositories - Copy\WarehouseRepository.cs" />
+    <Compile Remove="Repositories - Copy\WarehouseStoragePricingRepository.cs" />
+    <Compile Remove="Repositories - Copy\WarehouseTypeRepository.cs" />
+    <Compile Remove="Repositories - Copy\WarehouseWeightMeasurementRepository.cs" />
+    <Compile Remove="Repositories - Copy\WarehouseWeightRoundingRepository.cs" />
+    <Compile Remove="Repositories - Copy\WebhookKeysRepository.cs" />
+    <Compile Remove="Repositories - Copy\WeightUnitRepository.cs" />
+    <Compile Remove="Repositories - Copy\WorkerRoleNameRepository.cs" />
+  </ItemGroup>
+</Project>

@@ -53,7 +53,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        Id = a.Id,
                                        PaymentNo = a.PaymentNo,
                                        Tenant = a.Tenant,
-                                       
+
                                    }).FirstOrDefault();
             if (payment!=null)
             {

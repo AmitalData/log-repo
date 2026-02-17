@@ -219,7 +219,6 @@ import { GeneralLockComponent } from './Components/Maintenance/GeneralLockCompon
 import { GeneralLockListTemplate } from './Components/Templates/GeneralLockListTemplate';
 import { SearchListDDLDirective } from './Directives/SearchListDDL/SearchListDDLDirective';
 import { SearchListDDLComponent } from './Directives/SearchListDDL/SearchListDDLComponent';
-import { LandingPageComponent } from './Components/LandingPage/LandingPageComponent';
 import { HighlightAISearch } from './Pipes/HighlightAISearch';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -449,7 +448,6 @@ export const Components = [
     NewCustomObjectComponent,
     GeneralLockComponent,
     SearchListDDLComponent,
-    LandingPageComponent,
 
  ];
  
@@ -593,7 +591,7 @@ export class ModuleDeclarations {
             case 'DataProviderFieldsNestedList': { myResult = DataProviderFieldsNestedList; break; }
             case "GeneralLockComponent": { myResult = GeneralLockComponent; break; }
             case "GeneralLockListTemplate": { myResult = GeneralLockListTemplate; break; }
-            case 'LandingPageComponent': { myResult = LandingPageComponent; }
+
         }
  
         return myResult;
