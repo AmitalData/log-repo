@@ -32,7 +32,6 @@ namespace CommunicationWorkerRole
         private List<Thread> TasksThreads = new List<Thread>();
         int Tenant;
 		bool IsUpdating = false;
-        bool IsStartedFromUI = false;
 
 		public SchedularWorkerRole()
         {
@@ -79,8 +78,6 @@ namespace CommunicationWorkerRole
 
         private void RescheduleTask(TasksSchedulerPM Task)
         {
-            if (IsStartedFromUI)
-                return;
             string taskExecutedByServerName = !string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName + '/' + LogitudeSettings.WorkerRoleName : Task.ExecutedByServerName;
             if(Task.ExecutedByServerName != taskExecutedByServerName)
             {
@@ -201,7 +198,6 @@ namespace CommunicationWorkerRole
                         Tenant = int.Parse(message.MessageValues["Tenant"]);
                         int Version = int.Parse(message.MessageValues.ContainsKey("Version") ? message.MessageValues["Version"].ToString() : "0");
                         int Retries = int.Parse(message.MessageValues.ContainsKey("Retries") ? message.MessageValues["Retries"].ToString() : "0");
-                        IsStartedFromUI = message.MessageValues.ContainsKey("IsStartedFromUI") && bool.Parse(message.MessageValues["IsStartedFromUI"].ToString());
                         if (!string.IsNullOrEmpty(Id))
                         {
                             var objectContext = WebFreightContext.GetContext(Tenant);
@@ -238,7 +234,6 @@ namespace CommunicationWorkerRole
                                         WRItem.queueservice = queueservice;
                                         WRItem.RetryNumber = message.RetryNumber;
                                         WRItem.MessageId = message.MessageId;
-                                        WRItem.IsStartedFromUI = IsStartedFromUI;
                                         Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
                                         //Task.Status = "In progress";
                                         service.Update(Task);
