@@ -153,8 +153,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
             entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
             entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-            entityCard.BankBranch = entityPM.BankBranch;
-            entityCard.BankCodeId = entityPM.BankCodeId;
+
             if (!entityPM.IsFirstContactToAdd)
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;
@@ -331,8 +330,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 IBANNumber = a.Card.IBANNumber,
                 Swift = a.Card.Swift,
                 AccountNumber = a.Card.AccountNumber,
-                BankBranch = a.Card.BankBranch,
-                BankCodeId = a.Card.BankCodeId,
                 SharedLogisticsInvitationStatusName = a.Card.SharedLogisticsInvitationStatus != null ? a.Card.SharedLogisticsInvitationStatus.Name : null,
                 CargoTrackingInvitationStatusName = a.Card.CargoTrackingInvitationStatus != null ? a.Card.CargoTrackingInvitationStatus.Name : null,
                 IsActiveForMobile = a.Card.IsActiveForMobile,
@@ -390,7 +387,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 IRSNumber = a.Card.IRSNumber,
                 IRSPlace = a.Card.IRSPlace,
                 IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
-                
                 Card = new CardPM()
                 {
                     Id = a.Id,
