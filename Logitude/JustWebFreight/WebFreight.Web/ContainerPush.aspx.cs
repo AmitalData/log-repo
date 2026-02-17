@@ -277,6 +277,7 @@ namespace WebFreight.Web
         
         private void UpdateStatus(OceanInsightsRequestPM TempRec, string data, string Reference)
         {
+			WriteOceanInsightsStatusLog(data, TempRec.OceanInsigntId, TempRec.Tenant);
 			using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 IShipmentsContext objectContext = ShipmentsContext.GetContext(TempRec.Tenant);
@@ -389,6 +390,25 @@ namespace WebFreight.Web
                 scope.Complete();
             }
         }
+		private void WriteOceanInsightsStatusLog(dynamic data,string oceanInsightsRequestId, int tenant)
+		{
+			try
+			{
+				OceanInsightsStatusLogPM oceanInsightsStatusLog = new OceanInsightsStatusLogPM();
+				IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
+				OceanInsightsStatusLogService service = new OceanInsightsStatusLogService(objectContext, tenant);
+				oceanInsightsStatusLog.Tenant = tenant;
+				oceanInsightsStatusLog.OceanInsigntRequestId = oceanInsightsRequestId;
+				oceanInsightsStatusLog.XML = data;
+
+				service.Create(oceanInsightsStatusLog);
+			}
+			catch(Exception ex)
+			{
+
+			}
+
+		}
 		private void WriteData(dynamic data)
 		{
 			try

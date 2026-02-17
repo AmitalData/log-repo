@@ -59,7 +59,7 @@
   </Column>
   <Column
     Name="Company"
-    Type="nvarchar"
+    Type="varchar"
     Size="100">
     <Constraints
       Nullable="false" />
@@ -834,12 +834,6 @@
     Size="5000">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="HebrewTenant"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="AddressId"

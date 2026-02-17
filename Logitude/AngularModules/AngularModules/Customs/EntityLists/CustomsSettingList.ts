@@ -39,7 +39,6 @@ export class CustomsSettingList {
 	CourierDocToken: string;
 	ForbiddenSigns: string;
 	CB_LastUpdateDate: Date;
-	CustomsBookToken: string;
 	
 }
  

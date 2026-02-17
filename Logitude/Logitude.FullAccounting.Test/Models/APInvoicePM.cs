@@ -161,9 +161,5 @@ namespace Logitude.FullAccounting.Test.Models
         public Boolean IsNew { get; set; }
         public Boolean IsCopied { get; set; }
         public string CopiedFrom { get; set; }
-        public bool IsPrepaidExpenses { get; set; }
-        public bool HasExpenseAllocationSetting { get; set; }
-        public DateTime ExpenseAllocationStartDate { get; set; }
-
     }
 }
