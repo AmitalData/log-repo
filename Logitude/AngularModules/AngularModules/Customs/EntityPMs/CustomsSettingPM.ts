@@ -226,11 +226,6 @@ export class CustomsSettingPM {
     public set CB_LastUpdateDate(newValue: Date) { if (this.cB_LastUpdateDate != newValue) { this.cB_LastUpdateDate = newValue; this.MarkAsDirty("CB_LastUpdateDate"); } }
        
 	 
-    private customsBookToken: string;
-    public get CustomsBookToken() { return this.customsBookToken; }
-    public set CustomsBookToken(newValue: string) { if (this.customsBookToken != newValue) { this.customsBookToken = newValue; this.MarkAsDirty("CustomsBookToken"); } }
-       
-	 
 
     public OldEntityPM: CustomsSettingPM;
 		
