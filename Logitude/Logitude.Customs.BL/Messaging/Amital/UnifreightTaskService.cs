@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                     var comment = ""; // moran 20.9.15 - Task 15458
                     var addComment = ""; // moran 20.9.15 - Task 15458
 
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, dirtyDeclarationPM.Tenant, false);
+                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -204,6 +204,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
         public void OpenUnifreighTaskGen(DeclarationPM dirtyDeclarationPM, string entname, string primary, string taskType, string status, bool raiseStatus, string xmlStatus, bool toLock)
         {
             if (dirtyDeclarationPM?.Direction == "E") return;
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
 
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
@@ -230,7 +231,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(myAmitalContext);
                         var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(myAmitalContext);
                         myCCUQUELOCKUpdateService.DontAddTransaction = true;
-                        CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, dirtyDeclarationPM.Tenant, false);
+                        CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
                         if (myCCUQUELOCK == null)
                         {
                             var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -317,9 +318,10 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         USRCODE = unifreightUser,
                         ARCHIVE = "F",
                     };
-                    
-                    myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
-                    
+                    if (!isConnectedToUniFreight)
+                    {
+                        myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
+                    }
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
                     var myGGGQPM = new GGGQPM()
@@ -337,9 +339,10 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         DEBUG = "F",
                         DONEOPERATION = "D",
                     };
-                    
-                    myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
-                    
+                    if (!isConnectedToUniFreight)
+                    {
+                        myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                    }
                     myGGGQUpdateService.Update(myGGGQPM, true);
 
                     if (scope != null)
