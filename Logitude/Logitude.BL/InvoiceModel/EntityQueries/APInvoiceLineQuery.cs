@@ -197,7 +197,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 ContainerTypeId = a.ContainerTypeId,
                                 Quantity = a.Quantity,
                                 ExcludeFromTaxReport = a.ExcludeFromTaxReport,
-                                IsPrepaidExpenses = a.IsPrepaidExpenses,
+                                IsPrepaidExpenses =a.IsPrepaidExpenses
                             }).ToList();
 
                 ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
@@ -270,6 +270,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         item.PayableDebitGLAcountName = PayableDebitGLAcount.LocalName;
 
 
+                    }
+                    else
+                    {
+                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+                        CurrencyRepository currencyRepository = new CurrencyRepository(myCommonContext);
+                        Currency foreignCurrency = currencyRepository.GetSingleCurrency(item.ForiegnCurrencyId, tenant);
+                        if (foreignCurrency != null)
+                        {
+                            item.ForiegnCurrencyCode = foreignCurrency.Code;
+                        }
                     }
                 }
             }

@@ -22,6 +22,5 @@ namespace WebFreight.Web.DataContracts
         public int Sort { get; set; }
 
         public List<DataProviderField> Fields { get; set; }
-        public string Translation { get; set; }
     }
 }

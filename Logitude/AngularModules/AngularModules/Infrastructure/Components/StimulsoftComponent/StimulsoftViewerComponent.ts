@@ -21,7 +21,10 @@ import { GeneralEmailSender } from '../../../Infrastructure/Helpers/GeneralEmail
 import { AttachmentsList } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
 import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ReportsTemplatePM } from '../../../Common/EntityPMs/ReportsTemplatePM';
 import { SchedulerReportMessageTemplateService } from './Services/SchedulerReportMessageTemplateService';
 import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
@@ -87,10 +90,8 @@ export class StimulsoftViewerComponent implements OnInit {
     TemplateTypeName: string = "PDF Template";
 
     SelectedReportsTemplateList: ReportsTemplateList;
-    SelectedExcelReportsTemplateList: ReportsTemplateList;
     SelectedMessageTemplateList: ReportsTemplateList;
     ReportsTemplatesLists: ReportsTemplateList[] = [];
-    ExcelReportsTemplatesLists: ReportsTemplateList[] = [];
     MessageTemplatesLists: ReportsTemplateList[] = [];
     EntityPM: any;
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
@@ -155,48 +156,13 @@ export class StimulsoftViewerComponent implements OnInit {
 
         this.StimulsoftArgData.StimulsoftViewerComponent = this;
         this.EntityPM = this.StimulsoftArgData.ReportsPreviewComponent.Report;
-        
-        const processMenuTemplateId = this.StimulsoftArgData?.ProcessMenuTemplateId;
-        const templates = this.StimulsoftArgData?.ReportsTemplateLists ?? [];
-        const selected = templates.find(t => t.Id === processMenuTemplateId);
-
-        if (!AppTool.IsNullOrEmpty(processMenuTemplateId) && selected) {
-
-            this.TemplateType = selected?.TemplateType ?? "R";
-            this.SetReportTypeClickText(this.TemplateType);
-
-            if (this.TemplateType === "E") {
-                this.StimulsoftArgData.DefaultExcelTemplateId = processMenuTemplateId;
-                this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "E" && t.UseStimul);
-            } 
-            else {
-                this.StimulsoftArgData.DefaultTemplateId = processMenuTemplateId;
-                this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "R");
-            }
-
-            this.StimulsoftArgData.TemplateDescription = selected.Description;
-            console.log('matching template found for ProcessMenuTemplateId:', processMenuTemplateId);
-            this.SelectedReportsTemplateList = selected ?? null;
-        }
-        else {
-            console.log('No matching template found for ProcessMenuTemplateId:');
-            this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "R");
-            this.SelectedReportsTemplateList = this.ReportsTemplatesLists.find(t => t.Id === this.StimulsoftArgData.DefaultTemplateId) ?? null;
-        }
-
-        this.ExcelReportsTemplatesLists = this.StimulsoftArgData.ReportsTemplateLists.filter(d => d.TemplateType == "E" && !d.UseStimul);
-        const noTemplate = new ReportsTemplateList();
-        noTemplate.Id = "DefExcelTempId";
-        noTemplate.Description = "All Fields";
-
-        this.ExcelReportsTemplatesLists.push(noTemplate);
-
+        this.ReportsTemplatesLists = this.StimulsoftArgData.ReportsTemplateLists;
         this.MessageTemplatesLists = this.StimulsoftArgData.MessageTemplateLists;
         this.MessageTemplatesLists = this.StimulsoftArgData.MessageTemplateLists.filter(messageTemplate => messageTemplate.EntityId == this.StimulsoftArgData.EntityId || AppTool.IsNullOrEmpty(messageTemplate.EntityId));
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
-        
-        this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(d => d.Id == this.EntityPM.DefaultExcelNoStimId) ?? this.ExcelReportsTemplatesLists[0];
-        
+        if (this.ReportsTemplatesLists) {
+            this.SelectedReportsTemplateList = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
+        }
         if (this.MessageTemplatesLists) {
             this.SelectedMessageTemplateList = this.MessageTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultMessageTemplateId)[0];
         }
@@ -221,6 +187,7 @@ export class StimulsoftViewerComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel") && this.StimulsoftArgData.IsExcelReportAllowed == true) {
             this.IsEnableReportTemplateExcel = true;
         }
+
     }
 
     SetReportTypeClickText(templateType: string) {
@@ -688,34 +655,16 @@ export class StimulsoftViewerComponent implements OnInit {
     ReportTemplatesChange(item, runReport) {
         if (this.StimulsoftArgData) {
             if (item) {
-                if (this.TemplateType === "E") 
-                    this.StimulsoftArgData.DefaultExcelTemplateId = item.Id;
-                else
-                    this.StimulsoftArgData.DefaultTemplateId = item.Id;
-
+                this.StimulsoftArgData.DefaultTemplateId = item.Id;
                 this.StimulsoftArgData.TemplateDescription = item.Description;
                 if (this.StimulsoftArgData.ReportFilterConmponent && runReport) {
                     this.RunReport();
                 }
             } else {
-                if (this.TemplateType === "E")
-                    this.StimulsoftArgData.DefaultExcelTemplateId = "";
-                else
-                    this.StimulsoftArgData.DefaultTemplateId = "";
+                this.StimulsoftArgData.DefaultTemplateId = "";
             }
         }
     }
-
-      
-      ReportExcelTemplatesChange(item: any) {
-
-        this.SelectedExcelReportsTemplateList = item ?? null;
-    
-        if (this.StimulsoftArgData) {
-            this.StimulsoftArgData.DefaultExcelNoStimId = item ? item.Id : null;
-        }
-    }
-
     MessageTemplatesChange(item) {
         if (!this.StimulsoftArgData) return;
         this.StimulsoftArgData.DefaultMessageTemplateId = item ? item.Id : "";
@@ -724,21 +673,6 @@ export class StimulsoftViewerComponent implements OnInit {
 
 
     private RunReport() {
-        if (this.TemplateType === "E") {
-            if (!this.ReportsTemplatesLists.length) {
-                new MessageWindow().Show("There is no Excel Template for this report");
-                return;
-            }
-
-            if (!this.SelectedReportsTemplateList) {
-                new MessageWindow().Show("Please select an Excel Template");
-                return;
-            }
-            
-        }
-        if(this.SelectedExcelReportsTemplateList?.Id === "DefExcelTempId"){
-            this.StimulsoftArgData.DefaultExcelNoStimId = "DefExcelTempId";
-        }
         if (this.StimulsoftArgData.ReportFilterConmponent['RunReport']) {
             this.StimulsoftArgData.ReportFilterConmponent.RunReport(true);
             return;
@@ -798,9 +732,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         //  var fileName: string = this.StimulsoftArgData.ReportKey + "@" + (this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Name:"");
         var fileName: string = this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription;
-        var displayName = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Title : "Report";
-
-        this.reportService.GetPrepareSendReport(type, fileName, SessionLocator.Tenant, displayName).subscribe((res: any) => {
+        this.reportService.GetPrepareSendReport(type, fileName, SessionLocator.Tenant).subscribe((res: any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
@@ -944,7 +876,7 @@ ResetEditableField(field: EditableFieldPosition){
         if (this.StimulsoftArgData.ReportsPreviewComponent) {
             this.StimulsoftArgData.ReportFliter.ProcessType = processName;
             this.StimulsoftArgData.ReportFliter.NumberOfPage = this.StimulsoftArgData.NumberOfPage;
-            this.StimulsoftArgData.ReportsPreviewComponent.GenerateReport(this.StimulsoftArgData.ReportFliter, true ,true);
+            this.StimulsoftArgData.ReportsPreviewComponent.GenerateReport(this.StimulsoftArgData.ReportFliter, true);
         }
         else {
             if (this.StimulsoftArgData.EditDocumentComponent) {
@@ -1042,99 +974,53 @@ ResetEditableField(field: EditableFieldPosition){
 
     ManagementReport() {
 
-        if (this.StimulsoftArgData?.ReportsPreviewComponent?.Report?.Id) 
-        {
+        if (this.StimulsoftArgData && this.StimulsoftArgData.ReportsPreviewComponent && this.StimulsoftArgData.ReportsPreviewComponent.Report && this.StimulsoftArgData.ReportsPreviewComponent.Report.Id) {
             var reportId: string = this.StimulsoftArgData.ReportsPreviewComponent.Report.Id;
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
-                    const instance = cmpRef.instance;
-                    instance.ComponentRef = cmpRef;
-                    instance.Run({ EntityId: reportId, ObjectTableName: "Report", SelectedTabCode: "RPTP" });
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
+                    cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
+                            this.LoadReportTemplate(defultTemplateId, true);
+                        }
+                    });
 
-                    const loadTemplates = (runReport: boolean, isRefreshDefaultTemplate: boolean = true) => {
-                        const entity = instance.EntityPM;
-                        const defaultTemplateId = entity?.DefaultTemplateId || "";
-                        const defaultExcelTemplateId = entity?.DefaultExcelTemplateId || "";
-                        const defaultExcelNoStimId = entity?.DefaultExcelNoStimId || "";
-        
-                        this.LoadReportTemplate(defaultTemplateId, runReport, defaultExcelTemplateId, isRefreshDefaultTemplate, defaultExcelNoStimId);
-                    };
-        
-                    instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => { if(isSaveSuccess) loadTemplates(false, true)});
-                    instance.SaveCompleted.subscribe(() => loadTemplates(false, true));
-                    instance.BackCompleted.subscribe(() => loadTemplates(false, false));
-                   
                 });
         }
     }
 
-    LoadReportTemplate(defultTemplateId: any, runReport, defaultExcelTemplateId: any = "", isRefreshDefaultTemplate: boolean = true, defaultExcelNoStimId : any = "") {
-        const reportId = this.StimulsoftArgData.ReportsPreviewComponent.Report.Id;
-        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportId).subscribe((myResponse: ServiceResponse) => {
+    IsRefreshReportsTemplateList: boolean = false;
+    LoadReportTemplate(defultTemplateId: any, runReport) {
+
+        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(this.StimulsoftArgData.ReportsPreviewComponent.Report.Id, this.TemplateType).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
+                this.ReportsTemplatesLists = this.StimulsoftArgData.ReportsPreviewComponent.ReportsTemplateLists = this.StimulsoftArgData.ReportsTemplateLists = myResponse.Result;
+                var item: any = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
 
-                const allTemplates = myResponse.Result;
-                this.ReportsTemplatesLists = allTemplates.filter(t => t.TemplateType === this.TemplateType && (this.TemplateType !== "E" || t.UseStimul));
-                this.ExcelReportsTemplatesLists = allTemplates.filter(t => t.TemplateType === "E" && !t.UseStimul);
-
-                const noTemplate = new ReportsTemplateList();
-                noTemplate.Id = "DefExcelTempId";
-                noTemplate.Description = "All Fields";
-
-                this.ExcelReportsTemplatesLists.push(noTemplate);
-
-                this.StimulsoftArgData.ReportsPreviewComponent.ReportsTemplateLists = this.ReportsTemplatesLists;
-                this.StimulsoftArgData.ReportsTemplateLists = this.ReportsTemplatesLists;
-
-                if (!isRefreshDefaultTemplate) 
-                {
-                    if(AppTool.IsNullOrEmpty(this.StimulsoftArgData.DefaultExcelNoStimId))
-                        this.StimulsoftArgData.DefaultExcelNoStimId = defaultExcelNoStimId;
-                    if(AppTool.IsNullOrEmpty(this.StimulsoftArgData.DefaultExcelTemplateId))
-                        this.StimulsoftArgData.DefaultExcelTemplateId = defaultExcelTemplateId;
-                    if(AppTool.IsNullOrEmpty(this.StimulsoftArgData.DefaultTemplateId))
-                        this.StimulsoftArgData.DefaultTemplateId = defultTemplateId;
-                    this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(a => a.Id === this.StimulsoftArgData.DefaultExcelNoStimId) ?? this.ExcelReportsTemplatesLists[0];
-                    
-                    const defaultTemplateId = this.TemplateType === "E" ? this.StimulsoftArgData.DefaultExcelTemplateId : this.StimulsoftArgData.DefaultTemplateId;
-                    this.SelectedReportsTemplateList = this.ReportsTemplatesLists.find(a => a.Id === defaultTemplateId) ?? null;
-                    
-                    return;
+                if (!item) {
+                    this.SetDefaultTemplate(defultTemplateId, item);
                 }
 
-                let item = this.SetDefaultTemplate(defultTemplateId, defaultExcelTemplateId, defaultExcelNoStimId);
-                this.SelectedReportsTemplateList = item ?? null;
-                
-                 
-                this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(t => t.Id === defaultExcelNoStimId) ?? this.ExcelReportsTemplatesLists[0];
-                
+                this.SelectedReportsTemplateList = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
+                this.IsRefreshReportsTemplateList = !this.IsRefreshReportsTemplateList;
                 this.ReportTemplatesChange(item, runReport);
-                
+
             }
 
         });
 
     }
 
-
-    SetDefaultTemplate(defaultTemplateId: any, defaultExcelTemplateId: any, defaultExcelNoStimId: any = "") {
-        
-        
-        this.StimulsoftArgData.ReportsPreviewComponent.Report.DefaultTemplateId = defaultTemplateId;
-        this.StimulsoftArgData.DefaultTemplateId = defaultTemplateId;
-        this.StimulsoftArgData.DefaultExcelTemplateId = defaultExcelTemplateId;
-    
-        if (!AppTool.IsNullOrEmpty(defaultExcelNoStimId)) {
-            this.StimulsoftArgData.DefaultExcelNoStimId = defaultExcelNoStimId;
+    SetDefaultTemplate(defultTemplateId: any, item: any) {
+        if (this.TemplateType == "R") {
+            this.StimulsoftArgData.ReportsPreviewComponent.Report.DefaultTemplateId = this.StimulsoftArgData.DefaultTemplateId = defultTemplateId;
         }
-    
-        const searchId = this.TemplateType === "E" 
-            ? this.StimulsoftArgData.DefaultExcelTemplateId 
-            : this.StimulsoftArgData.DefaultTemplateId;
-    
-        const item = this.ReportsTemplatesLists.find(t => t.Id === searchId && (this.TemplateType !== "E" || t.UseStimul));
-    
-        return item;
+        if (this.TemplateType == "E") {
+            this.StimulsoftArgData.ReportsPreviewComponent.Report.DefaultExcelTemplateId = this.StimulsoftArgData.DefaultTemplateId = defultTemplateId;
+        }
+        item = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
     }
 
     GetDefaultTemplate(any) {
@@ -1145,10 +1031,14 @@ ResetEditableField(field: EditableFieldPosition){
             return any.DefaultExcelTemplateId;
         }
     }
-    
+
+
     ReportTypeClick(type: string, text: string) {
         this.TemplateType = type;
-        this.LoadReportTemplate(this.StimulsoftArgData.DefaultTemplateId, false, this.StimulsoftArgData.DefaultExcelTemplateId, true, this.StimulsoftArgData.DefaultExcelNoStimId);
+
+        var defulatReportId = this.GetDefaultTemplate(this.StimulsoftArgData.ReportsPreviewComponent.Report);
+        this.StimulsoftArgData.DefaultTemplateId = defulatReportId;
+        this.LoadReportTemplate(defulatReportId, false);
         this.TemplateTypeName = text;
     }
 

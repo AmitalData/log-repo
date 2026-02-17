@@ -516,7 +516,5 @@ namespace Logitude.FullAccounting.Test.Models
 
         public bool IsAutonomy { get; set; }
 
-        public string BankBranch { get; set; }
-        public string BankCodeId { get; set; }
     }
 }
