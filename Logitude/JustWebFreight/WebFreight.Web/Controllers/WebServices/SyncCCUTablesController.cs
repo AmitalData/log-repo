@@ -10,7 +10,7 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class SyncCCUTablesController : ApiController
     {
-        public IHttpActionResult GetSyncData(string fileNo = null, long? customsFileNo = null, bool allTask = false)
+        public IHttpActionResult GetSyncData(string fileNo = null, int? customsFileNo = null, bool allTask = false)
         {
             DevLog.Instance.WriteDebug($"GetSyncData, fileNo: {fileNo}, customsFileNo: {customsFileNo}, allTask: {allTask}");
             if(string.IsNullOrEmpty(fileNo) && !customsFileNo.HasValue)

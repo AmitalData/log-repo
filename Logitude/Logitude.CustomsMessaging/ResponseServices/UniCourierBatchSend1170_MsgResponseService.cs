@@ -59,8 +59,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //var qs = new DeclarationCourierStatusQueryService(context);
             var repo = new DeclarationCourierStatusRepository(context);
             List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
-            decimal minValPay = GetMinValPay(requestParams.Tenant);
-
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
 
@@ -83,7 +81,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                 {
                     mess.AppendLine($"GetByMasterIDCourierManifestStatusCode");
-                    listPoco = GetByMasterIDCourierManifestStatusCode(customResponse, requestParams, repo, minValPay);
+                    listPoco = GetByMasterIDCourierManifestStatusCode(customResponse, requestParams, repo);
                 }
                 if (listPoco.Count == 0)
                 {
@@ -141,7 +139,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        private static List<DeclarationCourierStatus> GetByMasterIDCourierManifestStatusCode(DCAInUCB1170WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository qs, decimal minValPay)
+        private static List<DeclarationCourierStatus> GetByMasterIDCourierManifestStatusCode(DCAInUCB1170WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository qs)
         {
             List<DeclarationCourierStatus> listPM;
             if (customResponse.IsWorkSheetFromExcel)
@@ -152,7 +150,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                customResponse.SelectedTotalInvoiceValue,
                customResponse.SelectedFastIndividualProcessValue,
                customResponse.SelectedCustomStatusValue,
-               customResponse.SelectedFinalReleaseValue, minValPay);
+               customResponse.SelectedFinalReleaseValue);
                 if (customResponse.CourierDeclarationStatusCode == "RV")
                 {
                     var listPM2 = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.LoggingUserId, "V", customResponse.SelectedBOLValue,
@@ -160,7 +158,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customResponse.SelectedTotalInvoiceValue,
                     customResponse.SelectedFastIndividualProcessValue,
                     customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue, minValPay);
+                    customResponse.SelectedFinalReleaseValue);
                     listPM = listPM.Concat(listPM2).ToList();
                 }
             }
@@ -172,7 +170,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
              customResponse.SelectedTotalInvoiceValue,
              customResponse.SelectedFastIndividualProcessValue,
              customResponse.SelectedCustomStatusValue,
-             customResponse.SelectedFinalReleaseValue, minValPay);
+             customResponse.SelectedFinalReleaseValue);
                 if (customResponse.CourierDeclarationStatusCode == "RV")
                 {
                     var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
@@ -180,7 +178,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customResponse.SelectedTotalInvoiceValue,
                     customResponse.SelectedFastIndividualProcessValue,
                     customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue, minValPay);
+                    customResponse.SelectedFinalReleaseValue);
                     listPM = listPM.Concat(listPM2).ToList();
                 }
             }
@@ -314,20 +312,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
-        private decimal GetMinValPay(int tenant)
-        {
-            const decimal fallback = 75m;
-            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
-            var s = defaultValueQueryService.GetDefault("ISRAEL", "CGO_MINVAL_PAY", "NON", "NON", tenant);
-
-            if (string.IsNullOrWhiteSpace(s)) return fallback;
-
-            var normalized = s.Trim().Replace(",", ".");
-            if (decimal.TryParse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture, out var val) && val > 0)
-                return val;
-
-            return fallback;
-        }
+        
 
     }
 }

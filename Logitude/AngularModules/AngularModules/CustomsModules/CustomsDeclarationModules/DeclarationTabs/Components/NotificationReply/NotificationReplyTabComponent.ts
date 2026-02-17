@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { NotificationReplyPM } from '../../../../../Customs/EntityPMs/NotificationReplyPM';
@@ -9,15 +11,19 @@ import { NotificationPM } from '../../../../../Customs/EntityPMs/NotificationPM'
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 import { MessageToAgentRequestParams } from '../../../../../Customs/DataContract/RequestParams/MessageToAgentRequestParams';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTablePM';
+import { NotificationListService } from '../../../../../Customs/Services/StandardLists/NotificationListService';
 import { NotificationPMService } from '../../../../../Customs/Services/StandardPMs/NotificationPMService';
 import { NotificationList } from '../../../../../Customs/EntityLists/NotificationList';
 import { NotificationWebService } from '../../../../../Customs/Services/WebServices/NotificationWebService';
 import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { GroupByPipe } from '../../../../../Infrastructure/Pipes/GroupByPipe';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { DeclarationMenuButtonsHandler } from 'Customs/Components/MenuButtons/DeclarationMenuButtonsHandler';
 declare var window: any;
 
 @Component({
