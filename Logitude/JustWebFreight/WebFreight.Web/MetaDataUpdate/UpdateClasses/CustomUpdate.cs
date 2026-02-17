@@ -83,10 +83,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         private QueryQuery queryQuery;
 
         #region update tenant zero
-        public void LoadUpdateTenantZero(IWebFreightContext context, int tenant = 0)
+        public void LoadUpdateTenantZero(IWebFreightContext context,int tenant=0)
         {
             isUpdate = true;
-            LoadObjectsTenantZero(context, tenant);
+            LoadObjectsTenantZero(context,tenant);
 
 
         }
@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         #region LoadObjectsTenantZero()
         bool isUpdate = false;
-        public void LoadObjectsTenantZero(IWebFreightContext context, int tenant)
+        public void LoadObjectsTenantZero(IWebFreightContext context,int tenant)
         {
             CommonDataDomainService commonDomain = new CommonDataDomainService();
             ObjectContext = context;
@@ -137,7 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             MenuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
             TenantSettingRepository = new TenantSettingRepository(ObjectContext);
 
-            LoadRolesAndFeatures(0, tenant);
+            LoadRolesAndFeatures(0,tenant);
             CreateTableCounters(tenant);
 
             this.ObjectContext.SaveChanges();
@@ -12545,7 +12545,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         #endregion
 
         #region load helper controls
-        public void LoadObjectTableHelperControls(int tenant = 0)
+        public void LoadObjectTableHelperControls(int tenant=0)
         {
             ObjectContext = WebFreightContext.GetContext(tenant);
             ObjectTableHelperControlsRepository = new ObjectTableHelperControlRepository(ObjectContext);
@@ -14486,7 +14486,6 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeletingDetails", DefaultText = "All Certificate data will be deleted , continue?", LocalDefaultText = "נתוני האישור ימחקו , להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Cancel", DefaultText = "This supplier invoice has unsaved changes, do you want to save it?", LocalDefaultText = "בחשבון ספק זה בוצעו שינויים שלא נשמרו, האם ברצונך לשמור אותם?  ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TooLongCode", DefaultText = "Importer code is too long", LocalDefaultText = "מספר יבואן ארוך מדי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TooLongExporterCode", DefaultText = "Exporter code is too long", LocalDefaultText = "מספר יצואן ארוך מדי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details", LocalDefaultText = "נתונים נוספים ליבואן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FillAgentObjection", DefaultText = "You must fill objection", LocalDefaultText = "יש למלא ערעור לתשובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
@@ -15088,7 +15087,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         #endregion
 
         #region Load menusTables
-        public void LoadMenustables(int tenant = 0)
+        public void LoadMenustables(int tenant=0)
         {
             ObjectContext = WebFreightContext.GetContext(tenant);
             MenusTablesRepository = new MenusTableRepository(ObjectContext);
@@ -15169,12 +15168,12 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSCO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 16, CategoryTypeCode = null, TextCode = "General.MH.Containerization", Icon = "CustomersPath", FeatureId = containerizationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Containerization").FirstOrDefault().Id, FeatureUniqeCode = containerizationFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSES", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 19, CategoryTypeCode = null, TextCode = "General.MH.ExportStorage", Icon = "CustomersPath", FeatureId = exportStorageFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ExportStorage").FirstOrDefault().Id, FeatureUniqeCode = exportStorageFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsReport/Components/CustomsReportsComponent", Code = "CSRP", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 18, CategoryTypeCode = null, TextCode = "General.MH.CustomsReports", Icon = "ReportsPath", FeatureId = reportsFeature.Id, FeatureUniqeCode = reportsFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CLAR", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 21, CategoryTypeCode = null, TextCode = "General.MH.LogisticActionRequest", Icon = "CustomersPath", FeatureId = LogisticActionRequestFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.LogisticActionRequest").FirstOrDefault().Id, FeatureUniqeCode = LogisticActionRequestFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CLAR", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 21, CategoryTypeCode = null, TextCode = "General.MH.LogisticActionRequest", Icon = "CustomersPath", FeatureId = LogisticActionRequestFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.LogisticActionRequest").FirstOrDefault().Id, FeatureUniqeCode = LogisticActionRequestFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "DEUT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 21, CategoryTypeCode = null, TextCode = "Customs.General.O.WorkSheetFromExcel", Icon = "CustomersPath", FeatureId = WorkSheetFromExcelFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CourierMaster").FirstOrDefault().Id, FeatureUniqeCode = WorkSheetFromExcelFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSSH", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.CustomsShipments", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id, FeatureId = customsShipmentsFeature.Id, FeatureUniqeCode = customsShipmentsFeature.FeatureUniqeCode, QuerySection = "CustomsShipments" }, MenusTablesRepository, tenantMenusTables);
+ 
 
-
-
+       
 
             #endregion
             #region Maintanance
@@ -15314,7 +15313,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
 
         #region Roles and features
-        public void LoadRolesAndFeatures(int tenant, int contextTenant)
+        public void LoadRolesAndFeatures(int tenant,int contextTenant)
         {
             ICommonDataContext ObjectContext = CommonDataContext.GetContext(contextTenant);
             FeatureRepository FeaturesRepository = new FeatureRepository(ObjectContext);
@@ -15498,45 +15497,45 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Role role_05 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "ACCT", Tenant = tenant, RoleTypeCode = "AC", Name = "Accounting", Description = "Full accounting include Payables and Payments .\nNo operational features, system setup and Manager Dashboards ." }, RolesRepository, TenantRoles);
 
             #endregion
-
+            
             #region GeneralFeatures
-            //Feature GeneralCustomsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Customs", NameTextCodeDefaultText = "Customs", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
-            Feature GeneralCustomBankFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMBANK", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomBank", NameTextCodeDefaultText = "Custom Bank", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralItemFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ITEM", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Item", NameTextCodeDefaultText = "Item", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralExchangeRateFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCHANGERATE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExchangeRate", NameTextCodeDefaultText = "Exchange Rate", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralInterfaceManagementFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERFACEMANAGEMENT", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.InterfaceManagement", NameTextCodeDefaultText = "Interface Management", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralNotificationDefinitionFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFICATIONDEFINITION", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Notification Definition", NameTextCodeDefaultText = "Notification Definition", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+             //Feature GeneralCustomsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Customs", NameTextCodeDefaultText = "Customs", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralCustomBankFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMBANK", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomBank", NameTextCodeDefaultText = "Custom Bank", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralItemFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ITEM", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Item", NameTextCodeDefaultText = "Item", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralExchangeRateFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCHANGERATE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExchangeRate", NameTextCodeDefaultText = "Exchange Rate", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralInterfaceManagementFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERFACEMANAGEMENT", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.InterfaceManagement", NameTextCodeDefaultText = "Interface Management", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralNotificationDefinitionFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFICATIONDEFINITION", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Notification Definition", NameTextCodeDefaultText = "Notification Definition", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
             //Feature GeneralCustomsSettingFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSETTING", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsSetting", NameTextCodeDefaultText = "Customs Setting", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
-            Feature GeneralRerequestAnalysisFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RerequestAnalysis", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.RerequestAnalysis", NameTextCodeDefaultText = "Re-request analysis", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+            Feature GeneralRerequestAnalysisFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RerequestAnalysis", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.RerequestAnalysis", NameTextCodeDefaultText = "Re-request analysis", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
 
-            Feature GeneralCustomsHouseTypeAdditionalFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HOUSETYPEADDITIONAL", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsHouseTypeAdditional", NameTextCodeDefaultText = "Customs House Type Additional", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralProceduralFaultsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ProceduralFaults", NameTextCodeDefaultText = "Procedural Faults", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralVehiclesFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Vehicles", NameTextCodeDefaultText = "Vehicles", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+            Feature GeneralCustomsHouseTypeAdditionalFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HOUSETYPEADDITIONAL", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsHouseTypeAdditional", NameTextCodeDefaultText = "Customs House Type Additional", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralProceduralFaultsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ProceduralFaults", NameTextCodeDefaultText = "Procedural Faults", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralVehiclesFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Vehicles", NameTextCodeDefaultText = "Vehicles", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
             //Feature GeneralCustomsCollateralFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSCOLLATERAL", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsCollateral", NameTextCodeDefaultText = "Customs Collateral", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
-            Feature GeneralSendTestCasesFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDTESTCASES", ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SendTstCases", NameTextCodeDefaultText = "Send Test Cases", FeatureTypeCode = "OTH" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralHouseTypeFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HOUSETYPE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomHouseType", NameTextCodeDefaultText = "Customs House Type", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralNotificationBellFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFICATIONBELL", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.NotificationBell", NameTextCodeDefaultText = "Notification Bell", FeatureTypeCode = "OTH" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralRecallSupplierFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECALLSUPPLIER", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.RecallSupplierFromFile", NameTextCodeDefaultText = "Recall Supplier From File", FeatureTypeCode = "OTH" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralCouriersVatFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVatMTC", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CouriersVat", NameTextCodeDefaultText = "Couriers Vat", FullLocalDefaultText = "רשימת בלדרים", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralCourierMasterFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COURIERMASTER", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CourierMaster", NameTextCodeDefaultText = "Courier Master", FullLocalDefaultText = "בלדר ראשי", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralCourierDeclarationFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COURIERDECLARATION", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CourierDeclaration", NameTextCodeDefaultText = "Declarations Courier", FullLocalDefaultText = "הצהרות יבוא בלדר", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+            Feature GeneralSendTestCasesFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDTESTCASES", ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SendTstCases", NameTextCodeDefaultText = "Send Test Cases", FeatureTypeCode = "OTH" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralHouseTypeFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HOUSETYPE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomHouseType", NameTextCodeDefaultText = "Customs House Type", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralNotificationBellFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFICATIONBELL", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.NotificationBell", NameTextCodeDefaultText = "Notification Bell", FeatureTypeCode = "OTH" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralRecallSupplierFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECALLSUPPLIER", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.RecallSupplierFromFile", NameTextCodeDefaultText = "Recall Supplier From File", FeatureTypeCode = "OTH" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralCouriersVatFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVatMTC", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CouriersVat", NameTextCodeDefaultText = "Couriers Vat", FullLocalDefaultText = "רשימת בלדרים", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralCourierMasterFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COURIERMASTER", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CourierMaster", NameTextCodeDefaultText = "Courier Master", FullLocalDefaultText = "בלדר ראשי", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralCourierDeclarationFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COURIERDECLARATION", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CourierDeclaration", NameTextCodeDefaultText = "Declarations Courier", FullLocalDefaultText = "הצהרות יבוא בלדר", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
             //Feature GeneralCustomsDeclarationFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSDECLARATION", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsDeclaration", NameTextCodeDefaultText = "Customs Declarations", FullLocalDefaultText = "הצהרות יבוא עמילות", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
 
-            Feature GeneralDocumentsDefinitionFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsDefinition", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.DocumentsDefinition", NameTextCodeDefaultText = "Documents Definition", FullLocalDefaultText = "הגדרת סוגי מסמך", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralCourierPendingReasonFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CourierPendingReason", NameTextCodeDefaultText = "Pending", FullLocalDefaultText = "Pending", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralDeclarationClosureFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationClosure", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.DeclarationClosure", NameTextCodeDefaultText = "Declaration Closure", FullLocalDefaultText = "Declaration Closure", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralReferantFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMREFERANT", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CUSTOMREFERANT", NameTextCodeDefaultText = "Referant Data", FullLocalDefaultText = "Referant Data", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralReferantWorkspaceFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REFERANTWORKSPACE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.REFERANTWORKSPACE", NameTextCodeDefaultText = "Referant Data Workspace", FullLocalDefaultText = "רפרנט מסך עבודה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralExportStorageFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExportStorage", NameTextCodeDefaultText = "ExportStorage", FullLocalDefaultText = "אחסנה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralReportFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsReports", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomsReports", NameTextCodeDefaultText = "CustomsReports", FullLocalDefaultText = "דוחות/פעולות", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralContainerizationFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Containerization", NameTextCodeDefaultText = "Containerization", FullLocalDefaultText = "המכלה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralExportDeclarationFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDeclaration", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Declaration", NameTextCodeDefaultText = "ExportDeclaration", FullLocalDefaultText = "הצהרות יצוא", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralRecallClientsForCutomsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "recallClientsForCutoms", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.General.O.recallClientsForCutoms", NameTextCodeDefaultText = "Customer Menu", FullLocalDefaultText = "תפריט לקוח", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralLogisticActionRequestFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionRequest", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.General.O.LogisticActionRequest", NameTextCodeDefaultText = "Logistic Action Request", FullLocalDefaultText = "בקשות ביטול יצוא", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature GeneralWorkSheetFromExcelFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkSheetFromExcel", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.General.O.WorkSheetFromExcel", NameTextCodeDefaultText = "WorkSheet From Excel", FullLocalDefaultText = "מסך עבודה מאקסל", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+            Feature GeneralDocumentsDefinitionFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsDefinition", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.DocumentsDefinition", NameTextCodeDefaultText = "Documents Definition", FullLocalDefaultText = "הגדרת סוגי מסמך", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralCourierPendingReasonFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CourierPendingReason", NameTextCodeDefaultText = "Pending", FullLocalDefaultText = "Pending", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralDeclarationClosureFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationClosure", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.DeclarationClosure", NameTextCodeDefaultText = "Declaration Closure", FullLocalDefaultText = "Declaration Closure", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralReferantFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMREFERANT", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CUSTOMREFERANT", NameTextCodeDefaultText = "Referant Data", FullLocalDefaultText = "Referant Data", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralReferantWorkspaceFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REFERANTWORKSPACE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.REFERANTWORKSPACE", NameTextCodeDefaultText = "Referant Data Workspace", FullLocalDefaultText = "רפרנט מסך עבודה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralExportStorageFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExportStorage", NameTextCodeDefaultText = "ExportStorage", FullLocalDefaultText = "אחסנה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralReportFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsReports", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomsReports", NameTextCodeDefaultText = "CustomsReports", FullLocalDefaultText = "דוחות/פעולות", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralContainerizationFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Containerization", NameTextCodeDefaultText = "Containerization", FullLocalDefaultText = "המכלה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralExportDeclarationFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDeclaration", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Declaration", NameTextCodeDefaultText = "ExportDeclaration", FullLocalDefaultText = "הצהרות יצוא", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralRecallClientsForCutomsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "recallClientsForCutoms", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.General.O.recallClientsForCutoms", NameTextCodeDefaultText = "Customer Menu", FullLocalDefaultText = "תפריט לקוח", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralLogisticActionRequestFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionRequest", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.General.O.LogisticActionRequest", NameTextCodeDefaultText = "Logistic Action Request", FullLocalDefaultText = "בקשות ביטול יצוא", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature GeneralWorkSheetFromExcelFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkSheetFromExcel", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.General.O.WorkSheetFromExcel", NameTextCodeDefaultText = "WorkSheet From Excel", FullLocalDefaultText = "מסך עבודה מאקסל", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+ 
 
-
-
+        
             Feature CustomsPartnerFtpFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails()
             {
                 Code = "CPARTNERFTP",
@@ -15546,21 +15545,21 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 NameTextCodeCode = "General.Features.CustomsPartnerFtp",
                 NameTextCodeDefaultText = "Communication Settings",
                 FeatureTypeCode = "MENU"
-            }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+            }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
 
 
             //Feature GeneralCustomsSignFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSIGN", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsSign", NameTextCodeDefaultText = "Sign Stations", FullLocalDefaultText = "עמדות חתימה" , FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
-            Feature GeneralDeclarationCargoSplitFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONCARGOSPLIT", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.DeclarationCargoSplit", NameTextCodeDefaultText = "Declaration Cargo Split", FullLocalDefaultText = "בקשות פיצול מטען", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+            Feature GeneralDeclarationCargoSplitFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONCARGOSPLIT", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.DeclarationCargoSplit", NameTextCodeDefaultText = "Declaration Cargo Split", FullLocalDefaultText = "בקשות פיצול מטען", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
             //Feature GeneralCustomsAirlineFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirlineMTC", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsAirline", NameTextCodeDefaultText = "Customs Airline", FullLocalDefaultText = "חברות תעופה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
-            Feature GeneralPendingByKeywordFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingByKeyword", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.PendingByKeyword", NameTextCodeDefaultText = "Pending By Keywords", FullLocalDefaultText = "מילות מפתח לקודי עיכוב", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+            Feature GeneralPendingByKeywordFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingByKeyword", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.PendingByKeyword", NameTextCodeDefaultText = "Pending By Keywords", FullLocalDefaultText = "מילות מפתח לקודי עיכוב", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
 
-            Feature AutonomyKeywordFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AutonomyKeyword", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.AutonomyKeyword", NameTextCodeDefaultText = "Autonomy By Keywords", FullLocalDefaultText = "מילות מפתח להצהרת אוטונומיה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature ExceptionReasonFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExceptionReason", NameTextCodeDefaultText = "Exception Reasons", FullLocalDefaultText = "חריגות", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+            Feature AutonomyKeywordFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AutonomyKeyword", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.AutonomyKeyword", NameTextCodeDefaultText = "Autonomy By Keywords", FullLocalDefaultText = "מילות מפתח להצהרת אוטונומיה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature ExceptionReasonFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExceptionReason", NameTextCodeDefaultText = "Exception Reasons", FullLocalDefaultText = "חריגות", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
 
-            Feature ReceiptCertificateFromFileFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReceiptCertificateFromFile", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ReceiptCertificateFromFile", NameTextCodeDefaultText = "Receipt Certificate From File", FullLocalDefaultText = "קליטת קובץ אישורים מאיקאה להצהרה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature ReferantTeamFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReferantTeam", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ReferantTeam", NameTextCodeDefaultText = "Referant Teams", FullLocalDefaultText = "צוותים תפעוליים", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature ServersNameFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ServersName", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ServersName", NameTextCodeDefaultText = "Servers Names", FullLocalDefaultText = "רשימת שרתים", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
-            Feature SchedulerParamFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SchedulerParam", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SchedulerParam", NameTextCodeDefaultText = "Scheduler Param", FullLocalDefaultText = "Scheduler Params", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes, contextTenant);
+            Feature ReceiptCertificateFromFileFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReceiptCertificateFromFile", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ReceiptCertificateFromFile", NameTextCodeDefaultText = "Receipt Certificate From File", FullLocalDefaultText = "קליטת קובץ אישורים מאיקאה להצהרה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature ReferantTeamFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReferantTeam", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ReferantTeam", NameTextCodeDefaultText = "Referant Teams", FullLocalDefaultText = "צוותים תפעוליים", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature ServersNameFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ServersName", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ServersName", NameTextCodeDefaultText = "Servers Names", FullLocalDefaultText = "רשימת שרתים", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
+            Feature SchedulerParamFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SchedulerParam", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SchedulerParam", NameTextCodeDefaultText = "Scheduler Param", FullLocalDefaultText = "Scheduler Params", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes , contextTenant);
 
 
             #endregion
@@ -15577,15 +15576,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         public void LoadBaseTablesForDataBases()
         {
             string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+    
+                GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                List<GlobalDB> dbList = globalDbRep.GetGlobalDBs().ToList();
 
-            GlobalDBRepository globalDbRep = new GlobalDBRepository();
-            List<GlobalDB> dbList = globalDbRep.GetGlobalDBs().ToList();
-
-            foreach (GlobalDB db in dbList)
-            {
-                LoadBaseTablesForConnection(db.DBConnection);
-            }
-
+                foreach (GlobalDB db in dbList)
+                {
+                    LoadBaseTablesForConnection(db.DBConnection);
+                }
+            
         }
 
         public void UpgradeClosedTablesForTenantZero()
@@ -15593,20 +15592,20 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             isUpdate = true;
 
             string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+         
+                List<GlobalDB> dbList = null;
+                using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
+                {
+                    GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                    dbList = globalDbRep.GetActiveDataBases().ToList();
+                    scop.Complete();
+                }
 
-            List<GlobalDB> dbList = null;
-            using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
-            {
-                GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                dbList = globalDbRep.GetActiveDataBases().ToList();
-                scop.Complete();
-            }
-
-            foreach (GlobalDB db in dbList)
-            {
-                LoadBaseTablesForConnection(db.DBConnection);
-            }
-
+                foreach (GlobalDB db in dbList)
+                {
+                    LoadBaseTablesForConnection(db.DBConnection);
+                }
+             
         }
 
         private void LoadBaseTablesForConnection(string connectionStr)
@@ -15654,7 +15653,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddNewDeclarationErrorMappingSample();
 
         }
-        public void AddNewDeclarationErrorMappingSample(int tenant = 0)
+        public void AddNewDeclarationErrorMappingSample(int tenant=0)
         {
             ICustomContext context = CustomContext.GetContext(tenant);
             DeclarationErrorMappingUpdateService declarationErrorMappingUpdateService = new DeclarationErrorMappingUpdateService(context, new Dictionary<string, IContext>(), 0);
@@ -16964,7 +16963,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             }
             #endregion
 
-
+ 
             this.ObjectContext.SaveChanges();
         }
         #endregion
@@ -17157,7 +17156,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
 
 
-        public void FillCustomsInterfaceManagements(int tenant = 0)
+        public void FillCustomsInterfaceManagements(int tenant=0)
         {
             var repo = new InterfaceManagementRepository(tenant);
             var dic = repo.GetAll().ToDictionary<InterfaceManagement, string, InterfaceManagement>(d => d.Code, a => a);
@@ -17224,7 +17223,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         }
 
 
-        public void FillCustomsNotificationDefinitions(int tenant = 0)
+        public void FillCustomsNotificationDefinitions(int tenant=0)
         {
             var repo = new NotificationDefinitionRepository(tenant);
             var dic = repo.GetAll().ToDictionary<NotificationDefinition, string, NotificationDefinition>(rec => rec.Code, a => a);
@@ -17233,7 +17232,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                                 Logitude.Customs.Def.ClosedTable.NotificationDefinitionDetails,
                                 Logitude.Customs.Data.Repsitories.NotificationDefinitionRepository>(repo, dic);
         }
-        public void FillCustomsInterfaceSendOptions(int tenant = 0)
+        public void FillCustomsInterfaceSendOptions(int tenant=0)
         {
 
             var repo = new InterfaceSendOptionRepository(tenant);
@@ -17461,9 +17460,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "I", EnglishName = null, LocalName = "חשבון ספק", SearchFields = "חשבון ספק,I" }, pointerLevelRepository);
             AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "P", EnglishName = null, LocalName = "פרט מכס", SearchFields = "פרט מכס,P" }, pointerLevelRepository);
             AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "D", EnglishName = "Declaration, הצהרה", LocalName = "הצהרה", SearchFields = "הצהרה,D" }, pointerLevelRepository);
-            AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "C", EnglishName = "Closing Export Declaration", LocalName = "סגירת הצהרת יצוא", SearchFields = "סגירת הצהרת יצוא,C" }, pointerLevelRepository);
+			AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "C", EnglishName = "Closing Export Declaration", LocalName = "סגירת הצהרת יצוא", SearchFields = "סגירת הצהרת יצוא,C" }, pointerLevelRepository);
 
-            pointerLevelRepository.SubmitChanges();
+			pointerLevelRepository.SubmitChanges();
 
         }
 
@@ -17493,7 +17492,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "1", Name = "בדיקה פיזית פתוחה", SearchFields = "בדיקה פיזית פתוחה,1" }, physicalCheckCodeRepository);
             AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "2", Name = "בדיקה פיזית סגורה", SearchFields = "בדיקה פיזית סגורה,2" }, physicalCheckCodeRepository);
-            // AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "N", Name = "ללא בדיקה", SearchFields = "ללא בדיקה,N" }, physicalCheckCodeRepository);
+         // AddClosedTables.AddPhysicalCheckCode(new PhysicalCheckCode() { Code = "N", Name = "ללא בדיקה", SearchFields = "ללא בדיקה,N" }, physicalCheckCodeRepository);
 
             physicalCheckCodeRepository.SubmitChanges();
 
@@ -17505,15 +17504,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             ToggleRepository toggleRepository = new ToggleRepository(tenant);
             Dictionary<string, Toggle> TenantToggle = toggleRepository.GetAll().ToDictionary(d => d.Code, a => a);
             AddClosedTables.AddToggle(new ToggleDetails() { Code = "CFS", Name = "Courier Force Sign", Description = "Courier Force Sign" }, toggleRepository);
-            AddClosedTables.AddToggle(new ToggleDetails() { Code = "FSN", Name = "Force Sign", Description = "Force Sign" }, toggleRepository);
+            AddClosedTables.AddToggle(new ToggleDetails() { Code = "FSN", Name = "Force Sign",Description = "Force Sign" }, toggleRepository);
             AddClosedTables.AddToggle(new ToggleDetails() { Code = "AIN", Name = "Activate Insurance", Description = "Is Activate Insurance" }, toggleRepository);
             AddClosedTables.AddToggle(new ToggleDetails() { Code = "DRU", Name = "Declaration Restore Update", Description = "Declaration Restore Update" }, toggleRepository);
             AddClosedTables.AddToggle(new ToggleDetails() { Code = "DQN", Name = "DbQueueNewReceive", Description = "DbQueueNewReceive" }, toggleRepository);
-            AddClosedTables.AddToggle(new ToggleDetails() { Code = "SDT", Name = "Send Document In Task", Description = "Is Send Document In Task" }, toggleRepository);
-            AddClosedTables.AddToggle(new ToggleDetails() { Code = "NXL", Name = "New Excel", Description = "New Excel" }, toggleRepository);
+			AddClosedTables.AddToggle(new ToggleDetails() { Code = "SDT", Name = "Send Document In Task", Description = "Is Send Document In Task" }, toggleRepository);
+			AddClosedTables.AddToggle(new ToggleDetails() { Code = "NXL", Name = "New Excel", Description = "New Excel" }, toggleRepository);
 
 
-            toggleRepository.SubmitChanges();
+			toggleRepository.SubmitChanges();
 
         }
 
@@ -17523,8 +17522,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             FacilitationTypeRepository facilitationTypeRepository = new FacilitationTypeRepository(tenant);
             Dictionary<string, FacilitationType> Tenant = facilitationTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
-            AddClosedTables.AddFacilitationType(new FacilitationType() { Code = "3", LocalName = "יצואן מאושר", EnglishName = "Approved Exporter", Inactive = false }, facilitationTypeRepository);
-            AddClosedTables.AddFacilitationType(new FacilitationType() { Code = "4", LocalName = "יבואן / יצואן מאושר", EnglishName = "Approved Exporter / Importer", Inactive = false }, facilitationTypeRepository);
+            AddClosedTables.AddFacilitationType(new  FacilitationType() { Code = "3", LocalName = "יצואן מאושר", EnglishName = "Approved Exporter",Inactive = false }, facilitationTypeRepository);
+            AddClosedTables.AddFacilitationType(new  FacilitationType() { Code = "4", LocalName = "יבואן / יצואן מאושר", EnglishName = "Approved Exporter / Importer", Inactive = false }, facilitationTypeRepository);
 
             facilitationTypeRepository.SubmitChanges();
 
@@ -17549,8 +17548,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Dictionary<string, OcrStatus> TenantOcrStatus = ocrStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
             AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "1", EnglishName = "Sent", LocalName = "נשלח" }, ocrStatusRepository);
-            AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "2", EnglishName = "Accepted-Auto", LocalName = "התקבל-AUTO" }, ocrStatusRepository);
-            AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "3", EnglishName = "Typing Team", LocalName = "הוקלד" }, ocrStatusRepository);
+            AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "2", EnglishName = "Accepted-Auto", LocalName ="התקבל-AUTO" }, ocrStatusRepository);
+            AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "3", EnglishName = "Typing Team", LocalName ="הוקלד" }, ocrStatusRepository);
             AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "4", EnglishName = "Accepted", LocalName = "התקבל" }, ocrStatusRepository);
             AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "7", EnglishName = "Cancelled", LocalName = "מבוטל" }, ocrStatusRepository);
             AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "8", EnglishName = "Rejected", LocalName = "נדחה" }, ocrStatusRepository);
@@ -17562,37 +17561,12 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         public void FillSIIRequestStatusTable(int tenant)
         {
             SIIRequestStatusRepository sIIRequestStatusRepository = new SIIRequestStatusRepository(tenant);
-            Dictionary<string, SIIRequestStatus> tenantSIIRequestStatus = sIIRequestStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
-            AddClosedTables.AddSIIRequestStatus(new SIIRequestStatus() { Code = "0", LocalName = "תקין" }, sIIRequestStatusRepository);
-            AddClosedTables.AddSIIRequestStatus(new SIIRequestStatus() { Code = "100", LocalName = "נכשל" }, sIIRequestStatusRepository);
+            Dictionary<string,SIIRequestStatus> tenantSIIRequestStatus = sIIRequestStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+            AddClosedTables.AddSIIRequestStatus(new SIIRequestStatus() { Code = "0" ,LocalName ="תקין" }, sIIRequestStatusRepository);
+            AddClosedTables.AddSIIRequestStatus(new SIIRequestStatus() { Code = "100" , LocalName = "נכשל"}, sIIRequestStatusRepository);
             sIIRequestStatusRepository.SubmitChanges();
 
 
-        }
-        public void FillSIIDocumentType(int tenant)
-        {
-            SIIDocumentTypeRepository sIIDocumentTypeRepository = new SIIDocumentTypeRepository(tenant);
-            Dictionary<string,SIIDocumentType> keyValuePairs=sIIDocumentTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
-            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "1", LocalName= "שטר מטען" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "2", LocalName = "חשבון ספק" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "4", LocalName = "תצהיר נלווה לבקשה למתן אישור עמידה בדרישות הממונה על התקינה" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "8", LocalName = "דוחות בדיקה חיצוניים" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "9", LocalName = "קטלוגים/תצהירים" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "101", LocalName = "אחר" }, sIIDocumentTypeRepository);
-            sIIDocumentTypeRepository.SubmitChanges();
-        }
-        public void FillSIIRequestLineStatus(int tenant)
-        {
-            var repo = new SIIRequestLineStatusRepository(tenant);
-
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "1", LocalName = "אישור ניפוק ומכירה" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "2", LocalName = "איסור ניפוק ומכירה" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "3", LocalName = "שחרור למכס תחת התחייבות ואיסור ניפוק ומכירה" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "4", LocalName = "הודעה על קריאה להשבת מוצר (ריקול)" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "5", LocalName = "אישור הצהרת עמידה לתקן" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "6", LocalName = "אין אישור הצהרת עמידה לתקן" }, repo);
-
-            repo.SubmitChanges();
         }
 
     }

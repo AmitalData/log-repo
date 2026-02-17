@@ -947,29 +947,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string customsBookToken ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomsBookToken  
-	   {
-	    
-	     get
-		{
-		   return customsBookToken;
-		 }
-		 set
-		 {
-		   if(customsBookToken != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBookToken",OldValue=customsBookToken,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   customsBookToken=value;
-		   }
-			
-		 }
-	   }
 	    }
    
 }
