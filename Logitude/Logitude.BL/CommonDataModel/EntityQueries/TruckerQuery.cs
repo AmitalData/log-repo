@@ -23,7 +23,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         TruckerRepository repository;
 
-
+        public TruckerQuery()
+        {
+            repository = new TruckerRepository(); 
+        }
 
         public TruckerQuery(int tenant)
         {

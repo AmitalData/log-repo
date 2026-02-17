@@ -40,7 +40,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
             if (declarationPM != null && (declarationPM.IsConnectedToUnifreight|| declarationPM.IsAmendment==true))
             {
-                UpdateUnifreight(entityPM, declarationPM.Direction);
+                UpdateUnifreight(entityPM);
             }
             UpdateNotification(entityPM);
         }
