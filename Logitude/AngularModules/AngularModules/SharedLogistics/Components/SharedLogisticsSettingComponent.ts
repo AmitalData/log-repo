@@ -329,7 +329,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         if (this.IsSharedLogisticsActivated) {
             this.IsSharedLogisticsActivatedEnable = false;
             this.SharedLogisticsMessageLinkEnable = true;
-            if (ObjectsLocator.GlobalSetting?.WorkEnvironment != "cloud" && this.TenantPM.CountryCode == "IL") {
+            if (ObjectsLocator.GlobalSetting.WorkEnvironment != "cloud" && this.TenantPM.CountryCode == "IL") {
                 this.IsMobileActivatedEnable = false;
             }
             else {

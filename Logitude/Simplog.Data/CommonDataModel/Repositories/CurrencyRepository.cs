@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
- 
+        public CurrencyRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CurrencyRepository(ICommonDataContext context)
         {

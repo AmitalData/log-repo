@@ -36,10 +36,8 @@ export class CustomsSettingList {
 	HSMToken: string;
 	StandAlone: boolean;
 	OcrToken: string;
-	CourierDocToken: string;
-	ForbiddenSigns: string;
-	CB_LastUpdateDate: Date;
-	CustomsBookToken: string;
-	
+ 	ForbiddenSigns: string;
+ 	CourierDocToken: string;
+ 	
 }
  
