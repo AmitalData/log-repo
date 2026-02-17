@@ -410,7 +410,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             newLine.Line = i;
             newLine.CurrencyId = this.ReconcileCurrencyId ?? selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
-            newLine.CurrencyRate = selectedTransaction.ExchangeRate;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.IsPartial = selectedTransaction.IsPartial;
             newLine.Reference1 = selectedTransaction.Reference1;
