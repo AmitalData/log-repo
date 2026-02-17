@@ -13,14 +13,13 @@ namespace Logitude.Server.Tools.QueueService
 
     public class CustomDbQueueService : DbQueueService
     {
-        QueueSendModel QueueSendModel = null;
 
         CustomDbQueueModel CustomDbQueueParams;
         public CustomDbQueueService(string queueCode, int tenant,
             int lockDurationInMin = 2,
             int maxDeliveryCount = 50,
-            int timeOutInHour = 24, string queueDefinitionCode = null)
-            : base(queueCode, tenant, queueDefinitionCode)
+            int timeOutInHour = 24)
+            : base(queueCode, tenant)
         {
             CustomDbQueueParams = new CustomDbQueueModel();
             CustomDbQueueParams.QueueCode = queueCode;
@@ -67,11 +66,10 @@ namespace Logitude.Server.Tools.QueueService
         new private void Complete(string messageId) { throw new NotImplementedException(); }
         new public List<CustomDBQueueMessage> Receive_new(int? nextRunDelayInSec = null, int? selectCount = null)
         {
-
             CurrentCustomQueueResponse = null;
             nextRunDelayInSec = nextRunDelayInSec ?? (int)(CustomDbQueueParams.LockDuration.TotalSeconds);
             base.CurrentMessageId = null;
-            var q = base.Receive_new(nextRunDelayInSec.Value, selectCount: selectCount, queueSendModel: QueueSendModel);
+            var q = base.Receive_new(nextRunDelayInSec.Value, selectCount: selectCount);
             if (q == null || q.Count == 0)
             {
                 return null;
@@ -132,7 +130,6 @@ namespace Logitude.Server.Tools.QueueService
         public int? Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime, /*int tenantPriority, */
             QueueSendModel queueSendModel = null)
         {
-
             //int tenantPriority=8;
             //LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue(${queueName},UseRabbitMQ={UseRabbitMQ})");
             var queueId = base.SendReturnId(messageValues, tenant, delayTime, null, null, null, /*tenantPriority,*/ queueSendModel);

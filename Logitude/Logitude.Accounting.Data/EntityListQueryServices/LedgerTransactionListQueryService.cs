@@ -181,20 +181,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return transactions;
         }
 
-        public static IQueryable<LedgerTransactionList> SetOrderBy(IQueryable<LedgerTransactionList> transactions, LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter)
+        private IQueryable<LedgerTransactionList> SetOrderBy(IQueryable<LedgerTransactionList> transactions, LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter)
         {
-            if (!string.IsNullOrEmpty(ledgerTransactionBalanceFilter.SortBy) && !string.IsNullOrEmpty(ledgerTransactionBalanceFilter.SortDirection))
+            if (!string.IsNullOrEmpty(ledgerTransactionBalanceFilter.SortBy))
             {
                 transactions = OrderByProperty(transactions, ledgerTransactionBalanceFilter.SortBy, ledgerTransactionBalanceFilter.SortDirection == "Ascending");
             }
             else
             {
-                transactions = transactions.OrderBy(rec => rec.AccountingDate).ThenBy(rec => rec.Id);
+                transactions = transactions.OrderByDescending(d => d.AccountingDate);
             }
             return transactions;
         }
 
-        private static IQueryable<LedgerTransactionList> OrderByProperty(IQueryable<LedgerTransactionList> source, string propertyName, bool ascending = true)
+        private IQueryable<LedgerTransactionList> OrderByProperty(IQueryable<LedgerTransactionList> source, string propertyName, bool ascending = true)
         {
             var parameter = Expression.Parameter(typeof(LedgerTransactionList), "x");
             var property = Expression.PropertyOrField(parameter, propertyName);
@@ -839,7 +839,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
              .ToList()
              .ForEach(j =>
              {
-                 j.a.AmountToReconcile = j.dto.AmountToReconcile  ?? j.a.AmountToReconcile;
                  j.a.GroupHash = j.dto.GroupHash;
                  withGroup.Add(j.a);
              });
@@ -2042,7 +2041,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public int GroupHash { get; set; }
-        public decimal? AmountToReconcile { get; set; }
     }
 
     public class LedgerTransactionBalanceFilter
