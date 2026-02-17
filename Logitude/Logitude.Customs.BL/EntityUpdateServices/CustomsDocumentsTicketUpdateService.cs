@@ -62,15 +62,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     this._CreateHybridTask = true; ;//Bug 36694: Disconnecting document from the ticket does not create trigger to UNF
                 }
-                //if (metaDataValues.Count == 0)
-                //{
-                //    if (customDocument != null)
-                //    {
-                //        updateCustomsDoc = true;
-                //        customDocument.ChangeSetOp = ChangeSetOperation.Update;
-                //        customDocument.DocumentTypeCode = null;
-                //    }
-                //}
+                if (metaDataValues.Count == 0)
+                {
+                    if (customDocument != null)
+                    {
+                        updateCustomsDoc = true;
+                        customDocument.ChangeSetOp = ChangeSetOperation.Update;
+                        customDocument.DocumentTypeCode = null;
+                    }
+                }
                 if (updateCustomsDoc)
                 {
                     customsdocumentUpdateService.Update(customDocument, true);
@@ -117,7 +117,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 }
             }
-            
+            if (entityPM?.CustomsDocumentPointers.Count > 1
+                && entityPM?.RequestedCustomsDocId != null
+                && entityPM.CustomsDocumentPointers.Any(x => x.ChangeSetOp == ChangeSetOperation.Delete))
+            {
+                var survivor = entityPM.CustomsDocumentPointers
+                       .FirstOrDefault(x => x != null && x.ChangeSetOp == ChangeSetOperation.None);
+                if (survivor != null)
+                {
+                    survivor.ChangeSetOp = ChangeSetOperation.Insert;
+                }
+            }
             UpdateNotification(entityPM);
             SetDeclarationAsChanged(entityPM);
 

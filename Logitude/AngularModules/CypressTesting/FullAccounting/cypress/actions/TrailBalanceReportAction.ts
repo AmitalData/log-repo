@@ -1,4 +1,10 @@
-
+import { JournalSelectors } from "../selectors/JournalSelectors";
+import { JournalLineActionDetails } from "cypress/models/JournalLineActionDetails";
+import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
+import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
+import { URLs } from '../constants/URLs';
+import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
+import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { TrailBalanceReportDetails } from "cypress/models/TrailBalanceReportDetails";
 import { TrailBalanceReportSelectors } from "../selectors/TrailBalanceReportSelectors";
 
@@ -19,10 +25,7 @@ export function FillTrailBalanceReportDetails(tailBalanceReportDetails:TrailBala
 }
 
 export function RunTrailBalanceReport() {
-    cy.Click(TrailBalanceReportSelectors.SelectReportRun, null, true);    
-    cy.wait(1000); // Wait for report button to become available
-    // Wait for the green button to exist and be visible, then click it
-    cy.get('.greenButton, .GreenButton', { timeout: 10000 }).first().should('exist').click({ force: true });
+    cy.Click(TrailBalanceReportSelectors.GreenButton, null);
 }
 
 export function AssertRunTrailBalanceReport() {
