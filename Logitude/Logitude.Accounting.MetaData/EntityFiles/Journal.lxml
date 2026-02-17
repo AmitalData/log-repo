@@ -3489,7 +3489,6 @@
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
     ValidForQuerySection1="&quot;Journal&quot;"
-    ValidForQuerySection2="&quot;&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"

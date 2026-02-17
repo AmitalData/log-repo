@@ -77,7 +77,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsAmountDebitNegative, 
 	         TransactionAmount, 
 	         ExcelTransactionAmount, 
-	         RefDate, 
+	         RefDate,
              CurrencyRate,
         }
 
@@ -196,6 +196,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconciledWithTransactionId))
             {
 					entityPM.ReconciledWithTransactionId = entityPOCO.ReconciledWithTransactionId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyRate))
+            {
+					entityPM.CurrencyRate = entityPOCO.CurrencyRate;
             }
 
 		}
