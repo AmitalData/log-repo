@@ -6,7 +6,6 @@ using Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using Logitude.CargoTracking.BL.CloseTables;
 using Logitude.CargoTracking.BL.EntityQueryServices;
-using Logitude.CargoTracking.BL.Enums;
 using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.Data.EntityLists;
@@ -440,7 +439,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                         if (item.PickupDone.HasValue && item.PickupDone.Value)
                             CheckMilestone(current, milestone, item.PickupDate);
                         break;
-                    case CargoTrackingMilestoneValues.OriginWarehouse:
+                    case CargoTrackingMilestoneValues.FromWarehouse:
                         if (item.FromWarehouseDone.HasValue && item.FromWarehouseDone.Value)
                             CheckMilestone(current, milestone, item.FromWarehouseDate);
                         break;
@@ -452,7 +451,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                         if (item.ArrivalDone.HasValue && item.ArrivalDone.Value)
                             CheckMilestone(current, milestone, item.ArrivalDate);
                         break;
-                    case CargoTrackingMilestoneValues.DestinationWarehouse:
+                    case CargoTrackingMilestoneValues.ToWarehouse:
                         if (item.ToWarehouseDone.HasValue && item.ToWarehouseDone.Value)
                             CheckMilestone(current, milestone, item.ToWarehouseDate);
                         break;
@@ -495,7 +494,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                         if (item.AssignedTruckerDone)
                             CheckMilestone(current, milestone, item.AssignedTruckerDate);
                         break;
-                    case CargoTrackingMilestoneValues.DeliveryOnTheWay:
+                    case CargoTrackingMilestoneValues.DeliveryOut:
                         if (item.DeliveryDone)
                             CheckMilestone(current, milestone, item.DeliveryDate);
                         break;
@@ -503,7 +502,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                         if (item.DeliveredDone.HasValue && item.DeliveredDone.Value)
                             CheckMilestone(current, milestone, item.DeliveredDate);
                         break;
-					case CargoTrackingMilestoneValues.ArrivedAtDistributionPoint:
+					case CargoTrackingMilestoneValues.DeliveryArrived:
                       
                         var DeliveryArrivedDate = GetDefaultEventMilstone(item.Tenant,item.EntityId,item.ForwardingShipmentHeaderId)?.EventDateTime;
 						if (DeliveryArrivedDate.HasValue)
