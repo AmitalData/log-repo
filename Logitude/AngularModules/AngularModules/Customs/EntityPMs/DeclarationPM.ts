@@ -1611,11 +1611,6 @@ export class DeclarationPM {
     public set UpdateTaxationDateTime(newValue: boolean) { if (this.updateTaxationDateTime != newValue) { this.updateTaxationDateTime = newValue; this.MarkAsDirty("UpdateTaxationDateTime"); } }
        
 	 
-    private fromCancelDeclaration: boolean;
-    public get FromCancelDeclaration() { return this.fromCancelDeclaration; }
-    public set FromCancelDeclaration(newValue: boolean) { if (this.fromCancelDeclaration != newValue) { this.fromCancelDeclaration = newValue; this.MarkAsDirty("FromCancelDeclaration"); } }
-       
-	 
 
     public OldEntityPM: DeclarationPM;
 		
@@ -1624,9 +1619,7 @@ export class DeclarationPM {
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
- if(!AppTool.IsNullOrEmpty(this.Id) && !this.IsDirty) {
-            ServiceHelper.CheckIsLock(this.Id, "Customs.Declaration",true);
-        }	
+ 	
         this.IsDirty = true;
 		  	
 		 

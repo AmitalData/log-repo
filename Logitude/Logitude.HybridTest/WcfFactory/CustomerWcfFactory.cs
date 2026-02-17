@@ -1,7 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +28,7 @@ namespace Logitude.HybridTest.WcfFactory
         }
         public static CustomerPM GetCustomerPMWithNewCode()
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "CS",
-                ["[BranchName]"] = "CS"
-            };
-            customerPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", EnvironmentGlobalParams.MainTenant, "CS") ? TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "CADC", "CS", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Customer", EnvironmentGlobalParams.MainTenant).ToString();
+            customerPM.Code = CodeCounter.GetNumber("Customer", EnvironmentGlobalParams.MainTenant).ToString();
             PreapareAddress();
             return customerPM;
         }

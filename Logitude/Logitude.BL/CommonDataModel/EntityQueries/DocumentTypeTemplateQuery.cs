@@ -28,7 +28,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentTypeTemplateRepository repository;
 
-
+        public DocumentTypeTemplateQuery()
+        {
+            repository = new DocumentTypeTemplateRepository(); 
+        }
 
         public DocumentTypeTemplateQuery(int tenant)
         {
@@ -1110,7 +1113,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return DocumentsIds;
         }
 
-        public void CopyFromTenant0(int tenant, int tenatToCopy, string documentTypeCode = null)
+        public void CopyFromTenant0(int tenant, int tenatToCopy)
         {
 
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
@@ -1132,11 +1135,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             List<DocumentTypeCustomField> tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
 
             IQueryable<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplates = this.GetDocumentTypeTemplatePMsByTenant(0).Where(d => !d.InActive && d.IsCopiedAtSignup && d.IsEnabledForCustomers);
-
-            if (!string.IsNullOrEmpty(documentTypeCode))
-            {
-                tenantZeroDocumentTypes = tenantZeroDocumentTypes.Where(d => d.Code == documentTypeCode).ToList();
-            }
 
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes) {
 
@@ -1188,15 +1186,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         documentTypeTemplates.Add(newDocumentTypeTemplate);
                     }
                 }
-
-                if (string.IsNullOrEmpty(usedDocumenttype.DocumentTypeDefaultReportTemplateId))
-                {
                 usedDocumenttype.DocumentTypeDefaultReportTemplateId = GetDocumentTypeDefaultReportTemplateId(documentTypeTemplates, documenttype, coutryCode);
-                }
-                if (string.IsNullOrEmpty(usedDocumenttype.DocumentTypeDefaultHTMLTemplateId))
-                {
                 usedDocumenttype.DocumentTypeDefaultHTMLTemplateId = GetDocumentTypeDefaultHTMLTemplateId(documentTypeTemplates, documenttype, coutryCode);
-                }
 
                 usedDocumenttype.IsDocOut = documenttype.IsDocOut;
                 theDocumentTypeRepository.Update(usedDocumenttype);

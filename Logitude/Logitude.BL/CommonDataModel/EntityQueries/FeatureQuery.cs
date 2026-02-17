@@ -22,7 +22,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         FeatureRepository repository;
 
-  
+        public FeatureQuery()
+        {
+            repository = new FeatureRepository();
+        }
 
         public FeatureQuery(int tenant)
         {
@@ -345,13 +348,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    contactTenantsRepository = new ContactTenantRepository(tenant);
-                    contactTenantRolesRepository = new ContactTenantRoleRepository(tenant);
+                    contactTenantsRepository = new ContactTenantRepository(0);
+                    contactTenantRolesRepository = new ContactTenantRoleRepository(0);
 
                     contactTenantQuery = new ContactTenantQuery(contactTenantsRepository);
                     contactTenantRoleQuery = new ContactTenantRoleQuery(contactTenantRolesRepository);
                     contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, 0);
-                    UserQuery userQuery = new UserQuery(tenant);
+                    UserQuery userQuery = new UserQuery(0);
                     UserPM user = userQuery.GetSinglePM(loggedUserId, 0);
                     isDistributor = user.IsDistributor;
                     isCustomerCare = !user.IsDistributor;
@@ -361,7 +364,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             else if (contactTenant.TenantId == 0)
             {
-                UserQuery userQuery = new UserQuery(tenant);
+                UserQuery userQuery = new UserQuery(0);
                 UserPM user = userQuery.GetSinglePM(contactTenant.ContactId, 0);
                 isDistributor = user.IsDistributor;
                 isCustomerCare = !user.IsDistributor;

@@ -34,9 +34,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         Inactive, 
 	         IsCustomApprovalRequired, 
-	         IsCriterionMandatory, 
-	         IsCustomsItemMandatory, 
-	         IsZipcodeMandatory,
+	         IsCriterionMandatory,
 	      }
 
 
@@ -49,9 +47,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         Inactive, 
 	         IsCustomApprovalRequired, 
-	         IsCriterionMandatory, 
-	         IsCustomsItemMandatory, 
-	         IsZipcodeMandatory,
+	         IsCriterionMandatory,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -88,16 +84,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCriterionMandatory))
             {
 				entityPOCO.IsCriterionMandatory = entityPM.IsCriterionMandatory;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsItemMandatory))
-            {
-				entityPOCO.IsCustomsItemMandatory = entityPM.IsCustomsItemMandatory;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsZipcodeMandatory))
-            {
-				entityPOCO.IsZipcodeMandatory = entityPM.IsZipcodeMandatory;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -141,16 +127,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsCriterionMandatory = entityPOCO.IsCriterionMandatory;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomsItemMandatory))
-            {
-					entityPM.IsCustomsItemMandatory = entityPOCO.IsCustomsItemMandatory;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsZipcodeMandatory))
-            {
-					entityPM.IsZipcodeMandatory = entityPOCO.IsZipcodeMandatory;
-            }
-
 		}
 
 		public void PMToOldPM(CertificateOfOriginTypeCodeEnumPM entityPM, CertificateOfOriginTypeCodeEnumPM oldEntityPM)
@@ -185,16 +161,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCriterionMandatory))
             {
                 oldEntityPM.IsCriterionMandatory = entityPM.IsCriterionMandatory;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsItemMandatory))
-            {
-                oldEntityPM.IsCustomsItemMandatory = entityPM.IsCustomsItemMandatory;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsZipcodeMandatory))
-            {
-                oldEntityPM.IsZipcodeMandatory = entityPM.IsZipcodeMandatory;
             }
 			
 		}

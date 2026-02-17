@@ -12,7 +12,7 @@ export class SystemEnvironmentService {
         let isPrivateLabel = SessionLocator.PrivateLableSettings ? true : false;
         let url: string = this.GetLogitudeURL().toLowerCase();
 
-        if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxpre") {
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "logboxpre") {
             if ((url.indexOf("logbox") > -1 || url.indexOf("test.logitudeworld.com") > -1) && !isPrivateLabel) {
                 return true;
             }

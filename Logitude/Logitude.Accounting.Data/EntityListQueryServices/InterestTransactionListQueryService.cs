@@ -400,155 +400,69 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
 
-
-        public IQueryable<InterestTransactionList> GetFutureInterestTransactionsByInterestReportMonth(DateTime reportMonthLastDay, string gLAccountId, int tenant)
+        public IQueryable<InterestTransactionList> GetFutureInterestTransactionsByInterestReportMonth(DateTime reportMonthLastDay, int tenant)
         {
             DateTime reportMonthLastDayDate = reportMonthLastDay.Date;
             DateTime nextMonth1st = reportMonthLastDayDate.Date.AddDays(1);
 
-            // Common base (no joins yet)
-            var baseInterestTransactions =
-                    context.InterestTransactions
-                        .Where(a =>
-                            a.GLAccountId == gLAccountId &&
-                            a.InterestReportId == null &&
-                            a.Tenant == tenant &&
-                            !a.IsCancelled &&
-                            !a.IsClosed &&
-                            a.CreateDateTime < nextMonth1st &&
-                            a.InterestValueDate > reportMonthLastDayDate)
-                        .Include("Currency");
+            IQueryable<InterestTransactionList> query = from interestTransaction in context.InterestTransactions.Where(a => a.InterestReportId == null && a.Tenant == tenant
+                    && a.IsCancelled == false && a.IsClosed == false
+                    && a.CreateDateTime < nextMonth1st
+                    && a.InterestValueDate > reportMonthLastDayDate).Include("Currency")
 
-            // Case A — JournalId IS NOT NULL(join by JournalId +Tenant)
-            var queryWithJournalId =
-                        from interestTransaction in baseInterestTransactions
-                        where interestTransaction.JournalId != null
-
-                        join journal in context.Journals.Include("AccountingEntity")
-                            on new
-                            {
-                                Id = interestTransaction.JournalId,
-                                interestTransaction.Tenant
-                            }
-                            equals new
-                            {
-                                Id = journal.Id,
-                                journal.Tenant
-                            }
-
-                        join journallines in context.JournalLines
-                            on new { journalId = journal.Id, tenant = journal.Tenant }
-                            equals new { journalId = journallines.JournalId, tenant = journallines.Tenant }
-
-                        join ten in context.Tenants
-                            on interestTransaction.Tenant equals ten.Id
-                            into joinData
-                        from x in joinData.DefaultIfEmpty()
-
-                        where journal.AccountingEntityCode == Enums.AccountingEntityValues.ARPayment
-                           && journallines.ActionCode == creditActionCodeType
-                           && (interestTransaction.LocalAmount == journallines.LocalAmount * -1 || interestTransaction.LocalAmount == journallines.LocalAmount)
-
-                        select new InterestTransactionList
+                    join journal in context.Journals.Include("AccountingEntity")
+                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode, Tenant = interestTransaction.Tenant } equals
+                        new
                         {
-                            Id = interestTransaction.Id,
-                            Tenant = interestTransaction.Tenant,
-                            CreateDateTime = interestTransaction.CreateDateTime,
-                            UpdateDateTime = interestTransaction.UpdateDateTime,
-                            SearchFields = interestTransaction.SearchFields,
-                            GLAccountId = interestTransaction.GLAccountId,
-                            InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
-                            EntityId = interestTransaction.EntityId,
-                            OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
-                            LocalAmount = interestTransaction.LocalAmount,
-                            ForeignAmount = interestTransaction.ForeignAmount,
-                            CurrencyId = interestTransaction.CurrencyId,
-                            InterestValueDate = interestTransaction.InterestValueDate,
-                            IsClosed = interestTransaction.IsClosed,
-                            IsCancelled = interestTransaction.IsCancelled,
-                            CurrencyCode = interestTransaction.Currency.Code,
-
-                            JournalId = journal.Id,
-                            JournalNumber = journal.JournalNumber,
-                            AccountingDate = journal.AccountingDate,
-
-                            Source = journal.AccountingEntityReference,
-                            SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
-                            SourceTypeCode = journal.AccountingEntityCode,
-                            SourceId = journal.AccountingEntityId,
-                            AccountingEntityCode = interestTransaction.AccountingEntityCode,
-                            Notes = interestTransaction.Notes,
-                        };
-             
-
-            // Case B — JournalId IS NULL (AccountingEntity join logic)
-            var queryWithoutJournalId =
-                        from interestTransaction in baseInterestTransactions
-                        where interestTransaction.JournalId == null
-
-                        join journal in context.Journals.Include("AccountingEntity")
-                            on new
+                            AccountingEntityId = journal.AccountingEntityId,
+                            journal.AccountingEntityCode,
+                            journal.Tenant
+                        }
+                    join journallines in context.JournalLines on new { journalId = journal.Id, tenant = journal.Tenant } equals
+                            new
                             {
-                                AccountingEntityId = interestTransaction.EntityId,
-                                AccountingEntityCode = interestTransaction.AccountingEntityCode,
-                                Tenant = interestTransaction.Tenant
+                                journalId = journallines.JournalId,
+                                tenant = journallines.Tenant
                             }
-                            equals new
-                            {
-                                AccountingEntityId = journal.AccountingEntityId,
-                                journal.AccountingEntityCode,
-                                journal.Tenant
-                            }
+                    join ten in context.Tenants on interestTransaction.Tenant equals ten.Id
+                    into joinData
+                    from x in joinData.DefaultIfEmpty()
+                    where journal.AccountingEntityCode == Enums.AccountingEntityValues.ARPayment && journallines.ActionCode == creditActionCodeType
+                    && interestTransaction.LocalAmount == journallines.LocalAmount * -1
 
-                        join journallines in context.JournalLines
-                            on new { journalId = journal.Id, tenant = journal.Tenant }
-                            equals new { journalId = journallines.JournalId, tenant = journallines.Tenant }
+                    select new InterestTransactionList()
+                    {
 
-                        join ten in context.Tenants
-                            on interestTransaction.Tenant equals ten.Id
-                            into joinData
-                        from x in joinData.DefaultIfEmpty()
+                        Id = interestTransaction.Id,
+                        Tenant = interestTransaction.Tenant,
+                        CreateDateTime = interestTransaction.CreateDateTime,
+                        UpdateDateTime = interestTransaction.UpdateDateTime,
+                        SearchFields = interestTransaction.SearchFields,
+                        GLAccountId = interestTransaction.GLAccountId,
+                        InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
+                        EntityId = interestTransaction.EntityId,
+                        OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
+                        LocalAmount = interestTransaction.LocalAmount,
+                        ForeignAmount = interestTransaction.ForeignAmount,
+                        CurrencyId = interestTransaction.CurrencyId,
+                        InterestValueDate = interestTransaction.InterestValueDate,
+                        //InterestReportId = interestTransaction.InterestReportId,
+                        IsClosed = interestTransaction.IsClosed,
+                        IsCancelled = interestTransaction.IsCancelled,
+                        CurrencyCode = interestTransaction.Currency.Code,
+                        //InterestReportNumber = report == null ? null : report.ReportNumber,
 
-                        where journal.AccountingEntityCode == Enums.AccountingEntityValues.ARPayment
-                           && journallines.ActionCode == creditActionCodeType
-                           && (interestTransaction.LocalAmount == journallines.LocalAmount * -1 || interestTransaction.LocalAmount == journallines.LocalAmount)
+                        JournalId = journal.Id,
+                        JournalNumber = journal.JournalNumber,
+                        AccountingDate = journal.AccountingDate,
 
-                        select new InterestTransactionList
-                        {
-                            // EXACT SAME projection as above
-                            Id = interestTransaction.Id,
-                            Tenant = interestTransaction.Tenant,
-                            CreateDateTime = interestTransaction.CreateDateTime,
-                            UpdateDateTime = interestTransaction.UpdateDateTime,
-                            SearchFields = interestTransaction.SearchFields,
-                            GLAccountId = interestTransaction.GLAccountId,
-                            InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
-                            EntityId = interestTransaction.EntityId,
-                            OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
-                            LocalAmount = interestTransaction.LocalAmount,
-                            ForeignAmount = interestTransaction.ForeignAmount,
-                            CurrencyId = interestTransaction.CurrencyId,
-                            InterestValueDate = interestTransaction.InterestValueDate,
-                            IsClosed = interestTransaction.IsClosed,
-                            IsCancelled = interestTransaction.IsCancelled,
-                            CurrencyCode = interestTransaction.Currency.Code,
-
-                            JournalId = journal.Id,
-                            JournalNumber = journal.JournalNumber,
-                            AccountingDate = journal.AccountingDate,
-
-                            Source = journal.AccountingEntityReference,
-                            SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
-                            SourceTypeCode = journal.AccountingEntityCode,
-                            SourceId = journal.AccountingEntityId,
-                            AccountingEntityCode = interestTransaction.AccountingEntityCode,
-                            Notes = interestTransaction.Notes,
-                        };
-             
-            // Final result
-            IQueryable<InterestTransactionList> query =
-                        queryWithJournalId.Union(queryWithoutJournalId);
-
+                        Source = journal.AccountingEntityReference,
+                        SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
+                        SourceTypeCode = journal.AccountingEntityCode,
+                        SourceId = journal.AccountingEntityId,
+                        AccountingEntityCode = interestTransaction.AccountingEntityCode,
+                        Notes = interestTransaction.Notes,
+                    };
 
 
             return query;

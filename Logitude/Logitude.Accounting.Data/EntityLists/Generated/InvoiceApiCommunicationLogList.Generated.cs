@@ -30,25 +30,13 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
-       public string DocumentId  { get; set; }
+       public string CommunicationId  { get; set; }
        [DataMember]
        public string Step  { get; set; }
        [DataMember]
        public string StatusCode  { get; set; }
        [DataMember]
        public string Exception  { get; set; }
-       [DataMember]
-       public string StatusName  { get; set; }
-       [DataMember]
-       public string StepName  { get; set; }
-       [DataMember]
-       public string ExternalID  { get; set; }
-       [DataMember]
-       public string ARInvoiceId  { get; set; }
-       [DataMember]
-       public string InvoiceNumber  { get; set; }
-       [DataMember]
-       public string ExternalInvoiceNumber  { get; set; }
    }
 
 }
