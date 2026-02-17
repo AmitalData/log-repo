@@ -32,23 +32,6 @@ namespace WebFreight.Web.Controllers.WebServices
                 Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
-        [HttpPost]
-        public HttpResponseMessage PostRequeue([FromBody] JObject request)
-        {
-            string token = AutorizeAndGetToken();
-
-            string[] ids = request["Ids"]?.ToObject<string[]>();
-
-            if (ids == null || ids.Length == 0)
-                return Request.CreateResponse(HttpStatusCode.BadRequest, new { success = false, message = "No IDs provided" });
-
-            bool success = schemaApi.Requeue(token, ids);
-
-            return success ?
-                Request.CreateResponse(HttpStatusCode.OK, new { success = true }) :
-                Request.CreateResponse(HttpStatusCode.BadRequest, new { success = false, message = "Failed to requeue items" });
-        }
-
         [HttpGet]
         public HttpResponseMessage GetDownloadRequest(string id)
         {
