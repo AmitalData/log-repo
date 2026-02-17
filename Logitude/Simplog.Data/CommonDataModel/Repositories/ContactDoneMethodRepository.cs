@@ -14,7 +14,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
         
-
+        public ContactDoneMethodRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public ContactDoneMethodRepository(int tenant)
         {

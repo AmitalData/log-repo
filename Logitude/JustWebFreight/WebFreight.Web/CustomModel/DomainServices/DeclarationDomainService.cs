@@ -182,44 +182,9 @@ namespace WebFreight.Web.CustomModel.DomainServices
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return queryService.GetListCount(queryOperations, tenant);
         }
-		public List<DeclarationCargoSplitList> GetDeclarationCargoSplitFilters(byte[] xmlFilters, int tenant)
-		{
-			SecurityUtility.AuthenticationOnTenant(tenant);
-			customContext = CustomContext.GetContext(tenant);
-			var listService = new DeclarationCargoSplitListQueryService(customContext);
-			QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-			return listService.GetList(queryOperations, tenant);
-
-		}
-
-		public int GetDeclarationCargoSplitFiltersCount(byte[] xmlFilters, int tenant)
-		{
-			SecurityUtility.AuthenticationOnTenant(tenant);
-			customContext = CustomContext.GetContext(tenant);
-			var queryService = new DeclarationCargoSplitListQueryService(customContext);
-			QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-			return queryService.GetListCount(queryOperations, tenant);
-		}
-		public List<ClaimList> GetClaimFilters(byte[] xmlFilters, int tenant)
-		{
-			SecurityUtility.AuthenticationOnTenant(tenant);
-			customContext = CustomContext.GetContext(tenant);
-			var listService = new ClaimListQueryService(customContext);
-			QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-			return listService.GetList(queryOperations, tenant);
 
 
-		}
-
-		public int GetClaimFiltersCount(byte[] xmlFilters, int tenant)
-		{
-			SecurityUtility.AuthenticationOnTenant(tenant);
-			customContext = CustomContext.GetContext(tenant);
-			var queryService = new ClaimListQueryService(customContext);
-			QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-			return queryService.GetListCount(queryOperations, tenant);
-		}
-		public DeclarationPM GetSingleDeclarationPM(string id, int tenant)
+        public DeclarationPM GetSingleDeclarationPM(string id, int tenant)
         {
             customContext = CustomContext.GetContext(tenant);
             declarationQuery = new DeclarationQueryService(customContext);

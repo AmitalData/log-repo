@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         UserLastSettingsRepository repository;
 
-
+        public UserLastSettingsQuery()
+        {
+            repository = new UserLastSettingsRepository(); 
+        }
 
         public UserLastSettingsQuery(int tenant)
         {
