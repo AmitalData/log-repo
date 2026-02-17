@@ -24,6 +24,7 @@ export class AccountingWorkspaceComponent {
     public IsGLAccountsTabVisibile: boolean = false;
     public IsMiscTabVisibile: boolean = false;
     public IsInterestTabVisibile: boolean = false;
+    public IsMicrosoftPowerBITabVisibile: boolean = false;
 
     constructor(private _entityResourceService: EntityResourceService) {
         this.RunComponent();
@@ -81,6 +82,7 @@ export class AccountingWorkspaceComponent {
       //  var MiscTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMisc") && f.ObjectTableId == table.Id)[0];
       //  if (MiscTabFeature) {
             this.IsMiscTabVisibile = true;
+            this.IsMicrosoftPowerBITabVisibile = true;
      //   }
         var InterestTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCInterest") && f.ObjectTableId == table.Id)[0];
         if (InterestTabFeature) {
@@ -141,6 +143,10 @@ export class AccountingWorkspaceComponent {
         }
         else if (this.IsInterestTabVisibile) {
             this.SelectedItem = "Interest";
+
+        }
+        else if (this.IsMicrosoftPowerBITabVisibile) {
+            this.SelectedItem = "PowerBI";
 
         }
     }
@@ -286,6 +292,10 @@ export class AccountingWorkspaceComponent {
                                     });
                                 });
                             }
+                            break;
+                        }
+                        case "PowerBI": {
+                            window.open("https://app.powerbi.com/", "_blank");
                             break;
                         }
                     }

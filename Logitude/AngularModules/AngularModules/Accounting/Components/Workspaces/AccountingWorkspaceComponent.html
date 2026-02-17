@@ -12,6 +12,8 @@
                 <li id="{{'FAGLAccouts' | IdGeneratorAsyncPipe | async}}" *ngIf="IsGLAccountsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'GLAccounts'" (click)="SelectedItem = 'GLAccounts'">{{ 'Accounting.O.GLAccounts' | TextCodeTranslationPipe }}</li>
                 <li id="{{'FAInterest' | IdGeneratorAsyncPipe | async}}" *ngIf="IsInterestTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'Interest'" (click)="SelectedItem = 'Interest'">{{ 'Accounting.General.O.Interest' | TextCodeTranslationPipe }}</li>
                 <li id="{{'FAMISC' | IdGeneratorAsyncPipe | async}}" *ngIf="IsMiscTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'MISC'" (click)="SelectedItem = 'MISC'">{{ 'Accounting.General.O.Misc' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAPowerBI' | IdGeneratorAsyncPipe | async}}" *ngIf="IsMicrosoftPowerBITabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'PowerBI'" (click)="SelectedItem = 'PowerBI'"> Microsoft Power BI</li>
+
             </ul>
         </td>
     </tr>
@@ -48,6 +50,9 @@
             </div>
             <div class="CellContent" [hidden]="SelectedItem != 'Interest'">
                 <div LocationDirective Code="Interest"></div>
+            </div>
+            <div class="CellContent" [hidden]="SelectedItem != 'PowerBI'">
+                <div LocationDirective Code="PowerBI"></div>
             </div>
         </td>
     </tr>

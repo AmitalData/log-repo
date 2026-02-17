@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B03864C5-0C52-465B-9206-3FFF150413B9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AmitalCloud.Infrastructure.Model</RootNamespace>
+    <AssemblyName>AmitalCloud.Infrastructure.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AmitalCloudDBSchema.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="DataBaseAttribute.cs" />
+    <Compile Include="EntityClasses\AccountingInformationIdentifier.cs" />
+    <Compile Include="EntityClasses\AccountingPaymentMethod.cs" />
+    <Compile Include="EntityClasses\AccountingSystemsSetting.cs" />
+    <Compile Include="EntityClasses\AccountingSystemsSyncStatus.cs" />
+    <Compile Include="EntityClasses\AccountingTransferHeader.cs" />
+    <Compile Include="EntityClasses\AccountingTransferLine.cs" />
+    <Compile Include="EntityClasses\AccountingTransferType.cs" />
+    <Compile Include="EntityClasses\APInvoice.cs" />
+    <Compile Include="EntityClasses\APInvoiceLine.cs" />
+    <Compile Include="EntityClasses\APInvoicePayment.cs" />
+    <Compile Include="EntityClasses\APInvoiceStatus.cs" />
+    <Compile Include="EntityClasses\APInvoiceTotalVAT.cs" />
+    <Compile Include="EntityClasses\APInvoiceTransferStatus.cs" />
+    <Compile Include="EntityClasses\APInvoiceType.cs" />
+    <Compile Include="EntityClasses\APPayment.cs" />
+    <Compile Include="EntityClasses\APPaymentStatus.cs" />
+    <Compile Include="EntityClasses\APPaymentTransferStatus.cs" />
+    <Compile Include="EntityClasses\ARInvoice.cs" />
+    <Compile Include="EntityClasses\ARInvoiceLine.cs" />
+    <Compile Include="EntityClasses\ARInvoicePayment.cs" />
+    <Compile Include="EntityClasses\ARInvoicesSignedStatus.cs" />
+    <Compile Include="EntityClasses\ARInvoiceStatus.cs" />
+    <Compile Include="EntityClasses\ARInvoiceStock.cs" />
+    <Compile Include="EntityClasses\ARInvoiceStockLine.cs" />
+    <Compile Include="EntityClasses\ARInvoiceStocksStatus.cs" />
+    <Compile Include="EntityClasses\ARInvoiceTotalVat.cs" />
+    <Compile Include="EntityClasses\ARInvoiceTransferStatus.cs" />
+    <Compile Include="EntityClasses\ARInvoiceType.cs" />
+    <Compile Include="EntityClasses\ARPayment.cs" />
+    <Compile Include="EntityClasses\ARPaymentBankTranfer.cs" />
+    <Compile Include="EntityClasses\ARPaymentChequeReplica.cs" />
+    <Compile Include="EntityClasses\ARPaymentStatus.cs" />
+    <Compile Include="EntityClasses\ARPaymentTransferStatus.cs" />
+    <Compile Include="EntityClasses\AWBAdditionalHandlingInfo.cs" />
+    <Compile Include="EntityClasses\AWBChargesCode.cs" />
+    <Compile Include="EntityClasses\AWBCustomsInformation.cs" />
+    <Compile Include="EntityClasses\AWBInformation.cs" />
+    <Compile Include="EntityClasses\AWBOCI.cs" />
+    <Compile Include="EntityClasses\AWBSpecialHandlingCode.cs" />
+    <Compile Include="EntityClasses\BankAccountLite.cs" />
+    <Compile Include="EntityClasses\CommodityPackage.cs" />
+    <Compile Include="EntityClasses\ConfirmationNumberDefault.cs" />
+    <Compile Include="EntityClasses\ConfirmationNumberStatus.cs" />
+    <Compile Include="EntityClasses\Container.cs" />
+    <Compile Include="EntityClasses\ContainerDiscrepancy.cs" />
+    <Compile Include="EntityClasses\ContainerFollowUp.cs" />
+    <Compile Include="EntityClasses\ContainersExternalData.cs" />
+    <Compile Include="EntityClasses\ContainerStatus.cs" />
+    <Compile Include="EntityClasses\ContainerStatusSource.cs" />
+    <Compile Include="EntityClasses\ContainerTrackingProvider.cs" />
+    <Compile Include="EntityClasses\ContainerTrackingRequest.cs" />
+    <Compile Include="EntityClasses\ContainerTrackingResponse.cs" />
+    <Compile Include="EntityClasses\CreditCardType.cs" />
+    <Compile Include="EntityClasses\CustomsTransferHeader.cs" />
+    <Compile Include="EntityClasses\CustomsTransferLine.cs" />
+    <Compile Include="EntityClasses\CustomsTransferType.cs" />
+    <Compile Include="EntityClasses\CustomsTransmissionsStatus.cs" />
+    <Compile Include="EntityClasses\ExternalSystemsTablesCode.cs" />
+    <Compile Include="EntityClasses\FBLStock.cs" />
+    <Compile Include="EntityClasses\HarmonizeCode.cs" />
+    <Compile Include="EntityClasses\InsideShipmentPackage.cs" />
+    <Compile Include="EntityClasses\INTTRABookingStatus.cs" />
+    <Compile Include="EntityClasses\INTTRABookingTransStatus.cs" />
+    <Compile Include="EntityClasses\INTTRADocumentType.cs" />
+    <Compile Include="EntityClasses\ManifestStatus.cs" />
+    <Compile Include="EntityClasses\Manual\APInvoiceEntity.cs" />
+    <Compile Include="EntityClasses\Manual\ARInvoiceLineAction.cs" />
+    <Compile Include="EntityClasses\Manual\ARPaymentChequeStatus.cs" />
+    <Compile Include="EntityClasses\Manual\AWBStatus.cs" />
+    <Compile Include="EntityClasses\Manual\BankAccount.cs" />
+    <Compile Include="EntityClasses\Manual\BankCode.cs" />
+    <Compile Include="EntityClasses\Manual\ContainerAnalytic.cs" />
+    <Compile Include="EntityClasses\Manual\DigitalShipmentsDataView.cs" />
+    <Compile Include="EntityClasses\Manual\FHLStatus.cs" />
+    <Compile Include="EntityClasses\Manual\FWBStatus.cs" />
+    <Compile Include="EntityClasses\Manual\INTTRASIStatus.cs" />
+    <Compile Include="EntityClasses\Manual\INTTRAStatus.cs" />
+    <Compile Include="EntityClasses\Manual\LogitudeOceanInsightsRequest.cs" />
+    <Compile Include="EntityClasses\Manual\LogitudeOceanInsightsResponse.cs" />
+    <Compile Include="EntityClasses\Manual\MappedShipmentDirections.cs" />
+    <Compile Include="EntityClasses\Manual\MessagingStockDataView.cs" />
+    <Compile Include="EntityClasses\Manual\NextLeg.cs" />
+    <Compile Include="EntityClasses\Manual\OceanInsightsRequest.cs" />
+    <Compile Include="EntityClasses\Manual\OceanInsightsRequestsCount.cs" />
+    <Compile Include="EntityClasses\Manual\OceanInsightsStatuses.cs" />
+    <Compile Include="EntityClasses\Manual\OceanInsightsStatusLog.cs" />
+    <Compile Include="EntityClasses\Manual\PickUpDeliveryType.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentAdditionalCloudData.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentAnalytic.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentCarrierStatus.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentContainerStatus.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentCountryDashboardView.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentDataView.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentDirectionTransmodeView.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentDocsField.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentFinancial.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentFollowUpDataView.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentMasterData.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentPayableAmountType.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentPayableLineStatus.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentReceivableLineStatus.cs" />
+    <Compile Include="EntityClasses\Manual\ShipmentsCustomersDashboardView.cs" />
+    <Compile Include="EntityClasses\Master.cs" />
+    <Compile Include="EntityClasses\MessagingStock.cs" />
+    <Compile Include="EntityClasses\MessagingStockUsageHistory.cs" />
+    <Compile Include="EntityClasses\OBLType.cs" />
+    <Compile Include="EntityClasses\OtherParticipantId.cs" />
+    <Compile Include="EntityClasses\PayableProratedAmount.cs" />
+    <Compile Include="EntityClasses\PickUpDeliveryFromToType.cs" />
+    <Compile Include="EntityClasses\PickUpDeliveryPackageHarmonize.cs" />
+    <Compile Include="EntityClasses\PickUpDeliveryTransportMode.cs" />
+    <Compile Include="EntityClasses\QBOGlobalTaxCalculation.cs" />
+    <Compile Include="EntityClasses\ReferenceType.cs" />
+    <Compile Include="EntityClasses\SATInterface.cs" />
+    <Compile Include="EntityClasses\SATInterfaceSetting.cs" />
+    <Compile Include="EntityClasses\SATInvoiceStatus.cs" />
+    <Compile Include="EntityClasses\SATPaymentMethod.cs" />
+    <Compile Include="EntityClasses\SATTransferStatus.cs" />
+    <Compile Include="EntityClasses\Shipment.cs" />
+    <Compile Include="EntityClasses\ShipmentAssembly.cs" />
+    <Compile Include="EntityClasses\ShipmentAWBPrintOnly.cs" />
+    <Compile Include="EntityClasses\ShipmentCommodity.cs" />
+    <Compile Include="EntityClasses\ShipmentComputedFields.cs" />
+    <Compile Include="EntityClasses\ShipmentCustomerType.cs" />
+    <Compile Include="EntityClasses\ShipmentCustomsMessageType.cs" />
+    <Compile Include="EntityClasses\ShipmentCustomsTransmission.cs" />
+    <Compile Include="EntityClasses\ShipmentDigitalField.cs" />
+    <Compile Include="EntityClasses\ShipmentLevel.cs" />
+    <Compile Include="EntityClasses\ShipmentOrderPackage.cs" />
+    <Compile Include="EntityClasses\ShipmentPackage.cs" />
+    <Compile Include="EntityClasses\ShipmentPackageHarmonize.cs" />
+    <Compile Include="EntityClasses\ShipmentPackageItem.cs" />
+    <Compile Include="EntityClasses\ShipmentPayable.cs" />
+    <Compile Include="EntityClasses\ShipmentPayableStatus.cs" />
+    <Compile Include="EntityClasses\ShipmentPickUpDelivery.cs" />
+    <Compile Include="EntityClasses\ShipmentPickUpDeliveryPackage.cs" />
+    <Compile Include="EntityClasses\ShipmentProductItem.cs" />
+    <Compile Include="EntityClasses\ShipmentReceivable.cs" />
+    <Compile Include="EntityClasses\ShipmentReceivableStatus.cs" />
+    <Compile Include="EntityClasses\ShipmentReferance.cs" />
+    <Compile Include="EntityClasses\ShipmentStoragePricing.cs" />
+    <Compile Include="EntityClasses\ShipmentSubType.cs" />
+    <Compile Include="EntityClasses\ShipmentType.cs" />
+    <Compile Include="EntityClasses\ShipmentUnassignedField.cs" />
+    <Compile Include="EntityClasses\SpecialServicesType.cs" />
+    <Compile Include="EntityClasses\Account.cs" />
+    <Compile Include="EntityClasses\AccountingPartner.cs" />
+    <Compile Include="EntityClasses\AccountingSetting.cs" />
+    <Compile Include="EntityClasses\AccountingSystem.cs" />
+    <Compile Include="EntityClasses\AccountType.cs" />
+    <Compile Include="EntityClasses\AdditionalService.cs" />
+    <Compile Include="EntityClasses\Address.cs" />
+    <Compile Include="EntityClasses\AddressType.cs" />
+    <Compile Include="EntityClasses\AdvancedQueryFilter.cs" />
+    <Compile Include="EntityClasses\Agent.cs" />
+    <Compile Include="EntityClasses\AgentSharedLogisticsKey.cs" />
+    <Compile Include="EntityClasses\Airline.cs" />
+    <Compile Include="EntityClasses\AirlineMessagingRule.cs" />
+    <Compile Include="EntityClasses\AnalyzeQueue.cs" />
+    <Compile Include="EntityClasses\AnalyzeQueueStatus.cs" />
+    <Compile Include="EntityClasses\ApiCredintials.cs" />
+    <Compile Include="EntityClasses\APILogs.cs" />
+    <Compile Include="EntityClasses\APILogsData.cs" />
+    <Compile Include="EntityClasses\AuditLog.cs" />
+    <Compile Include="EntityClasses\AuthenticationToken.cs" />
+    <Compile Include="EntityClasses\Automation.cs" />
+    <Compile Include="EntityClasses\AutomationHistory.cs" />
+    <Compile Include="EntityClasses\AutomationLastUpdate.cs" />
+    <Compile Include="EntityClasses\AutomationResultEmailRecipient.cs" />
+    <Compile Include="EntityClasses\AutoSignupEmail.cs" />
+    <Compile Include="EntityClasses\AWBDescriptionOfGoods.cs" />
+    <Compile Include="EntityClasses\AWBMessagesCCSType.cs" />
+    <Compile Include="EntityClasses\BatchServicesDefinition.cs" />
+    <Compile Include="EntityClasses\BatchServicesDefinitionMods.cs" />
+    <Compile Include="EntityClasses\BatchServicesLog.cs" />
+    <Compile Include="EntityClasses\BatchTaskExecution.cs" />
+    <Compile Include="EntityClasses\BatchTaskExecutionStatus.cs" />
+    <Compile Include="EntityClasses\BIFoldersPermission.cs" />
+    <Compile Include="EntityClasses\BIReport.cs" />
+    <Compile Include="EntityClasses\BIReportFolder.cs" />
+    <Compile Include="EntityClasses\BIReportsExecutionLog.cs" />
+    <Compile Include="EntityClasses\BIReportsType.cs" />
+    <Compile Include="EntityClasses\BlobFile.cs" />
+    <Compile Include="EntityClasses\BluesnapContract.cs" />
+    <Compile Include="EntityClasses\BluesnapContractType.cs" />
+    <Compile Include="EntityClasses\BluesnapTransaction.cs" />
+    <Compile Include="EntityClasses\BorderType.cs" />
+    <Compile Include="EntityClasses\Branch.cs" />
+    <Compile Include="EntityClasses\BusinessHour.cs" />
+    <Compile Include="EntityClasses\BusinessHoursHoliday.cs" />
+    <Compile Include="EntityClasses\BusinessProcessQueue.cs" />
+    <Compile Include="EntityClasses\BusinessRole.cs" />
+    <Compile Include="EntityClasses\BusinessUnit.cs" />
+    <Compile Include="EntityClasses\CaptchaKey.cs" />
+    <Compile Include="EntityClasses\Card.cs" />
+    <Compile Include="EntityClasses\CardContact.cs" />
+    <Compile Include="EntityClasses\CardContactAdditionalService.cs" />
+    <Compile Include="EntityClasses\CardContactProduct.cs" />
+    <Compile Include="EntityClasses\CardExternalAccountsByProduct.cs" />
+    <Compile Include="EntityClasses\CardExternalCodeByCurrency.cs" />
+    <Compile Include="EntityClasses\CardSearch.cs" />
+    <Compile Include="EntityClasses\CargoTenantMilestoneDefinition.cs" />
+    <Compile Include="EntityClasses\CarrierArea.cs" />
+    <Compile Include="EntityClasses\CarrierAreasPort.cs" />
+    <Compile Include="EntityClasses\CarrierServiceLine.cs" />
+    <Compile Include="EntityClasses\CategoryType.cs" />
+    <Compile Include="EntityClasses\ChangePasswordLog.cs" />
+    <Compile Include="EntityClasses\ChargesExternalAccountsByProduct.cs" />
+    <Compile Include="EntityClasses\ChargesGroup.cs" />
+    <Compile Include="EntityClasses\ChargesType.cs" />
+    <Compile Include="EntityClasses\ChargeTypeAccounting.cs" />
+    <Compile Include="EntityClasses\CheckDigitControlAlgorithm.cs" />
+    <Compile Include="EntityClasses\ChildEntitiesCustomField.cs" />
+    <Compile Include="EntityClasses\ColorIndex.cs" />
+    <Compile Include="EntityClasses\Commodity.cs" />
+    <Compile Include="EntityClasses\CommunicationAttachment.cs" />
+    <Compile Include="EntityClasses\CommunicationLog.cs" />
+    <Compile Include="EntityClasses\CommunicationLogStep.cs" />
+    <Compile Include="EntityClasses\CommunicationLogType.cs" />
+    <Compile Include="EntityClasses\CommunicationStatusType.cs" />
+    <Compile Include="EntityClasses\Competitor.cs" />
+    <Compile Include="EntityClasses\ComputingPartner.cs" />
+    <Compile Include="EntityClasses\ComputingPartnerCode.cs" />
+    <Compile Include="EntityClasses\ComputingPartnerTable.cs" />
+    <Compile Include="EntityClasses\ComputingPartnerTranslation.cs" />
+    <Compile Include="EntityClasses\Contact.cs" />
+    <Compile Include="EntityClasses\ContactActivityLog.cs" />
+    <Compile Include="EntityClasses\ContactDoneMethod.cs" />
+    <Compile Include="EntityClasses\ContactLastLogin.cs" />
+    <Compile Include="EntityClasses\ContactLoginLog.cs" />
+    <Compile Include="EntityClasses\ContactMobileDevice.cs" />
+    <Compile Include="EntityClasses\ContactPassword.cs" />
+    <Compile Include="EntityClasses\ContactTenant.cs" />
+    <Compile Include="EntityClasses\ContactTenantRole.cs" />
+    <Compile Include="EntityClasses\ContainerSetting.cs" />
+    <Compile Include="EntityClasses\ConvertProgramInfo.cs" />
+    <Compile Include="EntityClasses\Counter.cs" />
+    <Compile Include="EntityClasses\CounterDefinition.cs" />
+    <Compile Include="EntityClasses\CounterLastNumber.cs" />
+    <Compile Include="EntityClasses\CounterStat.cs" />
+    <Compile Include="EntityClasses\Country.cs" />
+    <Compile Include="EntityClasses\CountryCity.cs" />
+    <Compile Include="EntityClasses\CreditLimitSetting.cs" />
+    <Compile Include="EntityClasses\Currency.cs" />
+    <Compile Include="EntityClasses\CustomAgent.cs" />
+    <Compile Include="EntityClasses\CustomChildObject.cs" />
+    <Compile Include="EntityClasses\Customer.cs" />
+    <Compile Include="EntityClasses\CustomerAccountManagerByProduct.cs" />
+    <Compile Include="EntityClasses\CustomerAdditionalService.cs" />
+    <Compile Include="EntityClasses\CustomerCompetitor.cs" />
+    <Compile Include="EntityClasses\CustomerCompetitorProduct.cs" />
+    <Compile Include="EntityClasses\CustomerDeposition.cs" />
+    <Compile Include="EntityClasses\CustomerFieldsUpdateSetting.cs" />
+    <Compile Include="EntityClasses\CustomerGroup.cs" />
+    <Compile Include="EntityClasses\CustomerOpenFilesAmount.cs" />
+    <Compile Include="EntityClasses\CustomerProduct.cs" />
+    <Compile Include="EntityClasses\CustomerProductActualData.cs" />
+    <Compile Include="EntityClasses\CustomerProductLocation.cs" />
+    <Compile Include="EntityClasses\CustomerProductLocationActualData.cs" />
+    <Compile Include="EntityClasses\CustomerSalesNote.cs" />
+    <Compile Include="EntityClasses\CustomerSize.cs" />
+    <Compile Include="EntityClasses\CustomerStatus.cs" />
+    <Compile Include="EntityClasses\CustomerTeam.cs" />
+    <Compile Include="EntityClasses\CustomerTenantAccess.cs" />
+    <Compile Include="EntityClasses\CustomerTenantAccessCard.cs" />
+    <Compile Include="EntityClasses\CustomerTenantAccessCardsBatch.cs" />
+    <Compile Include="EntityClasses\CustomerTenantAccessRequest.cs" />
+    <Compile Include="EntityClasses\CustomerTenantAccessStatusType.cs" />
+    <Compile Include="EntityClasses\CustomFieldsMainObjects.cs" />
+    <Compile Include="EntityClasses\CustomPickList.cs" />
+    <Compile Include="EntityClasses\CustomsInterface.cs" />
+    <Compile Include="EntityClasses\CustomsInterfaceSetting.cs" />
+    <Compile Include="EntityClasses\CustomsShipper.cs" />
+    <Compile Include="EntityClasses\CustomTable.cs" />
+    <Compile Include="EntityClasses\DataBaseProperty.cs" />
+    <Compile Include="EntityClasses\DataCustomObject.cs" />
+    <Compile Include="EntityClasses\DataProvider.cs" />
+    <Compile Include="EntityClasses\DBIdCounter.cs" />
+    <Compile Include="EntityClasses\DefaultAndConfiguration.cs" />
+    <Compile Include="EntityClasses\DefaultAndConfigurationKey.cs" />
+    <Compile Include="EntityClasses\Department.cs" />
+    <Compile Include="EntityClasses\DeploymentPackage.cs" />
+    <Compile Include="EntityClasses\DeploymentPackageExecutionLog.cs" />
+    <Compile Include="EntityClasses\DeploymentPackagesVersion.cs" />
+    <Compile Include="EntityClasses\DescriptionOfGoods.cs" />
+    <Compile Include="EntityClasses\DigitalContactLastSetting.cs" />
+    <Compile Include="EntityClasses\DigitalFieldSecurity.cs" />
+    <Compile Include="EntityClasses\DigitalPortalLanguage.cs" />
+    <Compile Include="EntityClasses\DigitalPortalScreen.cs" />
+    <Compile Include="EntityClasses\DigitalPreDefinedComponent.cs" />
+    <Compile Include="EntityClasses\DigitalProfile.cs" />
+    <Compile Include="EntityClasses\DigitalTextCode.cs" />
+    <Compile Include="EntityClasses\DimensionsUnit.cs" />
+    <Compile Include="EntityClasses\Direction.cs" />
+    <Compile Include="EntityClasses\Distributor.cs" />
+    <Compile Include="EntityClasses\Document.cs" />
+    <Compile Include="EntityClasses\DocumentFilingBackupBatch.cs" />
+    <Compile Include="EntityClasses\DocumentFilingBackupSetting.cs" />
+    <Compile Include="EntityClasses\DocumentFolder.cs" />
+    <Compile Include="EntityClasses\DocumentOut.cs" />
+    <Compile Include="EntityClasses\DocumentOutCopy.cs" />
+    <Compile Include="EntityClasses\DocumentsDataProvider.cs" />
+    <Compile Include="EntityClasses\DocumentsExecutionLog.cs" />
+    <Compile Include="EntityClasses\DocumentsFiling.cs" />
+    <Compile Include="EntityClasses\DocumentsFilingMetaDataValue.cs" />
+    <Compile Include="EntityClasses\DocumentsMetaDataType.cs" />
+    <Compile Include="EntityClasses\DocumentStatus.cs" />
+    <Compile Include="EntityClasses\DocumentType.cs" />
+    <Compile Include="EntityClasses\DocumentTypeCategory.cs" />
+    <Compile Include="EntityClasses\DocumentTypeCopy.cs" />
+    <Compile Include="EntityClasses\DocumentTypeCustomField.cs" />
+    <Compile Include="EntityClasses\DocumentTypeMetaData.cs" />
+    <Compile Include="EntityClasses\DocumentTypeTemplate.cs" />
+    <Compile Include="EntityClasses\DueType.cs" />
+    <Compile Include="EntityClasses\DWCategories.cs" />
+    <Compile Include="EntityClasses\DWHBuildStatus.cs" />
+    <Compile Include="EntityClasses\DWHEnvironmentSetting.cs" />
+    <Compile Include="EntityClasses\DWHSetting.cs" />
+    <Compile Include="EntityClasses\DWObjectField.cs" />
+    <Compile Include="EntityClasses\DWObjectFieldCategories.cs" />
+    <Compile Include="EntityClasses\DWObjectTable.cs" />
+    <Compile Include="EntityClasses\DWQuery.cs" />
+    <Compile Include="EntityClasses\DWQueryColumn.cs" />
+    <Compile Include="EntityClasses\DWQueryFilter.cs" />
+    <Compile Include="EntityClasses\DWSubQuery.cs" />
+    <Compile Include="EntityClasses\EmailAlertSetting.cs" />
+    <Compile Include="EntityClasses\EmailProvider.cs" />
+    <Compile Include="EntityClasses\EntityCasualData.cs" />
+    <Compile Include="EntityClasses\EntityChange.cs" />
+    <Compile Include="EntityClasses\EntityDate.cs" />
+    <Compile Include="EntityClasses\EntityLastActivity.cs" />
+    <Compile Include="EntityClasses\EntityLastActivityType.cs" />
+    <Compile Include="EntityClasses\EntityLastUpdate.cs" />
+    <Compile Include="EntityClasses\EntityStatus.cs" />
+    <Compile Include="EntityClasses\EntityStatusType.cs" />
+    <Compile Include="EntityClasses\ErrorLog.cs" />
+    <Compile Include="EntityClasses\EventRemark.cs" />
+    <Compile Include="EntityClasses\EventType.cs" />
+    <Compile Include="EntityClasses\EventTypeCategory.cs" />
+    <Compile Include="EntityClasses\FailedLoginLog.cs" />
+    <Compile Include="EntityClasses\FailedTokenLog.cs" />
+    <Compile Include="EntityClasses\Feature.cs" />
+    <Compile Include="EntityClasses\FeatureAccessLevel.cs" />
+    <Compile Include="EntityClasses\FeatureChange.cs" />
+    <Compile Include="EntityClasses\FeaturePackageType.cs" />
+    <Compile Include="EntityClasses\FeatureToggle.cs" />
+    <Compile Include="EntityClasses\FeatureType.cs" />
+    <Compile Include="EntityClasses\FieldDataType.cs" />
+    <Compile Include="EntityClasses\FilingInbox.cs" />
+    <Compile Include="EntityClasses\FilingInboxAttachment.cs" />
+    <Compile Include="EntityClasses\FilingInboxAttachmentLog.cs" />
+    <Compile Include="EntityClasses\FollowUp.cs" />
+    <Compile Include="EntityClasses\FormCustomField.cs" />
+    <Compile Include="EntityClasses\FTPDetail.cs" />
+    <Compile Include="EntityClasses\GeneralLock.cs" />
+    <Compile Include="EntityClasses\GlobalContact.cs" />
+    <Compile Include="EntityClasses\GlobalDB.cs" />
+    <Compile Include="EntityClasses\GlobalTenant.cs" />
+    <Compile Include="EntityClasses\GlobalTenantCounter.cs" />
+    <Compile Include="EntityClasses\GlobalZone.cs" />
+    <Compile Include="EntityClasses\HelpResource.cs" />
+    <Compile Include="EntityClasses\Horse.cs" />
+    <Compile Include="EntityClasses\HorseGender.cs" />
+    <Compile Include="EntityClasses\HTSCode.cs" />
+    <Compile Include="EntityClasses\HybridPartner.cs" />
+    <Compile Include="EntityClasses\HybridPartnersPermission.cs" />
+    <Compile Include="EntityClasses\HybridTenantState.cs" />
+    <Compile Include="EntityClasses\HybridTenantThreshold.cs" />
+    <Compile Include="EntityClasses\IATACode.cs" />
+    <Compile Include="EntityClasses\ImageDetail.cs" />
+    <Compile Include="EntityClasses\ImageLibrary.cs" />
+    <Compile Include="EntityClasses\InboundEmail.cs" />
+    <Compile Include="EntityClasses\InboundEmailLine.cs" />
+    <Compile Include="EntityClasses\Incoterm.cs" />
+    <Compile Include="EntityClasses\Industry.cs" />
+    <Compile Include="EntityClasses\INTTRABranchRegisteredCarrier.cs" />
+    <Compile Include="EntityClasses\INTTRASetting.cs" />
+    <Compile Include="EntityClasses\INTTRASettingMode.cs" />
+    <Compile Include="EntityClasses\InvalidEmailResetPassword.cs" />
+    <Compile Include="EntityClasses\LastRunDetail.cs" />
+    <Compile Include="EntityClasses\LBPTeamMember.cs" />
+    <Compile Include="EntityClasses\LeadSource.cs" />
+    <Compile Include="EntityClasses\LogBoxTenantSetting.cs" />
+    <Compile Include="EntityClasses\LoginPolicy.cs" />
+    <Compile Include="EntityClasses\LogitudeLead.cs" />
+    <Compile Include="EntityClasses\LogitudeMessagesTransmissionLog.cs" />
+    <Compile Include="EntityClasses\MAWBStack.cs" />
+    <Compile Include="EntityClasses\Measurement.cs" />
+    <Compile Include="EntityClasses\Mention.cs" />
+    <Compile Include="EntityClasses\MenuButton.cs" />
+    <Compile Include="EntityClasses\MenuButtonGroup.cs" />
+    <Compile Include="EntityClasses\MenusTable.cs" />
+    <Compile Include="EntityClasses\MenuType.cs" />
+    <Compile Include="EntityClasses\MetodoPago.cs" />
+    <Compile Include="EntityClasses\MobileNotificationLog.cs" />
+    <Compile Include="EntityClasses\MonitorServiceLastUpdate.cs" />
+    <Compile Include="EntityClasses\MoveType.cs" />
+    <Compile Include="EntityClasses\MultiEntityUpdateLog.cs" />
+    <Compile Include="EntityClasses\NumberFormat.cs" />
+    <Compile Include="EntityClasses\ObjectField.cs" />
+    <Compile Include="EntityClasses\ObjectFieldModification.cs" />
+    <Compile Include="EntityClasses\ObjectFieldValidation.cs" />
+    <Compile Include="EntityClasses\ObjectTable.cs" />
+    <Compile Include="EntityClasses\ObjectTableHelperControl.cs" />
+    <Compile Include="EntityClasses\ObjectTableLastUpdate.cs" />
+    <Compile Include="EntityClasses\ObjectTableRule.cs" />
+    <Compile Include="EntityClasses\ObjectTableRuleField.cs" />
+    <Compile Include="EntityClasses\ObjectTableTab.cs" />
+    <Compile Include="EntityClasses\ObjectTableType.cs" />
+    <Compile Include="EntityClasses\OneTimePassword.cs" />
+    <Compile Include="EntityClasses\Package.cs" />
+    <Compile Include="EntityClasses\PackageConnectedPackage.cs" />
+    <Compile Include="EntityClasses\PackageFeature.cs" />
+    <Compile Include="EntityClasses\PackageType.cs" />
+    <Compile Include="EntityClasses\Participant.cs" />
+    <Compile Include="EntityClasses\PartnerType.cs" />
+    <Compile Include="EntityClasses\PasswordPolicy.cs" />
+    <Compile Include="EntityClasses\PasswordResetRequest.cs" />
+    <Compile Include="EntityClasses\PaymentChannel.cs" />
+    <Compile Include="EntityClasses\PaymentCurrency.cs" />
+    <Compile Include="EntityClasses\PaymentGatewayPartner.cs" />
+    <Compile Include="EntityClasses\PaymentMethod.cs" />
+    <Compile Include="EntityClasses\PaymentTerm.cs" />
+    <Compile Include="EntityClasses\PaymentTermDateType.cs" />
+    <Compile Include="EntityClasses\PerformanceLog.cs" />
+    <Compile Include="EntityClasses\PermissionType.cs" />
+    <Compile Include="EntityClasses\Port.cs" />
+    <Compile Include="EntityClasses\PortGroup.cs" />
+    <Compile Include="EntityClasses\PortTimeZone.cs" />
+    <Compile Include="EntityClasses\PostalCode.cs" />
+    <Compile Include="EntityClasses\PrepaidCollect.cs" />
+    <Compile Include="EntityClasses\ProductItem.cs" />
+    <Compile Include="EntityClasses\ProductPeriod.cs" />
+    <Compile Include="EntityClasses\ProductType.cs" />
+    <Compile Include="EntityClasses\Query.cs" />
+    <Compile Include="EntityClasses\QueryColumn.cs" />
+    <Compile Include="EntityClasses\QueryExportExecutionLog.cs" />
+    <Compile Include="EntityClasses\QueryGroup.cs" />
+    <Compile Include="EntityClasses\QueueDefinition.cs" />
+    <Compile Include="EntityClasses\QueueMessage.cs" />
+    <Compile Include="EntityClasses\QueueMessageMoreDetails.cs" />
+    <Compile Include="EntityClasses\QuoteChargesGroup.cs" />
+    <Compile Include="EntityClasses\QuoteGroupSection.cs" />
+    <Compile Include="EntityClasses\QuoteTemplate.cs" />
+    <Compile Include="EntityClasses\QuoteTemplateSection.cs" />
+    <Compile Include="EntityClasses\QuoteTemplateSectionType.cs" />
+    <Compile Include="EntityClasses\QuoteTemplateSetting.cs" />
+    <Compile Include="EntityClasses\QuoteTemplateTableDesign.cs" />
+    <Compile Include="EntityClasses\QuoteTemplateTextDesign.cs" />
+    <Compile Include="EntityClasses\QuoteType.cs" />
+    <Compile Include="EntityClasses\Rank.cs" />
+    <Compile Include="EntityClasses\RateClass.cs" />
+    <Compile Include="EntityClasses\RatesTable.cs" />
+    <Compile Include="EntityClasses\RecurringPeriod.cs" />
+    <Compile Include="EntityClasses\ReferenceCustomObject.cs" />
+    <Compile Include="EntityClasses\RegimenFiscal.cs" />
+    <Compile Include="EntityClasses\Region.cs" />
+    <Compile Include="EntityClasses\RegistryDateType.cs" />
+    <Compile Include="EntityClasses\Report.cs" />
+    <Compile Include="EntityClasses\ReportExecutionLog.cs" />
+    <Compile Include="EntityClasses\ReportGroup.cs" />
+    <Compile Include="EntityClasses\ReportsTemplate.cs" />
+    <Compile Include="EntityClasses\ReportsTemplatesVersion.cs" />
+    <Compile Include="EntityClasses\Responsibility.cs" />
+    <Compile Include="EntityClasses\Restriction.cs" />
+    <Compile Include="EntityClasses\Role.cs" />
+    <Compile Include="EntityClasses\RoleFeature.cs" />
+    <Compile Include="EntityClasses\RoleType.cs" />
+    <Compile Include="EntityClasses\RuleConditionField.cs" />
+    <Compile Include="EntityClasses\RuleNotificationType.cs" />
+    <Compile Include="EntityClasses\RuleType.cs" />
+    <Compile Include="EntityClasses\RuleUpdateHistory.cs" />
+    <Compile Include="EntityClasses\SatisfactionSurvey.cs" />
+    <Compile Include="EntityClasses\SchedulerProcedure.cs" />
+    <Compile Include="EntityClasses\Screen.cs" />
+    <Compile Include="EntityClasses\ScreenField.cs" />
+    <Compile Include="EntityClasses\ScreenModification.cs" />
+    <Compile Include="EntityClasses\ScreenSection.cs" />
+    <Compile Include="EntityClasses\SessionPolicy.cs" />
+    <Compile Include="EntityClasses\Setting.cs" />
+    <Compile Include="EntityClasses\SharedLogisticsContactLastLogin.cs" />
+    <Compile Include="EntityClasses\SharedLogisticsInvitationStatus.cs" />
+    <Compile Include="EntityClasses\SharedLogisticsSetting.cs" />
+    <Compile Include="EntityClasses\SharedUserQuery.cs" />
+    <Compile Include="EntityClasses\ShippingAgent.cs" />
+    <Compile Include="EntityClasses\ShippingLine.cs" />
+    <Compile Include="EntityClasses\SmallDocument.cs" />
+    <Compile Include="EntityClasses\SpecialService.cs" />
+    <Compile Include="EntityClasses\State.cs" />
+    <Compile Include="EntityClasses\SystemData.cs" />
+    <Compile Include="EntityClasses\SystemMetadataLastUpdate.cs" />
+    <Compile Include="EntityClasses\TabModification.cs" />
+    <Compile Include="EntityClasses\TariffCarrierTranslation.cs" />
+    <Compile Include="EntityClasses\TarrifCharge.cs" />
+    <Compile Include="EntityClasses\TarrifFromTo.cs" />
+    <Compile Include="EntityClasses\TarrifFromToType.cs" />
+    <Compile Include="EntityClasses\TarrifHeader.cs" />
+    <Compile Include="EntityClasses\TarrifStep.cs" />
+    <Compile Include="EntityClasses\TarrifType.cs" />
+    <Compile Include="EntityClasses\TaskSchedulerHistory.cs" />
+    <Compile Include="EntityClasses\TasksScheduler.cs" />
+    <Compile Include="EntityClasses\Team.cs" />
+    <Compile Include="EntityClasses\TeamMemberBusinessRole.cs" />
+    <Compile Include="EntityClasses\TemperatureUnit.cs" />
+    <Compile Include="EntityClasses\TemplateFormat.cs" />
+    <Compile Include="EntityClasses\Tenant.cs" />
+    <Compile Include="EntityClasses\TenantAdditionalData.cs" />
+    <Compile Include="EntityClasses\TenantAddOn.cs" />
+    <Compile Include="EntityClasses\TenantLoginPolicy.cs" />
+    <Compile Include="EntityClasses\TenantManagement.cs" />
+    <Compile Include="EntityClasses\TenantManagementLicense.cs" />
+    <Compile Include="EntityClasses\TenantManagmentPrivateLabels.cs" />
+    <Compile Include="EntityClasses\TenantSetting.cs" />
+    <Compile Include="EntityClasses\TenantType.cs" />
+    <Compile Include="EntityClasses\TermsofUse.cs" />
+    <Compile Include="EntityClasses\TermsofUseSignature.cs" />
+    <Compile Include="EntityClasses\TextCode.cs" />
+    <Compile Include="EntityClasses\TextCodeType.cs" />
+    <Compile Include="EntityClasses\Tip.cs" />
+    <Compile Include="EntityClasses\TipsVisibility.cs" />
+    <Compile Include="EntityClasses\Toggle.cs" />
+    <Compile Include="EntityClasses\TraceEvent.cs" />
+    <Compile Include="EntityClasses\Translation.cs" />
+    <Compile Include="EntityClasses\TranslationHeader.cs" />
+    <Compile Include="EntityClasses\TransportMode.cs" />
+    <Compile Include="EntityClasses\TriggerType.cs" />
+    <Compile Include="EntityClasses\Trucker.cs" />
+    <Compile Include="EntityClasses\TwoFactorAuthenticationDevice.cs" />
+    <Compile Include="EntityClasses\UnassignedEntity.cs" />
+    <Compile Include="EntityClasses\User.cs" />
+    <Compile Include="EntityClasses\UserLastLogin.cs" />
+    <Compile Include="EntityClasses\UserLastSettings.cs" />
+    <Compile Include="EntityClasses\UserLicense.cs" />
+    <Compile Include="EntityClasses\UserLoginLog.cs" />
+    <Compile Include="EntityClasses\UserPermittedBranch.cs" />
+    <Compile Include="EntityClasses\UserPermittedProduct.cs" />
+    <Compile Include="EntityClasses\UsersReleaseNotesDisplay.cs" />
+    <Compile Include="EntityClasses\UsoCFDI.cs" />
+    <Compile Include="EntityClasses\ValidationType.cs" />
+    <Compile Include="EntityClasses\VatFormatType.cs" />
+    <Compile Include="EntityClasses\VatMandatoryType.cs" />
+    <Compile Include="EntityClasses\VatType.cs" />
+    <Compile Include="EntityClasses\VatTypePercentage.cs" />
+    <Compile Include="EntityClasses\VATTypesGroup.cs" />
+    <Compile Include="EntityClasses\VatUniquePartnerType.cs" />
+    <Compile Include="EntityClasses\VatUniqueType.cs" />
+    <Compile Include="EntityClasses\Vendor.cs" />
+    <Compile Include="EntityClasses\Vessel.cs" />
+    <Compile Include="EntityClasses\VolumeUnit.cs" />
+    <Compile Include="EntityClasses\Warehouse.cs" />
+    <Compile Include="EntityClasses\WarehouseStoragePricing.cs" />
+    <Compile Include="EntityClasses\WarehouseType.cs" />
+    <Compile Include="EntityClasses\WarehouseWeightMeasurement.cs" />
+    <Compile Include="EntityClasses\WarehouseWeightRounding.cs" />
+    <Compile Include="EntityClasses\WebhookKeys.cs" />
+    <Compile Include="EntityClasses\WeightUnit.cs" />
+    <Compile Include="EntityClasses\WorkerRoleName.cs" />
+    <Compile Include="Interfaces\IAmitalCloudContext.Invoice.cs" />
+    <Compile Include="Interfaces\IAmitalCloudContext.Shipment.cs" />
+    <Compile Include="Interfaces\IContext.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
+    <Compile Include="Interfaces\IAmitalCloudContext.AutoCreated.cs" />
+    <Compile Include="Interfaces\IAmitalCloudContext.cs" />
+    <Compile Include="Interfaces\IGlobalContext.cs" />
+    <Compile Include="Interfaces\ISystemLogContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+  </Target>
+</Project>

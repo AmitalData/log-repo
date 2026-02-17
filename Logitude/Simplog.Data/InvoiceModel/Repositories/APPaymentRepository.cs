@@ -143,13 +143,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return list;
         }
 
-        public List<APPayment> GetAPPaymentsByMasavInterfaceId(string masavInterfaceId, int tenant)
-        {
-            return (from a in context.APPayments
-                    where a.Tenant == tenant && a.MasavInterfaceId == masavInterfaceId
-                    select a).ToList();
-        }
-
         public List<APPayment> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
