@@ -23,7 +23,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public CardContactProductRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<CardContactProduct> GetCardContactProducts(int tenant)
         {

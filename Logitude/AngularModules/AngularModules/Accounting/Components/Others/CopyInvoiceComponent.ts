@@ -544,15 +544,6 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
         if (!this.isCopyLinesChecked) {
             this.IsCopyAmountsChecked = false;
-            this.IsCopyVatTypeChecked = false;
-        }
-    }
-
-    private isCopyVatTypeChecked: boolean = true;
-    get IsCopyVatTypeChecked() { return this.isCopyVatTypeChecked; }
-    set IsCopyVatTypeChecked(value: boolean) {
-        if (this.isCopyVatTypeChecked != value) {
-            this.isCopyVatTypeChecked = value;
         }
     }
 
@@ -889,9 +880,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
                 var chargetype = response.Result;
                 if (!chargetype.InActive) {
                     copiedAPInvoiceLinePM.ChargesTypeId = this.IsCopyLinesChecked ? originalAPInvoiceLine.ChargesTypeId : null;
-                    if (!this.IsCopyVatTypeChecked) {
-                        this.SetVatTypeIdIfActive(chargetype.VatTypeId, copiedAPInvoiceLinePM);
-                    }
+                    this.SetVatTypeIdIfActive(chargetype.VatTypeId, copiedAPInvoiceLinePM);
                     copiedAPInvoiceLinePM.ChargeTypeGLAccountId = chargetype.PayableDebitGLAcountId;
                     copiedAPInvoiceLinePM.ChargesTypeCode = chargetype.Code;
                 }

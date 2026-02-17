@@ -39,8 +39,3 @@ Cypress.Commands.add("restoreLocalStorage", () => {
 import 'cypress-file-upload';
 import "cypress-localstorage-commands";
 
-// Stable selector helper using data-cy attributes
-Cypress.Commands.add('getBySel', (selector, options) => {
-  return cy.get(`[data-cy="${selector}"]`, options);
-});
-
