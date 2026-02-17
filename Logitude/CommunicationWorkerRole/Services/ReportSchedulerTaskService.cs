@@ -93,7 +93,6 @@ namespace CommunicationWorkerRole.Services
                 string errorMessage = new StringBuilder().Append(logsMessage).AppendLine().ToString();
                 errorMessage += new StringBuilder().Append("Exception Message: ").AppendLine().Append(ex.Message).AppendLine().ToString();
                 errorMessage += new StringBuilder().Append("Stack Trace:").AppendLine().Append(ex.StackTrace).AppendLine().ToString();
-                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to run task in ReportSchedulerTaskService for task scheduler id: {reportTask.Id}, errorMessage: {errorMessage}");
 
                 throw new Exception(errorMessage);
             }
@@ -172,34 +171,16 @@ namespace CommunicationWorkerRole.Services
 
         private void TryToSendReportAfterMeetACertainConditions(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
-            bool isValid = true;
-            bool powerBi = reportFilter.ReportCode?.ToUpper()?.StartsWith("PBI") == true;
-            var reportRecepients = schedulerDetails.ReportDetails.Recepients;
-            StiReport stiReport = null;
-
-            if (!powerBi)
+            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+            if (stiReport == null)
             {
-                stiReport = GetStimulReportByReportFilter(reportFilter);
-                if (stiReport == null)
-                {
-                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Report Is Empty"));
-                    return;
-                }
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Report Is Empty"));
             }
-
-            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
-            string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant, schedulerDetails, reportFilter, reportTask);
-
-            if (stiReport != null)
+            else
             {
-                (isValid, reportRecepients) = ValidateStiReport(reportTask, schedulerDetails, stiReport);
-            }
-
-            if (isValid)
-            {
-                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
-                SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
-                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
+                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant, schedulerDetails, reportFilter, reportTask);
+                SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId, stiReport);
             }
         }
 
@@ -214,7 +195,7 @@ namespace CommunicationWorkerRole.Services
             return recepients;
         }
 
-        private (bool, ReportSchedulerRecepients) ValidateStiReport(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, StiReport stiReport)
+        private void SendPdfReportIfIsValid(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, string documentId, StiReport stiReport)
         {
             AdditionalValidate additionalValidate = new AdditionalValidate();
             ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
@@ -231,13 +212,15 @@ namespace CommunicationWorkerRole.Services
 
             if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid && gLAccountLocalBalanceInDueValidateResult.IsValid)
             {
-                return (true, reportRecepients);
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
+                SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
             }
             else
             {
                 LogErrorMessage(result, gLAccountBalanceInLocalValidateResult);
-                return (false, null);
             }
+
         }
 
         private void LogErrorMessage(ValidateResult result, ValidateResult gLAccountBalanceInLocalValidateResult) {
@@ -478,11 +461,6 @@ namespace CommunicationWorkerRole.Services
             {
                 reportTask.Format = "Excel";
                 memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
-            }
-            else if (reportFilter.ReportCode.ToUpper().StartsWith("PBI"))
-            {
-                PowerBIReportHelper powerBIReportHelper = new PowerBIReportHelper(reportTask.Tenant);
-                memoryStream = powerBIReportHelper.GetReportFile(reportFilter.ReportCode);
             }
             else
             {
@@ -761,7 +739,7 @@ namespace CommunicationWorkerRole.Services
             EmailDetails emailDetails = GetEmailDetailsByMessageTemplateId(new GetEmailDetailsByMessageTemplateIdArgs() { messageTemplateId = schedulerDetails.ReportDetails.MessageTemplateId, tenant = args.reportTask.Tenant, userId = args.reportTask.CreatedBy, stiReport = args.stiReport });
             string reportTableId = GetReportTableId(args.reportTask.Tenant);
             string subject = !string.IsNullOrEmpty(emailDetails.Subject) ? emailDetails.Subject : args.reportTask.Name;
-            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To , subject, (string.IsNullOrEmpty(args.recepients.Cc) || string.IsNullOrWhiteSpace(args.recepients.Cc))  ? emailDetails.Cc : args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "",  emailDetails.From,  emailDetails.ReplyTo);
+            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To, subject, args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "", "", "");
 			if (!IsCUstomerDebitNotification) 
             { 
 				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
@@ -790,10 +768,9 @@ namespace CommunicationWorkerRole.Services
 
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
             string subject = reportsTemplatePM != null ? reportsTemplatePM.Subject : null;
-            string from = reportsTemplatePM != null ? reportsTemplatePM.From : null; ;
-            string replyTo = reportsTemplatePM != null ? reportsTemplatePM.ReplyTo : null; ;
-            string cc = reportsTemplatePM != null ? reportsTemplatePM.CC : null;
-
+            string from = null;
+            string replyTo = null;
+            string cc = null;
             UTF8Encoding utf8Encoding = new UTF8Encoding();
 
             object dataProvider = GetDataProviderFromStiReport(args.stiReport);
@@ -803,9 +780,6 @@ namespace CommunicationWorkerRole.Services
             string htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, args.userId, ref subject, ref from, ref replyTo, ref cc, args.tenant);     
             emailDetails.Body = utf8Encoding.GetBytes(htmlstring);
             emailDetails.Subject = subject;
-            emailDetails.From = from;
-            emailDetails.ReplyTo = replyTo;
-            emailDetails.Cc = cc;
             return emailDetails;
         }
 
@@ -927,12 +901,6 @@ namespace CommunicationWorkerRole.Services
     {
         public byte[] Body;
         public string Subject;
-        public string From;
-        public string ReplyTo;
-        public string Cc;
-
-        
-
     }
 }
 
