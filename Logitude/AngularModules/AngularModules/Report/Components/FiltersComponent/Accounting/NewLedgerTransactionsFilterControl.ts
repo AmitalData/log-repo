@@ -633,7 +633,21 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
 
     PrepareContactList() {
-      
+        var cardExtendedPMService = new CardExtendedPMService();
+        var glAccountId = this.GetLookUpFieldValue(this.GLAccountId);
+        if (glAccountId != null) {
+            cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var allContacts = response.Result;
+                    if (allContacts != null && allContacts.length > 0) {
+                        allContacts.forEach(contact => {
+                            if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
+                        });
+                        this.ReportsPreview.PartnersObslist.reverse();
+                    }
+                }
+            });
+        }
     }
 
     RunButtonClicked(isInteractive: boolean) {
