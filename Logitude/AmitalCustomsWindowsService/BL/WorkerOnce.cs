@@ -49,7 +49,7 @@ namespace AmitalCustomsWindowsService.BL
             _TWorker.Tenant = Tenant;
             _TWorker.ThreadId = ///_TWorker.GetHashCode().ToString(); //
             Guid.NewGuid().ToString();
-            _TWorker.BatchServiceCode = this.QueueDefinitionCode != null ? this.QueueDefinitionCode : typeof(TWorker).Name;
+            _TWorker.BatchServiceCode = typeof(TWorker).Name;
             _intervalInSec =interval;
             this.MyType = _TWorker.NameOf();
             Simplog.Server.Infrastructure.WebFreightEntryPoint.UsingAzure = true; // For Log -ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "DCA Wroker role", log);

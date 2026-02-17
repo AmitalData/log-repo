@@ -61,8 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.SIIRequest", "READ", authToken.Tenant);
-	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 SIIRequestListQueryService sIIRequestQuery = new SIIRequestListQueryService(MyContext);
                 SIIRequestList sIIRequestList = sIIRequestQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -84,8 +83,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.SIIRequest", "READ", authToken.Tenant);
-	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 SIIRequestListQueryService sIIRequestQuery = new SIIRequestListQueryService(MyContext);
                 List<SIIRequestList> result = sIIRequestQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -107,8 +105,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.SIIRequest", "READ", authToken.Tenant);
-	                
+                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
