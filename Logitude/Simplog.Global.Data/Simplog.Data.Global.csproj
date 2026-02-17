@@ -129,8 +129,6 @@
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapTransaction.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapContract.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapContractType.cs" />
-    <Compile Include="GlobalModel\EntityPOCOs\DefaultAndConfiguration.cs" />
-    <Compile Include="GlobalModel\EntityPOCOs\DefaultAndConfigurationKey.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\WebhookKeys.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\CaptchaKey.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ChangePasswordLog.cs" />
@@ -180,8 +178,6 @@
     <Compile Include="GlobalModel\Mapping\BluesnapTransactionMap.cs" />
     <Compile Include="GlobalModel\Mapping\BluesnapContractMap.cs" />
     <Compile Include="GlobalModel\Mapping\BluesnapContractTypeMap.cs" />
-    <Compile Include="GlobalModel\Mapping\DefaultAndConfigurationKeyMap.cs" />
-    <Compile Include="GlobalModel\Mapping\DefaultAndConfigurationMap.cs" />
     <Compile Include="GlobalModel\Mapping\WebhookKeysMap.cs" />
     <Compile Include="GlobalModel\Mapping\CaptchaKeyMap.cs" />
     <Compile Include="GlobalModel\Mapping\ChangePasswordLogMap.cs" />
@@ -224,8 +220,6 @@
     <Compile Include="GlobalModel\Repositories\BluesnapTransactionRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BluesnapContractRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BluesnapContractTypeRepository.cs" />
-    <Compile Include="GlobalModel\Repositories\DefaultAndConfigurationKeyRepository.cs" />
-    <Compile Include="GlobalModel\Repositories\DefaultAndConfigurationRepository.cs" />
     <Compile Include="GlobalModel\Repositories\WebhookKeysRepository.cs" />
     <Compile Include="GlobalModel\Repositories\CaptchaKeyRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ChangePasswordLogRepository.cs" />
