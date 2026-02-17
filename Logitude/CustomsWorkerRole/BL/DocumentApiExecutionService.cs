@@ -137,8 +137,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 			
 			byte[] logXML = Encoding.UTF8.GetBytes(queueId);// LogitudeXmlSerializer.SerializeObject(queueMessage);
 			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
-			string val1 = null;
-			string hawb = queueMessage.Params?.TryGetValue("parcelTrackingNumber", out val1) == true && !string.IsNullOrWhiteSpace(val1) ? val1 : queueMessage.BlobFilename?.Split('_')[2]?.Split('.')[0];
+			string hawb = queueMessage.BlobFilename?.Split('_')[2]?.Split('.')[0];
 
 			CommunicationsParams logParams = new CommunicationsParams()
 			{

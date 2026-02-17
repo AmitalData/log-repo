@@ -5,7 +5,7 @@ import { CreateNewExportInvoiceDetails } from '../../models/CreateNewExportInvoi
 import * as Actions from '../../actions/Actions';
 import { CreateNewExportInvoiceSelectors } from '../../selectors/CreateNewExportInvoiceSelectors';
 
-//#region Create new Import Invoice
+//#region Create new Export Invoice
 Given("the user logged in and navigates to Export workspace", () => {
     cy.Login();
     Actions.NavigatesExportsWizerd();

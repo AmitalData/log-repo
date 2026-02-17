@@ -54,6 +54,7 @@ export class PhysicalCheckComponent
 
   
     OnMassageDisplayMethod() {
+
         if (this.MyCommunicationLogId != null) {
             this.getData(this.MyCommunicationLogId, this.MyCustomsMenuItem.MainInterfaceCode);
         }
@@ -61,7 +62,7 @@ export class PhysicalCheckComponent
 
     getData(id: string, InterfaceTypeCode: string) {
         this.CurrentSession.StartBusyIndicator("");
-        var ary = [20];
+        var ary = [20, 30];
         var suppressHugeDataFeature: boolean = true;
         this._PhysicalCheckPMService.GetPhysicalCheckRequest(
             InterfaceTypeCode,
