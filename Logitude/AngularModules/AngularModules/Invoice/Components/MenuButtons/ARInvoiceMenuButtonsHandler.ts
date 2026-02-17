@@ -28,7 +28,6 @@ import { interval, Subscription } from 'rxjs';
 import { switchMap, takeWhile } from 'rxjs/operators';
 import { TraceEventExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
 import { ARInvoiceExtendedService } from 'Invoice/Services/ExtendedPMs/ARInvoiceExtendedService';
-import { ConfirmationNumberDefaultExtendedService } from 'Invoice/Services/ExtendedPMs/ConfirmationNumberDefaultExtendedService';
 
 export class ARInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
@@ -42,7 +41,7 @@ export class ARInvoiceMenuButtonsHandler {
     public myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
     public statusCode: string;  
     public approvedDate: Date;  
-    private CheckCreationStatusInterval = 2000;
+    
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -619,11 +618,10 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     ApproveClicked() {
-
         if (!FeatureLocator.HasEntityPermessions("ARInvoice", "UPDT", true)) {
             this.StopFlags();
         }
-          
+
         else if(!AppTool.IsNullOrEmpty(this.EntityPM.Id)){
             this.CurrentSession.StartBusyIndicatorLoading();
             this.myEntityPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
@@ -635,7 +633,6 @@ export class ARInvoiceMenuButtonsHandler {
                }
             });
         }
-       
         else{
           this.Approve();                    
         }
@@ -644,8 +641,8 @@ export class ARInvoiceMenuButtonsHandler {
     Approve(statusCode: string = null, approvedDate: Date = null){
                 
         this.Validate(statusCode, approvedDate);
-        
-        if (this.isValid) {
+
+            if (this.isValid) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                     ServiceLocator.SendTotangoUserActivity("ARInvoice", "New Invoice");
                 }
@@ -748,18 +745,6 @@ export class ARInvoiceMenuButtonsHandler {
 
     ApplyApproveClicked() {
 
-        if(!AppTool.IsNullOrEmpty(this.EntityPM.ConfirmationNumber) && AppTool.IsNullOrEmpty(this.EntityPM.ConfirmationNumberStatus) ){
-            this.EntityPM.ConfirmationNumberStatus="7";
-            this.ContinueApprove(); 
-        }
-        else if(this.EntityPM.VatNumber === SessionLocator.AccountingSettingPM.VatNumber){
-            this.ShowSelfInvoiceConfirmationNumberDialog()
-        }
-        else{
-            this.ContinueApprove(); 
-        }
-    }
-    ContinueApprove() {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode !== "NONE") {
             this.CheckVendorExpenseCharges();
         }
@@ -767,6 +752,7 @@ export class ARInvoiceMenuButtonsHandler {
             this.CheckAutoCreditInvoice();
         }
     }
+
     private CheckVendorExpenseCharges() {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "PROF40") {
             this.CheckExchageRateLastUpdate();
@@ -935,7 +921,7 @@ export class ARInvoiceMenuButtonsHandler {
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
         this.EntityPM.SetReSendQBO = false;
-        
+
         if (this.EntityPM.IsConsolidationInvoice) {
             this.SaveConsolidation(msg);
         }
@@ -973,13 +959,11 @@ export class ARInvoiceMenuButtonsHandler {
     }
     private subscription: Subscription | null = null;
 
-    ngOnDestroy() {
-        if (this.subscription) this.subscription.unsubscribe();
-    }
+ 
     
     StartCheckingStatus(id: string) {
  
-        this.subscription = interval(this.CheckCreationStatusInterval)
+        this.subscription = interval(5000)
             .pipe(
                 takeWhile(() => !(this.EntityPM.StatusCode !== "PR" && this.EntityPM.ApprovalInProgress), true),
                 switchMap(() => this.GetInvoiceStatus(id)) 
@@ -1244,40 +1228,6 @@ export class ARInvoiceMenuButtonsHandler {
     }
     VoidClickedProccess() {
         this.ShowConfirmVoidMessage();
-    }
-    confirmationNumberDefaultExtendedService: ConfirmationNumberDefaultExtendedService = new ConfirmationNumberDefaultExtendedService();
-
-    ShowSelfInvoiceConfirmationNumberDialog()  {
-        this.confirmationNumberDefaultExtendedService.getAmountForConfirmationNumber(this.EntityPM.InvoiceDate).subscribe((myResponse: ServiceResponse) => {
-            if(!myResponse.HasError && myResponse.Result) {
-               
-              if(myResponse.Result <= (this.EntityPM.AmountInLocalCurrency - this.EntityPM.SubTotalInLocalCurrency)) {
-                const confirmWindow = new ConfirmWindow();
-                confirmWindow.Width = 400;
-                confirmWindow.ShowErorImage = true;
-                confirmWindow.NoButtonText = TextCodeTranslator.Translate("ARInvoice.O.ContinueToGetNewConfirmationNumber");
-                confirmWindow.YesButtonText = TextCodeTranslator.Translate("ARInvoice.O.ReturnToEnteringConfirmationNumber");
-                confirmWindow.IsMultipleMessages = true;
-                confirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberRequiredMessage"));
-                confirmWindow.WindowClosed.subscribe(() => {
-                    if (confirmWindow.Yes) {
-                        this.StopFlags();
-                    }
-                    if (confirmWindow.No) {
-                         this.ContinueApprove();
-                    }
-                          
-                });
-              }
-              else{
-                this.ContinueApprove();
-              }
-              
-            }
-            else{
-                this.ContinueApprove();
-            }
-        })
     }
 
     ShowConfirmVoidMessage() {
