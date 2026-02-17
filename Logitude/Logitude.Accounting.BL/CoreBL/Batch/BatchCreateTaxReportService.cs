@@ -38,12 +38,10 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             taxReportPM.IsEdited = false;
             taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
             taxReportUpdateService.Update(taxReportPM, true);
-			TaxReportService.ValidationJournalAdditinalData(parameterArgs.Tenant, taxReportPM.Id, lines);
-
-		}
+        }
 
 
 
 
-	}
+    }
 }
