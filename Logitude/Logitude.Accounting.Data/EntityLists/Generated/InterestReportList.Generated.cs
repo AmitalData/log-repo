@@ -123,12 +123,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ChartOfAccountsName  { get; set; }
        [DataMember]
        public string ChartOfAccountsCode  { get; set; }
-       [DataMember]
-       public bool IsForeignCurrency  { get; set; }
-       [DataMember]
-       public string ReportCurrencyId  { get; set; }
-       [DataMember]
-       public string ReportCurrencyCode  { get; set; }
    }
 
 }
