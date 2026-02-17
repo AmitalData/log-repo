@@ -120,7 +120,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return groupRecord;
         }
 
-        public int GetFileNo(int tenant, long customsFileNo) =>
+        public int GetFileNo(int tenant, int customsFileNo) =>
             context.CCUFILEMs.Where(file => file.TENANT == tenant && file.CUSTOMFILENO == customsFileNo)
                 .Select(file => file.FILENO)
                 .FirstOrDefault();
@@ -129,22 +129,18 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             syncDT = syncDT.AddSeconds(1);
 
-            string sql = @"
-                UPDATE SyncRecord
-                SET IsSync = @p0
-                WHERE Tenant = @p1
-                AND (FileNo = @p2 OR Entname = @p2)
-                AND IsSync = @p3 
-                AND SyncDT <= @p4";
+            IEnumerable<SyncRecord> query = context.SyncRecord.Where(syncRecord =>
+                syncRecord.Tenant == tenant &&
+                (syncRecord.FileNo == itemUpdate || syncRecord.Entname == itemUpdate) &&
+                syncRecord.IsSync == SyncRecordStatus.Synced &&
+                syncRecord.SyncDT <= syncDT);
 
-            context.Database.ExecuteSqlCommand(
-                sql,
-                SyncRecordStatus.SyncedAndUpdated,
-                tenant,
-                itemUpdate,
-                SyncRecordStatus.Synced,
-                syncDT
-            );
+            List<SyncRecord> records = query.ToList();
+
+            for (int i = 0; i < records.Count; i++)
+                records.ElementAt(i).IsSync = SyncRecordStatus.SyncedAndUpdated;
+
+            context.SaveChanges();
         }
 
         public DateTime? GetLastSyncDate(int tenant, string fileNo)

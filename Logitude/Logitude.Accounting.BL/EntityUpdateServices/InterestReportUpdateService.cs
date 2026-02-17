@@ -51,16 +51,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(cardPM.GLAccountId, entityPM.Tenant);
                     if (gLAccountPM != null)
                     {
-                        if (gLAccountPM.ForeignCurrencyInterest)
-                        {
-                            entityPM.IsForeignCurrency = true;
-                            entityPM.ReportCurrencyId = gLAccountPM.CurrencyId;
-                        }
-                        else
-                        {
-                            entityPM.ReportCurrencyId = GetTenantCurrencyId(entityPM.Tenant);
-                        }
-           
                         InterestReportQueryService interestReportQueryService = new InterestReportQueryService(entityPM.Tenant);
                         List<InterestReportPM> interestReportPMs = interestReportQueryService.GetInterestReportsForCustomer(entityPM.CustomerId, cardPM.GLAccountId, entityPM.Tenant);
                         if (interestReportPMs == null || interestReportPMs.Count == 0)
@@ -92,7 +82,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
 
                             entityPM.OpenBalance = gLAccountPM.InterestOpenBalance;
-                           
                         }
                     }
                 }
@@ -216,7 +205,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 ContactPM contact = GetLoggedContact(entityPM.Tenant);
                 bool showLocals = !contact.DontShowLocal;
-                if ((entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode) || (entityPM.InterestReportStatusCode == "6" && !String.IsNullOrWhiteSpace(entityPM.InvoiceFailureReason)))
+                if ((entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode))
                 {
                     switch (entityPM.InterestReportStatusCode)
                     {
@@ -398,12 +387,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            return aRInvoiceQuery.GetSinglePM(interestReport.ARinvoiceId, Tenant);
 
         }
-        private static string GetTenantCurrencyId(int tenant)
-        {
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            var tenantPM = tenantQuery.GetSinglePM(tenant);
-            return tenantPM.CurrencyId;
-        }
+
         private ARInvoicePM CreateautoCreditInvoiceLines(ARInvoicePM autoCreditInvoice, ARInvoicePM invoice)
         { int index = 1;
             foreach (ARInvoiceLinePM item in invoice.InvoiceLines){
