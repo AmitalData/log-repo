@@ -129,4 +129,6 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="CreateDate" />
+  <Index
+    Columns="ReportTemplateId" />
 </Table>

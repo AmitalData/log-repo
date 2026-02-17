@@ -467,8 +467,6 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<ReconciliationLine>().Property(x => x.ReconciliationAmount).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<ReconciliationLine>().Property(x => x.CurrencyRate).HasPrecision(16, 5);
-				
 			modelBuilder.Entity<TaxReport>().Property(x => x.TaxableOutputAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<TaxReport>().Property(x => x.OutputTaxAmount).HasPrecision(16, 2);

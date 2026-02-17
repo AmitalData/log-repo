@@ -17,7 +17,6 @@ export class MainReportSchedulerComponent implements OnInit {
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
     public BIReportEntity: any;
-    public IsPowerBIReport: boolean;
     public IsQueryReport: any;
     public IsCustomerDebNotification: any;
     public GLAccountId: any;
@@ -34,7 +33,6 @@ export class MainReportSchedulerComponent implements OnInit {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
         this.BIReportEntity = windowArgs.BIReportEntity;
-        this.IsPowerBIReport = windowArgs.IsPowerBIReport;
         this.IsQueryReport = windowArgs.IsQueryReport;
         this.IsCustomerDebNotification = windowArgs.IsCustomerDebNotification;
         this.GLAccountId = windowArgs.GLAccountId;
@@ -95,7 +93,7 @@ export class MainReportSchedulerComponent implements OnInit {
                             .then(cmpRef => {
                                 this.PageChild_RETASK = cmpRef.instance;
                                 
-                                this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList, BIReportEntity: this.BIReportEntity, IsPowerBIReport: this.IsPowerBIReport, IsQueryReport: this.IsQueryReport ,
+                                this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList, BIReportEntity: this.BIReportEntity, IsQueryReport: this.IsQueryReport ,
                                      IsCustomerDebNotification: this.IsCustomerDebNotification ,TaskSchedulerId: this.TaskSchedulerId,GLAccountId: this.GLAccountId, TaskSchedulerIdMaintenance: this.TaskSchedulerIdMaintenance
                                     });
                             });
