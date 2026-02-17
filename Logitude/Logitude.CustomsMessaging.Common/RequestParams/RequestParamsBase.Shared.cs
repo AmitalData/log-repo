@@ -99,8 +99,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public bool ignoreConcurrentKiller { get; set; }
 
         public bool SendUpdateContainerization { get; set; }
-
-        public string HsmStationContext { get; set; } = null;
     }
 
     public class TestCase

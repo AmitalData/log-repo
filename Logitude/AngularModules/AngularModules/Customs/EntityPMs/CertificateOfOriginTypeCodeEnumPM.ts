@@ -61,16 +61,6 @@ export class CertificateOfOriginTypeCodeEnumPM {
     public set IsCriterionMandatory(newValue: boolean) { if (this.isCriterionMandatory != newValue) { this.isCriterionMandatory = newValue; this.MarkAsDirty("IsCriterionMandatory"); } }
        
 	 
-    private isCustomsItemMandatory: boolean;
-    public get IsCustomsItemMandatory() { return this.isCustomsItemMandatory; }
-    public set IsCustomsItemMandatory(newValue: boolean) { if (this.isCustomsItemMandatory != newValue) { this.isCustomsItemMandatory = newValue; this.MarkAsDirty("IsCustomsItemMandatory"); } }
-       
-	 
-    private isZipcodeMandatory: boolean;
-    public get IsZipcodeMandatory() { return this.isZipcodeMandatory; }
-    public set IsZipcodeMandatory(newValue: boolean) { if (this.isZipcodeMandatory != newValue) { this.isZipcodeMandatory = newValue; this.MarkAsDirty("IsZipcodeMandatory"); } }
-       
-	 
 
     public OldEntityPM: CertificateOfOriginTypeCodeEnumPM;
 		

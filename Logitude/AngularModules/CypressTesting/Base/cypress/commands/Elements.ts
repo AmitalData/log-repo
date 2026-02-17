@@ -106,10 +106,10 @@ Cypress.Commands.add("FillLogTextBox", (selector, value, ValidateInputDone = fal
 
 function FillLogTextBoxProcess(selector: string, value: string, ValidateInputDone: boolean) {
     if (ValidateInputDone) {
-        cy.get(selector).clear({force: true}).type("{selectall}" + value, {force: true})//.should('have.value', value)
+        cy.get(selector).clear().type("{selectall}" + value)//.should('have.value', value)
     }
     else {
-        cy.get(selector).clear({force: true}).type("{selectall}" + value, {force: true}).should('have.value', value)
+        cy.get(selector).clear().type("{selectall}" + value).should('have.value', value)
     }
 }
 

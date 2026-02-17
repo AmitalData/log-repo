@@ -20,15 +20,15 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
         //public const string TENATcompanyid = "101";
         //public const string TENATtoken = "c6f85591-6e4e-4203-95ef-628b826577b8";
 
-        public bool IsHSMSign_IsOn(int tenant,string HsmStationContext=null)
+        public bool IsHSMSign_IsOn(int tenant)
         {
             CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-            return settingService.IsHSMSign_IsOn(tenant, HsmStationContext);
+            return settingService.IsHSMSign_IsOn(tenant);
         }
 
         
 
-        public List<MySignStationList> GetHSMAllCertificates(int tenant,bool fromCache=true,string hsmStationContext=null)
+        public List<MySignStationList> GetHSMAllCertificates(int tenant,bool fromCache=true)
         {
 
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
@@ -36,11 +36,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             var settingService = new CustomsSettingQueryService(tenant);
             var tenantSetting = settingService.GetSettingByTenantN(tenant);
 
-            string signProcess = environmentSettingPM.HSMSignProcess;
-            if (!string.IsNullOrWhiteSpace(hsmStationContext))
-            {
-                signProcess = hsmStationContext;
-            }
+
             var hSMActiveSignCardService = new HSMActiveSignCardService();
             var res = hSMActiveSignCardService.GetActiveCertificates(
                 tenant,
@@ -50,7 +46,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
       {
           companyid = tenantSetting.HSMCompanyId,// "101",
           token = tenantSetting.HSMToken,// "c6f85591-6e4e-4203-95ef-628b826577b8",
-          signprocess = signProcess,
+          signprocess = environmentSettingPM.HSMSignProcess,
           companyBN = tenantSetting.CustomsAgentId, //"550221105"
 
       },
