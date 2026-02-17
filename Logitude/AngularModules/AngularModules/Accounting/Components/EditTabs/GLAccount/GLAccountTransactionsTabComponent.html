@@ -405,7 +405,7 @@
                                                                 [LookUpTableName]="'Currency'" [HideColumns]="true">
                                                             </LogLov>
                                                         </td>
-                                                        <td style="width:180px;">
+                                                        <td style="width:125px;">
                                                             <div></div>
                                                         </td>
 
@@ -448,17 +448,17 @@
                                                                 </li>
                                                             </ul>
                                                         </td>
-                                                        <td style="width:5px;">
+                                                        <td style="width:15px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width: 40px;"
+                                                        <td style="width: 50px;"
                                                         [style.text-align]="isRTL ? 'right' : 'left'"
                                                         *ngIf="isVatInputOrOutput&& filterSelectedValue === 'filter_Tax'">
                                                         <div></div>
                                                         </td>
                                                         <td style="width:90px"
                                                             *ngIf="isVatInputOrOutput&& filterSelectedValue === 'filter_Tax'">
-                                                            <div style="width:90px">
+                                                            <div style="width:100px">
                                                                 <ComboBox [ItemsSource]="TaxReportLists"
                                                                     [IsDisabled]="NotIncludedInAnyTaxReport"
                                                                     [Binding]="'Name'"
@@ -468,7 +468,7 @@
                                                             </div>
                                                         </td>
                                                        
-                                                        <td style="width: 40px;"
+                                                        <td style="width: 50px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'"
                                                             *ngIf="filterSelectedValue != 'filter_Tax'">
                                                             {{
@@ -484,15 +484,15 @@
                                                                 [DataContext]="DataContext" [HideColumns]="true"
                                                                 [SelectedDateValue]="FromDate"></LogDatePicker>
                                                         </td>
-                                                        <td *ngIf="filterSelectedValue == 'filter_Tax'" style="width:18px;">
+                                                        <td *ngIf="filterSelectedValue == 'filter_Tax'" style="width:40px;">
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:5px;">
+                                                        <td style="width:15px;">
                                                             <div></div>
                                                         </td>
                                                         <td *ngIf="filterSelectedValue == 'filter_Tax'"
-                                                        style="vertical-align :top;padding-top:9px;width:90px">
+                                                        style="vertical-align :top;padding-top:5px;width:85px">
                                                         <div [style.float]="isRTL ? 'right' : 'left'">
                                                             <div float-start
                                                                 style="width: 20px; padding-top: 2px;">
@@ -503,7 +503,7 @@
                                                             </div>
                                                             <div [style.float]="isRTL ? 'left' : 'right'"
                                                                 [style.text-align]="isRTL ? 'right' : 'left'"
-                                                                style="padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                                                style="width: 260px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
                                                                 {{
                                                                 'GLAccount.O.NotIncludedInTax' |
                                                                 TextCodeTranslationPipe
@@ -513,7 +513,7 @@
 
                                                         </td>
 
-                                                        <td style="width: 20px;"
+                                                        <td style="width: 30px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'"
                                                             *ngIf="filterSelectedValue != 'filter_Tax'">
                                                             {{
@@ -530,7 +530,7 @@
                                                                 [DataContext]="DataContext" [HideColumns]="true"
                                                                 [SelectedDateValue]="ToDate"></LogDatePicker>
                                                         </td>
-                                                        <td style="width:5px;">
+                                                        <td style="width:15px;">
                                                             <div></div>
                                                         </td>
                                                         <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'LedgerTransaction.O.LocalAmount' | TextCodeTranslationPipe}}</td>
@@ -545,7 +545,7 @@
                                                             
                                                                 
                                                         </td>
-                                                        <td style="width: 5px;"><div></div></td>
+                                                        <td style="width: 15px;"><div></div></td>
                                                        
         
                                                         <td *ngIf="selectedAmountLocalOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
@@ -570,7 +570,7 @@
                                                             (ValueChanged)="AmountLocalTextFromChanged($event)"
                                                         ></LogTextBox>
                                                         </td>
-                                                        <td style="width: 5px"><div></div></td>
+                                                        <td style="width: 15px"><div></div></td>
                                                         <td *ngIf="selectedAmountLocalOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                                            
                                                         </td>
@@ -592,7 +592,7 @@
                                                         <td style="width:15px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width:160px" rowspan="2">
+                                                        <td style="width:180px" rowspan="2">
                                                             <table>
 
                                                                 <tr>
@@ -651,13 +651,12 @@
 
 
                                                         </td>
-                                                        <td style="width:5px;">
+                                                        <td style="width:15px;">
                                                             <div></div>
                                                         </td>
                                                         <td style="width:270px">
-                                                          
                                                             <div [style.float]="isRTL ? 'left' : 'right'"
-                                                                style="width: 180px;padding: 0 5px;">
+                                                                style="width: 190px;padding: 0 5px;">
                                                                 <SearchTextBox [ObjectTableName]="'LedgerTransaction'"
                                                                     [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe"
                                                                     (SearchTextChangeEvent)="TextChanged($event)">
@@ -683,10 +682,6 @@
                                                                  style="cursor: pointer;" class="CenterCenter"  (click)="onColumnsClick()"
                                                                  />
                                                             </div>
-                                                            
-                                                        </td>
-                                                        <td style="width:30px;">
-                                                            <div></div>
                                                         </td>
                                                     </table>
                                                 </td>
@@ -703,7 +698,7 @@
                                                 <td>
                                                     <table style="table-layout: fixed;">
                                                         <td style="width:10px"></td>
-                                                        <td style="width:320px;"
+                                                        <td style="width:265px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'">
 
                                                             <span float-start
@@ -726,7 +721,7 @@
                                                             <LogToolTip float-start
                                                                 [direction]="isRTL?'bottomleft':'bottomright'"
                                                                 [title]="'Accounting.General.O.OpenBalanceByCurrency' | TextCodeTranslationPipe"
-                                                                [name]="'toto'" *ngIf="EntityPM.IsMultiCurrency && filterSelectedValue !== 'filter_Tax'">
+                                                                [name]="'toto'" *ngIf="EntityPM.IsMultiCurrency">
                                                                 <span style="font-size: bold;">
                                                                     <div>
                                                                         <ul style="list-style: none;">
@@ -793,11 +788,11 @@
                                                         [style.text-align]="isRTL ? 'right' : 'left'">
                                                         <div></div>
                                                     </td>
-                                                        <td style="width:6px;">
+                                                        <td style="width:16px;">
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width: 40px;"
+                                                        <td style="width: 50px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'">
                                                             {{
                                                             'Accounting.General.O.Datefrom'
@@ -812,11 +807,11 @@
                                                                 [SelectedDateValue]="FromDate2"></LogDatePicker>
                                                         </td>
 
-                                                        <td style="width:5px;">
+                                                        <td style="width:15px;">
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width: 20px;"
+                                                        <td style="width: 30px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'">
                                                             {{ 'Accounting.General.O.To' | TextCodeTranslationPipe }}
                                                         </td>
@@ -829,7 +824,7 @@
                                                                 [SelectedDateValue]="ToDate2"></LogDatePicker>
                                                         </td>
                                                       
-                                                        <td style="width:5px;">
+                                                        <td style="width:15px;">
                                                             <div></div>
                                                         </td>
                                                         <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'LedgerTransaction.O.ForeignAmount' | TextCodeTranslationPipe}}</td>
@@ -844,7 +839,7 @@
                                                             
                                                                 
                                                         </td>
-                                                        <td style="width: 5px;"><div></div></td>
+                                                        <td style="width: 15px;"><div></div></td>
                                                        
         
                                                         <td *ngIf="selectedAmountForeignOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
@@ -869,7 +864,7 @@
                                                             (ValueChanged)="AmountForeignTextFromChanged($event)"
                                                         ></LogTextBox>
                                                         </td>
-                                                        <td style="width: 5px"><div></div></td>
+                                                        <td style="width: 15px"><div></div></td>
                                                         <td *ngIf="selectedAmountForeignOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                                            
                                                         </td>

@@ -47,9 +47,6 @@ export class StimulsoftArg {
     IsReset: boolean;
     MessageTemplateLists: ReportsTemplateList[] = [];
     DefaultMessageTemplateId: string;
-    DefaultExcelTemplateId: string;
-    DefaultExcelNoStimId: string;
-    ProcessMenuTemplateId: string;
     ResultType: string;
     ObjectTableId: string;
     constructor() {
