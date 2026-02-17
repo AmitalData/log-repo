@@ -465,7 +465,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
             var topProperty: number = (appHeight - windowHeight) / 2;
             var leftProperty: number = (appWidth - windowWidth) / 2;
 
-            if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
+            if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
                 //#region Abdullah: this code to paint the window over editcomponent section while split component is opened (customs)
                 var windowPlaceholderWidth: number = null;
                 var windowPlaceholderHeight: number = null;

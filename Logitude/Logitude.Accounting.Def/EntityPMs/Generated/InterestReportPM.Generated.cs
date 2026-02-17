@@ -1074,29 +1074,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string vatNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatNumber  
-	   {
-	    
-	     get
-		{
-		   return vatNumber;
-		 }
-		 set
-		 {
-		   if(vatNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatNumber",OldValue=vatNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   vatNumber=value;
-		   }
-			
-		 }
-	   }
 	    }
    
 }

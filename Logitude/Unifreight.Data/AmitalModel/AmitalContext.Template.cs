@@ -4795,10 +4795,10 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"LINE_COUNTER")
                     .HasColumnType("int");
             modelBuilder.Entity<CFIMSVLINE>()
-                .Property(p => p.PROTESTREMARK)
-                .HasColumnName(@"PROTEST_REMARK")
-                .HasMaxLength(255)
-                .HasColumnType("varchar2");
+.Property(p => p.PROTESTREMARK)
+.HasColumnName(@"PROTEST_REMARK")
+.HasMaxLength(255)
+.HasColumnType("varchar2");
             modelBuilder.Entity<CFIMSVLINE>()
             .Property(p => p.MAKATREMARK)
             .HasColumnName(@"MAKAT_REMARK")
@@ -4809,17 +4809,6 @@ namespace Unifreight.Data.AmitalModel
         .HasColumnName(@"PRAT_MEHES2")
         .HasMaxLength(11)
         .HasColumnType("varchar2");
-            modelBuilder.Entity<CFIMSVLINE>()
-    .Property(p => p.WEIGHT)
-        .HasColumnName(@"WEIGHT")
-        .HasColumnType("decimal")
-        .HasPrecision(14, 4);
-
-            modelBuilder.Entity<CFIMSVLINE>()
-                .Property(p => p.WEIGHT_UNIT)
-                    .HasColumnName(@"WEIGHT_UNIT")
-                    .HasMaxLength(32)
-                    .HasColumnType("varchar2");
 
             #endregion
 
