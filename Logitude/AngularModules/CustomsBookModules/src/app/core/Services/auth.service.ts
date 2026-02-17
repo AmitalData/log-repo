@@ -11,6 +11,7 @@ export class AuthService {
 
     public isAuthenticated(): boolean {
         const token = sessionStorage.getItem('Token');
+
         if(!token) return false;
         return true;
     }

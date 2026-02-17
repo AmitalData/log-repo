@@ -30,7 +30,6 @@ export class SIIRequestList {
 	ContactCellPhone: string;
 	ContactFax: string;
 	ContactId: string;
-	RequestDate: Date;
 	
 }
  
