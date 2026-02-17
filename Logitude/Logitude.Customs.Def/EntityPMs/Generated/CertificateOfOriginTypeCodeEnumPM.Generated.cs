@@ -188,52 +188,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool? isCustomsItemMandatory ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? IsCustomsItemMandatory  
-	   {
-	    
-	     get
-		{
-		   return isCustomsItemMandatory;
-		 }
-		 set
-		 {
-		   if(isCustomsItemMandatory != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomsItemMandatory",OldValue=isCustomsItemMandatory,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   isCustomsItemMandatory=value;
-		   }
-			
-		 }
-	   }
-	  private bool? isZipcodeMandatory ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? IsZipcodeMandatory  
-	   {
-	    
-	     get
-		{
-		   return isZipcodeMandatory;
-		 }
-		 set
-		 {
-		   if(isZipcodeMandatory != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsZipcodeMandatory",OldValue=isZipcodeMandatory,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   isZipcodeMandatory=value;
-		   }
-			
-		 }
-	   }
 	    }
    
 }

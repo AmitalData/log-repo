@@ -1,39 +1,38 @@
-﻿using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.BL.CommonDataModel;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.DataContracts;
-using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.Resolvers;
-using Logitude.BL.Security;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Microsoft.Practices.Unity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel;
+using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core;
 using System.Globalization;
-using System.Linq;
 using System.Transactions;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityLists;
+using Simplog.Data.InvoiceModel;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using Logitude.BL.DataContracts;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Data.Entity.Core;
+using Logitude.BL.Resolvers;
+using Logitude.BL.Security;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -98,10 +97,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         if (string.IsNullOrEmpty(entityPM.VatNumber))
                         {
                             string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.VatNumber", entityPM.Tenant, useLocal);
-                            string billToNameLable = TranslateTextsClass.Translate("Card.F.GLAccountDisplayNumber", entityPM.Tenant, useLocal);
-                            string errorMessage = $"{msgRequired.Replace("%FieldName", fieldLabel)} , {billToNameLable} : {entityPM.BillToDisplayNumber}";
-
-                            throw new ApplicationException(errorMessage);
+                            throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
                         }
                     }
                 }
@@ -355,20 +351,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             foreach (ARInvoiceLinePM item in lines)
             {
                 string importStorageChargeId = null;
-                string lineInfo = "";
-
                 if (item.ChargesTypeId == null)
                 {
                     string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.ChargesTypeId", entityPM.Tenant);
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
                 }
 
                 else
                 {
                     ChargesType chargesType = chargesTypeRepository.GetSingleChargesTypeByCode("ISTOR", entityPM.Tenant);
-                    lineInfo = $" (Line: {item.LineActionCode ?? "?"}, ChargesTypeId: {chargesType?.Code ?? "?"})";
-
-                    if (chargesType != null)
+                    if(chargesType != null)
                     {
                         importStorageChargeId = chargesType.Id;
                     }
@@ -377,13 +369,13 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 if (item.VatTypeId == null)
                 {
                     string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.VatTypeId", entityPM.Tenant);
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
                 }
 
                 if (item.ForiegnCurrencyId == null)
                 {
                     string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.ForiegnCurrencyId", entityPM.Tenant);
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
                 }
 
                 if (item.MeasurementCode == "STFE" && item.ChargesTypeId == importStorageChargeId)
@@ -396,34 +388,34 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     if (item.Quantity == null)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.Quantity", entityPM.Tenant);
-                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
+                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
                     }
 
                     if (item.UnitPrice == null)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.UnitPrice", entityPM.Tenant);
-                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
+                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
                     }
                 }
 
                 if (item.ForiegnExchangeRate == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Foriegn Exchange Rate") + lineInfo);
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Foriegn Exchange Rate"));
                 }
 
                 if (item.ForiegnCurrencyAmount == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Foriegn Currency Amount") + lineInfo);
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Foriegn Currency Amount"));
                 }
 
                 if (item.LocalCurrencyAmount == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Local Currency Amount") + lineInfo);
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Local Currency Amount"));
                 }
 
                 if (item.InvoiceCurrencyAmount == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Invoice Currency Amount") + lineInfo);
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Invoice Currency Amount"));
                 }
             }
         }
@@ -1134,8 +1126,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (!entityPM.IsExternalEntity)
                         {
-                          var  counterDefinitionQuery = new CounterDefinitionQuery(entityPM.Tenant);
-                            bool uniquePerPrefix = counterDefinitionQuery.GetUniquePerPrefixByCounterName("A/R Invoice", entityPM.Tenant);
                             bool HasInterestFeature = entityPM.HasInterestFeature;
 
                             ARInvoice lastApprovedInvoice = (from a in myContext.ARInvoices
@@ -1146,7 +1136,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                                              && a.StatusCode != "PR"
                                                              && a.StatusCode != "VD"
                                                              && a.InvoiceNumber != a.Id
-                                                              && (uniquePerPrefix ? ((HasInterestFeature || entityPM.ARInvoiceTypeCode == "IT") ? a.ARInvoiceTypeCode == "IT" : a.ARInvoiceTypeCode == entityPM.ARInvoiceTypeCode) : true)
+                                                             && ((HasInterestFeature || entityPM.ARInvoiceTypeCode  == "IT") ? a.ARInvoiceTypeCode == "IT": a.ARInvoiceTypeCode != "IT")
                                                              select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
 
                             if (lastApprovedInvoice != null)
@@ -1278,10 +1268,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             if (Type == "IT")
             {
                 AccountPeriodCode = "3";// 2- Interest Invoice
-            }
-            if( Type == "CD")
-            {
-                AccountPeriodCode = "4";
             }
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(accountingContext);
