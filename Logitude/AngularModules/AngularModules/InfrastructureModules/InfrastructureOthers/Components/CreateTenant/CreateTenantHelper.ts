@@ -53,7 +53,7 @@ export class CreateTenantHelper {
                             var Msg: string = "";
 
                             if (this.ObjecttableName == "Customer") {
-                                if ((ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2")) {
+                                if ((ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2")) {
                                     if (AppTool.IsNullOrEmpty(contactList.BusinessPhone) && AppTool.IsNullOrEmpty(contactList.Mobile)) {
                                         Msg = "Business Phone Field Or Mobile Phone Field is Required";
                                     }

@@ -37,15 +37,6 @@ export class ARInvoiceExtendedService {
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-
-    getCanBeReconciled(arInvoiceId: string) {
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetCanBeReconciled/?arInvoiceId=' + arInvoiceId, ServiceHelper.GetHttpHeaders())
-                .pipe(map((response: any) => {
-                    return response;
-                }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
     
     UpdateIsApproveDoneInARInvocie(invoiceId: string, approvalInProgress: boolean) {
         return defer(() => {    
