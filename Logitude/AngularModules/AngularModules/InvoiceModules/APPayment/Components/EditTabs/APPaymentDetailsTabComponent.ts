@@ -53,12 +53,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private APInvoiceListService: APInvoiceListService = new APInvoiceListService();
     public EnableNegativeOffsetAPPayments: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
-    SavedPaymentCurrencyId: string;
-    SavedLocalAmount: number = null;
-    SavedPaymentCurrencyAmount: number = null;
-    SavedExchangeRate: number = null;
-    IsRestoring: boolean = false;  
-    SkipUpdatingLocalAmount: boolean = false;  
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetAPPayments == true && this.PaymentMethodCode == "FS" ? true : false; }
     public isRTL: boolean = false;
     public IsFullAccounting: boolean = false;
@@ -83,7 +77,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
      public GLAccountsFilterItems: ApiQueryFilters;
     isLoad:boolean = false;
     public OldRate: number = null;
-    public partnerTypeList ="AC,CS,AG,AL,CG,SG,SL,TR,VD,CO,WH"
      constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -97,11 +90,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
         this.ReconcileInternalTrans = this.EntityPM.ReconcileInternalTrans;
-        this.SavedPaymentCurrencyId = this.EntityPM.IsFromReconcilePage ? this.EntityPM.PaymentCurrencyId : null;
-
-        this.SavedPaymentCurrencyAmount = this.EntityPM.IsFromReconcilePage ? this.EntityPM.AmountInPaymentCurrency : null;
-
-
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
@@ -271,8 +259,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     vendor: CardList;
     VendorChanged(vednor: CardList) {
         this.vendor = vednor;
-        this.FromDate = null;
-        this.ToDate = null;
 
     }
 
@@ -561,9 +547,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     UpdateCurrencyRates() {
-        if (this.isRateManual) {
-            return;
-        }
         var loadingDate = this.RegisterDate;
         if (loadingDate == null) {
             loadingDate = DateTool.GetCurrentDateAsUtc();
@@ -584,7 +567,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         var myRateDate: Date = null;
 
         if (!AppTool.IsNullOrEmpty(this.PaymentCurrencyId)) {
-            if (this.PaymentCurrencyId === SessionLocator.TenantPM.CurrencyId) {
+            if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
                 myRate = 1;
             }
 
@@ -628,31 +611,23 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
 
                 if (this.LastRatesList) {
-                    if (this.PaymentCurrencyId === SessionLocator.TenantPM.CurrencyId) {
-                        result = 1;
-                    }
-                    else {
-                        const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
-                        if (lastRate) {
-                            const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
-                            const customRate = exchangeRateId
-                            ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
-                            : null;
-                            result = customRate ?? lastRate.Rate;
-                    
-                        } 
-                    }
+                    const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
+                    if (lastRate) {
+                        const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+                        const customRate = exchangeRateId
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
+                        : null;
+                         result = customRate ?? lastRate.Rate;
+                
+                   } 
                 }
             }
         }
 
         return result;
     }
-    private OldKnownExchangeRateDate: Date = null;
     GetCurrencyRateDate(currencyId: string): Date {
-        if (!this.OldKnownExchangeRateDate) {
-            this.OldKnownExchangeRateDate = this.ExchangeRateDate ?? this.EntityPM.PaymentCurrencyExchangeRateDate;
-        }
+
         var result = null;
 
         if (!AppTool.IsNullOrEmpty(currencyId)) {
@@ -667,9 +642,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
                         const customRate = exchangeRateId 
                         ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
-                        : this.OldKnownExchangeRateDate;
+                        : null;
                          result = customRate ?? lastRate.ValueDate;
-                         this.OldKnownExchangeRateDate = result;
                      } 
                 }
             }
@@ -730,15 +704,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (!AppTool.IsNullOrEmpty(this.searchText)) {
             searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
         }
-        if(!AppTool.IsNullOrEmpty(this.DateFilterSelectedValue) && (!AppTool.IsNullOrEmpty(this.FromDate) || !AppTool.IsNullOrEmpty(this.ToDate))){
-            if(this.DateFilterSelectedValue ==="filter_Due"){
-                filters.addAdditionalFilter("DueDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "DateTime"); 
-            }
-            else{
-                filters.SortBy =  "AccountingDate"
-                filters.addAdditionalFilter("AccountingDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "DateTime");
-            }
-        }
+
         filters.addAdditionalFilter("APPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
         filters.addAdditionalFilter("APPaymentInvoicesConnected", this.EntityPM.Id, null, null, "Contains", true, false, false, "string");
 
@@ -774,15 +740,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         filters.addAdditionalFilter("IsClosed", false, null, null, "Equals", false, false, false, "Boolean");
         if (this.FilterInvoiceByAPPayment)
             filters.addAdditionalFilter("InvoiceCurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");
-        if(!AppTool.IsNullOrEmpty(this.DateFilterSelectedValue) && (!AppTool.IsNullOrEmpty(this.FromDate) || !AppTool.IsNullOrEmpty(this.ToDate))){
-            if(this.DateFilterSelectedValue ==="filter_Due"){
-                filters.addAdditionalFilter("DueDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "DateTime"); 
-            }
-            else{
-                filters.SortBy =  "AccountingDate"
-                filters.addAdditionalFilter("AccountingDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "DateTime");
-            }
-        }
         var searchValue = null;
         if (!AppTool.IsNullOrEmpty(this.searchText)) {
             searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
@@ -852,21 +809,21 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     if (!item.IsClosed) {
                         var isCurrencyMatched: boolean = false;
 
-                        if (this.PaymentCurrencyId === item.InvoiceCurrencyId) {
+                        if (this.PaymentCurrencyId == item.InvoiceCurrencyId) {
                             isCurrencyMatched = true;
                         }
 
                         else if (this.IsMultiCurrency) {
-                            if (this.PaymentCurrencyId === SessionLocator.LocalCurrencyId) {
+                            if (this.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
                                 isCurrencyMatched = true;
                             }
 
-                            else if (item.InvoiceCurrencyId === SessionLocator.LocalCurrencyId) {
+                            else if (item.InvoiceCurrencyId == SessionLocator.LocalCurrencyId) {
                                 isCurrencyMatched = true;
                             }
                         }
 
-                        if (isCurrencyMatched === false || item.StatusCode === "WA") {
+                        if (isCurrencyMatched == false || item.StatusCode == "WA") {
                             unConnectedListNotMatched.push(new APPaymentInvoiceArgs(item, this));
                         }
 
@@ -1295,121 +1252,68 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.setPaymentCurrencyId(value)
     }
 
-
-    private _isSettingPaymentCurrency = false;
+    // get FilterInvoiceByAPPayment (){
+    //     return this.IsFullAccounting && !( this.vendorGLAccount!=null&& (
+    //         this.vendorGLAccount.IsMultiCurrency &&
+    //          this.vendorGLAccount.ReconcileMethodCode=='0')) && this.EntityPM.VendorId!=null;
+    // }
 
 
     async setPaymentCurrencyId(value: string) {
+    if (!this.EntityPM.IsCreatedFromInvoiceSide) {
+        if (this.EntityPM != null) {
+            if (this.EntityPM.PaymentCurrencyId != value || this.EntityPM.IsFromReconcilePage) {
+                this.EntityPM.PaymentCurrencyId = value;
 
-              // avoid re-entrancy
-            if (this._isSettingPaymentCurrency) {
-                return;
-            }
-            this._isSettingPaymentCurrency = true;
-            try {
-                if (!this.EntityPM.IsCreatedFromInvoiceSide && value !== null && value !== undefined && value !== "") {
-                    if (this.EntityPM != null) {
-                        if (this.EntityPM.PaymentCurrencyId != value || this.EntityPM.IsFromReconcilePage) {
-                            this.EntityPM.PaymentCurrencyId = value;
+                // Store the old exchange rate before updating
+                const oldRate = this.OldRate;
 
+                this.PaymentCurrencyExchangeRate = await this.GetCurrencyRate(value);
+                const newRate = this.PaymentCurrencyExchangeRate;
 
-                            // Store the old exchange rate before updating
-                            let oldRate = this.OldRate;
-                            this.isRateManual = false;
-
-                            if (AppTool.IsNullOrEmpty(value)) {
-                                this.PaymentCurrencyCode = null;
-                            }
-
-                            else {
-                                var myService = new CurrencyListService();
-                                myService.getSingleFromCache(value).subscribe(async (myResponse: ServiceResponse) => {
-                                    if (!myResponse.HasError) {
-                                        var list: CurrencyList = myResponse.Result;
-                                        if (list) {
-                                            this.PaymentCurrencyCode = list.Code;                                  
-                                            if(!this.isLoad && this.EntityPM.IsFromReconcilePage && this.EntityPM.IsMultiCurrency && this.PaymentCurrencyCode != "NIS") {
-                                                this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);  
-                                            }
-                                            this.isLoad = true;
-                                        }
-
-
-                                            if (this.EntityPM.IsFromReconcilePage) {
-                                                this.IsRestoring = true;
-
-                                                if (this.SavedLocalAmount != null) {
-                                                    this.AmountInLocalCurrency = this.SavedLocalAmount;
-                                                    this.EntityPM.AmountInLocalCurrency = this.SavedLocalAmount;
-                                                }
-
-                                                if (this.SavedPaymentCurrencyAmount != null) {
-                                                    this.AmountInPaymentCurrency = this.SavedPaymentCurrencyAmount;
-                                                    this.EntityPM.AmountInPaymentCurrency = this.SavedPaymentCurrencyAmount;
-                                                }
-
-                                                if (this.SavedExchangeRate != null) {
-                                                    this.PaymentCurrencyExchangeRate = this.SavedExchangeRate;
-                                                    this.EntityPM.PaymentCurrencyExchangeRate = this.SavedExchangeRate;
-                                                }
-                                                this.OldRate = this.SavedExchangeRate; 
-                                                oldRate = this.SavedExchangeRate;       
-                                                this.IsRestoring = false;
-                                            }
-
-                                            this.SkipUpdatingLocalAmount = true;
-                                            this.PaymentCurrencyExchangeRate = await this.GetCurrencyRate(value);
-                                            this.SkipUpdatingLocalAmount = false;
-                                            const newRate = this.PaymentCurrencyExchangeRate;
-
-                                            if (value == SessionLocator.TenantPM.CurrencyId) { 
-                                                this.AmountInPaymentCurrency = this.AmountInLocalCurrency;
-                                                this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
-                                            }  
-
-                                            // If new rate is valid and not zero, and the currency came from reco screen, update AmountInLocalCurrency by the new rate
-                                            else if (newRate && newRate !== 0
-                                                    && this.EntityPM.IsFromReconcilePage && this.SavedPaymentCurrencyId === this.PaymentCurrencyId) {
-                                                this.OldRate = newRate; // Update OldRate to the new rate
-                                                this.AmountInLocalCurrency = AppTool.Round(this.AmountInPaymentCurrency * newRate, 2);
-                                                this.EntityPM.AmountInLocalCurrency = this.AmountInLocalCurrency;
-                                            }
-
-                                            // If both rates are valid and not zero, update AmountInPaymentCurrency by the rate ratio
-                                            else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
-                                                const rateRatio = oldRate / newRate;
-                                                this.OldRate = newRate; // Update OldRate to the new rate
-                                                this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
-
-                                                this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
-                                            }
-                                            this.updateOldRateFromCurrentExchangeRate(newRate); // Update OldRate to the new rate
-
-                                            this.ExchangeRateDate = this.GetCurrencyRateDate(value);
-
-
-                                    }
-                                });
-                            }
-
-                            this.SetUIProperties_ExchangeRate();
-
-                            this.ItemsSource.Collection.forEach(item => {
-                                item.SetUIProperties();
-                                item.InitExchangeRate();
-                            });
-                            if (this.FilterInvoiceByAPPayment && this.EntityPM.VendorId != null)
-                                this.LoadPaymentInvoices_IsMatched();
-                        }
-                    }
+                // If both rates are valid and not zero, update AmountInPaymentCurrency by the rate ratio
+                if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
+                    const rateRatio = oldRate / newRate;
+                    this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
+                    this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
                 }
-                this.filterBankAccountsUsingPaymentCurrencyId();
-            } finally {
-            this._isSettingPaymentCurrency = false;
+                this.updateOldRateFromCurrentExchangeRate(newRate); // Update OldRate to the new rate
+
+                this.ExchangeRateDate = this.GetCurrencyRateDate(value);
+
+                if (AppTool.IsNullOrEmpty(value)) {
+                    this.PaymentCurrencyCode = null;
+                }
+
+                else {
+                    var myService = new CurrencyListService();
+                    myService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list: CurrencyList = myResponse.Result;
+                            if (list) {
+                                this.PaymentCurrencyCode = list.Code;                                  
+                                if(!this.isLoad && this.EntityPM.IsFromReconcilePage && this.EntityPM.IsMultiCurrency && this.PaymentCurrencyCode != "NIS") {
+                                    this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);  
+                                }
+                                this.isLoad = true;
+                            }
+                        }
+                    });
+                }
+
+                this.SetUIProperties_ExchangeRate();
+
+                this.ItemsSource.Collection.forEach(item => {
+                    item.SetUIProperties();
+                    item.InitExchangeRate();
+                });
+                if (this.FilterInvoiceByAPPayment && this.EntityPM.VendorId != null)
+                    this.LoadPaymentInvoices_IsMatched();
+            }
         }
-    } 
-
-
+    }
+    this.filterBankAccountsUsingPaymentCurrencyId();
+} 
     filterBankAccountsUsingPaymentCurrencyId() {
         if (this.IsFullAccounting == true && this.PaymentMethodCode == "BT" && this.EntityPM.PaymentCurrencyId) {
             this.BankAccountsFilterItems = new ApiQueryFilters();
@@ -1433,37 +1337,15 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         return this.EntityPM.PaymentCurrencyExchangeRate;
     }
     set PaymentCurrencyExchangeRate(value: number) {
-        if (!this.EntityPM.IsCreatedFromInvoiceSide && value !== null && value !== undefined) {
+        if (!this.EntityPM.IsCreatedFromInvoiceSide) {
             if (this.EntityPM != null) {
                 if (this.EntityPM.PaymentCurrencyExchangeRate != value) {
-                    let veryFirstTime = (this.EntityPM.PaymentCurrencyExchangeRate == null || this.EntityPM.PaymentCurrencyExchangeRate === 0) && this.SavedExchangeRate == null;
-                   
                     // Store the previous rate if it's valid
                     this.updateOldRateFromCurrentExchangeRate(this.EntityPM.PaymentCurrencyExchangeRate);
                     this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
-
                     this.GetRateIsEnabled();
                     this.ComputeLocalAmount();
-                    if (veryFirstTime && this.EntityPM.IsFromReconcilePage) {
-                        if (this.EntityPM.IsFromReconcilePage) {
-                            if (this.EntityPM.PaymentCurrencyExchangeRate != null && this.EntityPM.PaymentCurrencyExchangeRate !== 0) {
-                                this.SavedExchangeRate = this.EntityPM.PaymentCurrencyExchangeRate;
-                                this.SavedLocalAmount = this.SavedExchangeRate * this.SavedPaymentCurrencyAmount;
-                            } 
-                            else if (
-                                this.AmountInLocalCurrency != null &&
-                                this.AmountInPaymentCurrency != null &&
-                                this.AmountInPaymentCurrency !== 0) {
-                                this.SavedExchangeRate =
-                                    this.AmountInLocalCurrency / this.AmountInPaymentCurrency;
-                                this.SavedLocalAmount = this.EntityPM.AmountInLocalCurrency;
-                            } 
-                            else {
-                                this.SavedExchangeRate = null;
-                            }
-                        }
-                        
-                    }
+
                     this.ItemsSource.Collection.forEach(item => {
                         item.InitExchangeRate();
                     });
@@ -1561,7 +1443,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.UpdateCurrencyRates();
                 this.IsTaxUpdated = true;
                 this.LoadTaxPercentage();
-               
+                // if (value != null && DateTool.GetDateFromDate(value) > DateTool.GetDateFromDate(this.ValueDate) && this.PaymentMethodCode == "BT") {
+                //     var msg = TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate");
+                //     this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, false, msg);
+                // } else {
+                //     this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, true, '');
+                //     this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, '');
+                // }
             }
         }
     }
@@ -1574,7 +1462,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     set AccountingPaymentMethodId(value: string) {
         if (this.EntityPM != null) {
-            if (this.EntityPM.AccountingPaymentMethodId != value) {                
+            if (this.EntityPM.AccountingPaymentMethodId != value) {
                 this.EntityPM.AccountingPaymentMethodId = value;
                 this.RefreshPaymentMethodFields();
             }
@@ -1656,18 +1544,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
 
-        if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
+        if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS") {
             this.ValueDate = DateTool.GetCurrentDateAsUtc();
         }
-        if(this.PaymentMethodCode === "MS"){
-            this.partnerTypeList = "VD,CS";
-            this.VendorId = null;
-            
-        }
-            
-        else{
-            this.partnerTypeList = "AC,CS,AG,AL,CG,SG,SL,TR,VD,CO,WH"
-        }
+
         this.SetUIProperties_Cheque();
         this.SetUIProperties_CreditCard();
 
@@ -1743,7 +1623,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     get VisibleIfCash() {
         var result = false;
-        if (AppTool.IsNullOrEmpty(this.PaymentMethodCode) || this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
+        if (AppTool.IsNullOrEmpty(this.PaymentMethodCode) || this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS") {
             result = true;
         }
         return result;
@@ -1751,7 +1631,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     get CollapsedIfCash() {
         var result = false;
         if (!AppTool.IsNullOrEmpty(this.PaymentMethodCode)) {
-            if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
+            if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS") {
                 result = false;
             }
 
@@ -1820,7 +1700,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 else {
                     this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, true);
                 }
-              
+                
+                // if (value != null && DateTool.GetDateFromDate(value) < DateTool.GetDateFromDate(this.RegisterDate) && this.PaymentMethodCode == "BT") {
+                //     var msg = TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate");
+                //     this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, false, msg);
+                // } else {
+                //     this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, '');
+                //     this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, true, '');
+                // }
             }
         }
     }
@@ -1962,25 +1849,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
-    private toDate : Date = null;
-    get ToDate() { return this.toDate; }
-    set ToDate(value: Date) {
-        if (this.toDate != value) {
-            this.toDate = value;
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId))
-                this.LoadData();
-        }
-    }
-    private fromDate : Date = null;
-    get FromDate() { return this.fromDate; }
-    set FromDate(value: Date) {
-        if (this.fromDate != value) {
-            this.fromDate = value;
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId))
-                this.LoadData();
-        }
-    }
-    
     loadBankAccounts(filters: ApiQueryFilters) {
         var myService: BankAccountListService = new BankAccountListService();
         filters.addAdditionalFilter("Inactive", false, null, null, "Equals", false, false, false, "Boolean");
@@ -2008,14 +1876,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid - this.Summary_ExternalAmount;
     }
     ComputeLocalAmount() {
-        if ((this.AmountInLocalCurrency === null || this.AmountInLocalCurrency === undefined)   // In this case, we must calculate this value
-            || !this.EntityPM.IsFromReconcilePage                                               // as it worked before 
-            || (
-                this.EntityPM.IsFromReconcilePage && // when coming from reconcile page
-                !this.IsRestoring && // not restoring saved values
-                !this.SkipUpdatingLocalAmount  // not skipping update
-                ))  // when changing currency from reconcile page
-             this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
+        this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
     }
 
     // Summary
@@ -2087,50 +1948,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.entityArgs.EditComponent.SaveChanges();
         }
     }
-
-    private isProgrammaticRateUpdate = false;
-    isRateManual = false;
-
-    onRateValueChanged(value: any) {
-        if (this.isProgrammaticRateUpdate) {
-            return; // 👈 ignore internal updates
-        }
-
-        this.isRateManual = true; // ✝︝ user typed
-
-        // Store the old exchange rate before updating
-        const oldRate = this.OldRate;
-
-        const newRate = this.PaymentCurrencyExchangeRate;
-        if (value == SessionLocator.TenantPM.CurrencyId) { 
-            this.AmountInPaymentCurrency = this.AmountInLocalCurrency;
-            this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
-        }  
-
-
-        // If new rate is valid and not zero, and the currency came from reco screen, update AmountInLocalCurrency by the new rate
-        else if (newRate && newRate !== 0
-                 && this.EntityPM.IsFromReconcilePage && this.SavedPaymentCurrencyId === this.PaymentCurrencyId) {
-            this.OldRate = newRate; // Update OldRate to the new rate
-            this.AmountInLocalCurrency = AppTool.Round(this.AmountInPaymentCurrency * newRate, 2);
-            this.EntityPM.AmountInLocalCurrency = this.AmountInLocalCurrency;
-        }
-
-        // If both rates are valid and not zero, update AmountInPaymentCurrency by the rate ratio
-        else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
-            const rateRatio = oldRate / newRate;
-            this.OldRate = newRate; // Update OldRate to the new rate
-            this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
-
-            this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
-        }
-        this.updateOldRateFromCurrentExchangeRate(newRate); // Update OldRate to the new rate 
-        this.ExchangeRateDate = this.GetCurrencyRateDate(value);                           
-    }
-
-
-
-
     UpdateCurrencyRateMethod() {
         this._entityResourceService.getEntityResourceByTableName("RatesTable", 0).subscribe((response: any) => {
             var logWindow = new LogitudeWindow();
@@ -2144,43 +1961,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         // Store the old exchange rate before updating
                         const oldRate = this.OldRate;
 
-
-                        /*
-                            The LogTextBox always emits ValueChanged:
-
-                                * when the user types ✝︝
-
-                                * when your code assigns a value 🤖
-
-                            But we only want:
-
-                                “Manual mode” when the user typed,
-                                not when your code sets the value.
-
-                            So we need a way to tell:
-                                “Was this change caused by the user, or by my own code?”
-                        */ 
-
-                        this.isProgrammaticRateUpdate = true;  // suppress ValueChanged side effects
                         this.PaymentCurrencyExchangeRate = comp.Rate;
                         this.ExchangeRateDate = comp.RateDate;
-                        this.isProgrammaticRateUpdate = false;
-
-                        // popup = intentional manual override
-                        this.isRateManual = true;
 
                         // After setting the new rate, update AmountInPaymentCurrency by the rate ratio
                         const newRate = this.PaymentCurrencyExchangeRate;
-
-                        // If new rate is valid and not zero, and the currency came from reco screen, update AmountInLocalCurrency by the new rate
-                        if (newRate && newRate !== 0
-                            && (this.EntityPM.IsFromReconcilePage && this.SavedPaymentCurrencyId === this.PaymentCurrencyId)
-                        ) {
-                            this.OldRate = newRate; // Update OldRate to the new rate
-                            this.AmountInLocalCurrency = AppTool.Round(this.AmountInPaymentCurrency * newRate, 2);
-                            this.EntityPM.AmountInLocalCurrency = this.AmountInLocalCurrency;
-                        }
-                        else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
+                        if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
                             const rateRatio = oldRate / newRate;
                             this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
                             this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
@@ -2193,8 +1979,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             logWindow.Show('./CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent');
         });
     }
-
-
     UpdatePaymentInvoicesErrors() {
 
         var haserrors = false;
@@ -2240,15 +2024,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.RequestedCommandCode = null;
-    }
-   
-    DateFilterSelectedValue: string = 'filter_Accounting';
-    DateFilterItemClicked(filter: string) {
-        if(this.DateFilterSelectedValue != filter){
-            this.DateFilterSelectedValue = filter;
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId) && this.EntityPM.StatusCode != "VD")
-                this.LoadPaymentInvoices_IsMatched();
-        }
     }
 }
 export class APPaymentInvoiceArgs extends BaseComponent {
@@ -2912,5 +2687,4 @@ export class APPaymentInvoiceArgs extends BaseComponent {
             this.UpdatePayment();
         }
     }
-    
 }

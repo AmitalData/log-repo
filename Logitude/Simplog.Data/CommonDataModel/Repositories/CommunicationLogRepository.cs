@@ -100,10 +100,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
 
-        public CommunicationLog GetSingleCommunicationLogIdAndTenant(string id, int tenant)
+        public CommunicationLog GetSingleCommunicationLog(string id, int tenant, DateTime? createDate)
         {
             return (from a in context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ObjectTable").Include("InternalDocument").Include("ExternalDocument").Include("Document").Include("CurrentTenant")
-                    where a.Id == id && a.Tenant == tenant 
+                    where a.Id == id && a.Tenant == tenant && a.CreateDate == createDate
                     select a).FirstOrDefault();
         }
 

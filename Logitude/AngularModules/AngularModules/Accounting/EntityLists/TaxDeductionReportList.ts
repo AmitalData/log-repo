@@ -26,7 +26,6 @@ export class TaxDeductionReportList {
 	StatusLocalName: string;
 	ByMonth: boolean;
 	Month: Date;
-	FromMonth: Date;
 	
 }
  

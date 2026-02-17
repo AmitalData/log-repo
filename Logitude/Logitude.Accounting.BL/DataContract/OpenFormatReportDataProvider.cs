@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.DataContract
 {
-   public class OpenFormatReportDataProvider: BaseDataProvider
+   public class OpenFormatReportDataProvider
     {
 
         //public decimal? ARinvoiceTotalAmount { get; set; }

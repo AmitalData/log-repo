@@ -21,10 +21,10 @@ namespace Simplog.Data.AzureSearch.Repo
             )
         { }
 
-        public async Task<List<dynamic>> SearchAsync(string filter, string searchText, int maxResult, List<string> selectedFields, bool perfixSearch, string orderByField = null, bool? descending = false)
+        public async Task<List<dynamic>> SearchAsync(string filter, string searchText, int maxResult, List<string> selectedFields, bool perfixSearch)
         {
             if (perfixSearch)
-                searchText += "* " + searchText;
+                searchText += "*";
 
             SearchOptions searchOptions = new SearchOptions
             {
@@ -36,11 +36,7 @@ namespace Simplog.Data.AzureSearch.Repo
             selectedFields.Add(keyFieldName);
             searchOptions.Select.Clear();
             selectedFields?.ForEach(searchOptions.Select.Add);
-            if (!string.IsNullOrEmpty(orderByField))
-            {
-                string order = descending == true ? "desc" : "asc";
-                searchOptions.OrderBy.Add($"{orderByField} {order}");
-            }
+
             Response<SearchResults<SearchDocument>> searchResponse = await GetSearchClient().SearchAsync<SearchDocument>(searchText, searchOptions).ConfigureAwait(false);
             Pageable<SearchResult<SearchDocument>> searchResults = searchResponse.Value.GetResults();
             List<dynamic> res = searchResults.Select(x => x.Document).ToList<dynamic>();
