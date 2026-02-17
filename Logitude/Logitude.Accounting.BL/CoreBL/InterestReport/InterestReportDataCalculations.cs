@@ -30,7 +30,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private int tenant;
         IInterestReportCalculationPreparations interestReportCalculationPreparations;
         private bool recalculateData;
-        public bool IsForeignCurrency { get; set; }
         public InterestReportDataCalculations(InterestReportArgs interestReportArgs)
         {
             interestReportId = interestReportArgs.InterestReportId;
@@ -45,7 +44,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             try
             {
                 interestReportPM = interestReportPM != null ? interestReportPM : interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
-                IsForeignCurrency = interestReportPM.IsForeignCurrency;
                 interestReportPM.GLAccountInterestCreditLimit = interestReportCalculationPreparations.GetCreditLimitFromGLAccount(interestReportPM.GLAccountId, tenant);
                 DateTime? interestCalculationStartDate = GetInterestCalculationStartDate();
                 List<string> glaccountIds = GetSplittedByCurrencyAcountsIds(interestReportPM.GLAccountId, tenant);
@@ -177,8 +175,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         }
        
         private void validateInterestReportClosingBalance(List<InterestReportLinesByDatePM> interestReportLinesByDatePMs) {
-
-            var totalInterestTransactionsLocalAmount = interestTransactionPMs.Sum(x => IsForeignCurrency? x.ForeignAmount : x.LocalAmount);
+            var totalInterestTransactionsLocalAmount = interestTransactionPMs.Sum(x => x.LocalAmount);
             var interestReportLinesByDateTotalLocalAmount = interestReportLinesByDatePMs.Sum(x => x.TotalAmount);
             
             var totalInterestTransactionsLocalAmountWithOpenBalance = interestReportPM.OpenBalance + totalInterestTransactionsLocalAmount;
@@ -428,8 +425,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private decimal? GetInterestReportOpenBalance()
         {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            return interestReportQueryService.GetInterestReportOpenBalance(interestReportPM.InterestCalculationDate, tenant, interestReportPM.GLAccountId,interestReportPM.IsForeignCurrency);
-            
+            return interestReportQueryService.GetInterestReportOpenBalance(interestReportPM.InterestCalculationDate, tenant, interestReportPM.GLAccountId);
+
         }
 
         

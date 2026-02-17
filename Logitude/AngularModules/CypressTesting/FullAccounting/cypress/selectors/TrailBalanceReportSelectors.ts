@@ -4,8 +4,7 @@ export class TrailBalanceReportSelectors {
     public static readonly Reportbtn ='#ViewTRBRReportbtn'
     public static readonly FromDate = '#FromDate';
     public static readonly ToDate = '#ToDate';
-    public static readonly RunReportButton = '.GreenButton:first';
+    public static readonly GreenButton = '.greenButton';
     public static readonly TrailBalanceReporScreen = '.container';
-    public static readonly SelectReportRun = 'app-run-report-toggle .ToggleButton';
 
 }

@@ -72,7 +72,7 @@ export function AssertSaveJournal() {
 
 export function ApproveJournal() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Journals, RequestAliases.PutJournal)
-    cy.Click(JournalSelectors.ApproveButton, null, true)
+    cy.Click(JournalSelectors.ApproveButton, null)
 }
 
 export function AssertApproveJournal() {
@@ -82,9 +82,9 @@ export function AssertApproveJournal() {
 
 export function PrintReport() {
     cy.DefineWindowOpen(RequestAliases.PrintReportWindowOpen);
-    cy.Click(JournalSelectors.MenuButtons, null, true);
-    cy.Click(JournalSelectors.JournalPrint, null, true);
-    cy.Click(JournalSelectors.Printbutton, null, true);
+    cy.Click(JournalSelectors.MenuButtons, null);
+    cy.Click(JournalSelectors.JournalPrint, null);
+    cy.Click(JournalSelectors.Printbutton, null,true);
 }
 
 export function AssertPrintReport() {
